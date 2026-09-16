@@ -1,0 +1,43 @@
+---
+sidebar: sidebar 
+permalink: cloudwatch-monitoring-permissions.html 
+keywords: CloudWatch monitoring permissions, monitoring stack, file system metrics, CloudWatch alarms, CloudWatch dashboards, Amazon SNS, event logs, ONTAP credentials, secretsmanager 
+summary: CloudWatch 監控權限在 NetApp Workload Factory 中是選用的，並且僅在部署分隔的監控堆疊時才適用。 
+---
+= Amazon CloudWatch 針對 NetApp Workload Factory 的監控權限
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Amazon CloudWatch 監控權限在 NetApp Workload Factory 中是選用的，且僅在您部署分隔的監控堆疊時才適用。監控堆疊透過收集檔案系統計量、發佈事件記錄、管理 CloudWatch 儀表板和警示，以及透過 Amazon SNS 發送警示通知，來提供營運可見度。該堆疊還需要存取權限，以便在監控需要時擷取 ONTAP 認證資料。
+
+
+
+[[required-cloudwatch-monitoring-permissions]]
+== 所需的 CloudWatch 監控權限
+
+可選的監控堆疊需要以下權限：
+
+[cols="2,3"]
+|===
+| 權限 | 目的 
+
+
+| fsx:Describe* / fsx:ListTagsForResource | 收集檔案系統計量 
+
+
+| cloudwatch:PutMetricData / cloudwatch:PutDashboard / cloudwatch:PutMetricAlarm / cloudwatch:DescribeAlarms / cloudwatch:Delete* | 管理儀表板和警報 
+
+
+| logs:CreateLogGroup / logs:CreateLogStream / logs:PutLogEvents | 發布事件記錄 
+
+
+| sns:Publish | 發送提醒通知 
+
+
+| secretsmanager:GetSecretValue | 擷取用於監控的 ONTAP 認證資料 
+|===

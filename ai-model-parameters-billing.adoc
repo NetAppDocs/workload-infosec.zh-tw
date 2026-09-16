@@ -1,0 +1,53 @@
+---
+sidebar: sidebar 
+permalink: ai-model-parameters-billing.html 
+keywords: AI model parameters, Amazon Bedrock billing, AI usage limits, model configuration, inference profile, Claude model, deterministic parameters, cost visibility, AI governance 
+summary: NetApp Workload Factory 定義了與 AI 治理相關的模型組態、使用情況和計費邊界。 
+---
+= NetApp Workload Factory 的 AI 模型參數與計費
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+NetApp Workload Factory 定義了與 AI 治理相關的模型組態、使用情況和計費邊界。設定的模型使用確定性參數並傳回結構化 JSON，以支援一致的分析結果。AWS 會將 Amazon Bedrock 推理費用計入您的帳戶，而 Workload Factory 則會追蹤 AI 使用情況並提供每個帳戶的每月成本可見度。這些小節說明了模型參數以及適用於 AI 消耗的限制。
+
+
+
+[[model-and-parameters]]
+== 模型和參數
+
+[cols="2,3"]
+|===
+| 參數 | 價值 
+
+
+| 模型 | Anthropic Claude（使用跨區域推論設定檔） 
+
+
+| 溫度 | 0（確定性，無隨機性） 
+
+
+| 最大輸出 Token | 2,048 
+
+
+| 最大推理步驟 | 每次分析 15 
+
+
+| 輸出格式 | 結構化 JSON（總結、嚴重程度、根目錄原因、糾正措施） 
+|===
+
+
+[[billing-and-usage-limits]]
+== 計費和使用限制
+
+* AWS 會將 Bedrock 推論費用計入您的帳戶（您的推論設定檔、您的憑證）。
+* Workload Factory 會在內部追蹤 AI 使用情況。
+* Workload Factory 提供每個帳戶的每月成本可見度。
++
+link:https://docs.netapp.com/us-en/workload-fsx-ontap/track-costs.html["在 NetApp Workload Factory 中追蹤儲存設備成本"^]
+
+

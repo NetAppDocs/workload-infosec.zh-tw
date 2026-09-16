@@ -1,0 +1,100 @@
+---
+settings:
+  name: Information Security for Workload Factory
+  internal:
+    pdf_enabled: true
+  prod:
+    pdf_enabled: true
+    harmony_enabled: false
+  langs: zh-tw,us-en,de-de,es-es,fr-fr,it-it,pt-br,ja-jp,ko-kr,zh-cn
+sidebar:
+  entries:
+  - title: 了解 Workload Factory 的資訊安全性
+    url: "/learn-about-workload-factory-infosec.html"
+  - title: 安全性模型和職責
+    entries:
+    - title: 安全性模型概覽
+      url: "/security-model.html"
+    - title: 共同責任邊界
+      url: "/shared-responsibility-boundaries.html"
+    - title: 就職安全性工作流程
+      url: "/onboarding-security-workflow.html"
+    - title: 法規遵循和安全性態勢
+      url: "/compliance-security-posture.html"
+  - title: 架構與連線
+    entries:
+    - title: 連結性和信任路徑
+      url: "/connectivity-trust-paths.html"
+    - title: ONTAP 執行選項
+      url: "/ontap-execution-options.html"
+  - title: 身分、憑證和最小權限
+    entries:
+    - title: AWS 帳戶整合
+      url: "/aws-account-integration.html"
+    - title: AWS 認證資料流程
+      url: "/aws-credential-flow.html"
+    - title: 認證資料保留
+      url: "/credential-retention.html"
+    - title: 認證資料類型
+      url: "/credential-types.html"
+    - title: 認證資料儲存設備選項
+      url: "/credential-storage-options.html"
+    - title: 最小權限要求
+      url: "/least-privilege-permissions.html"
+    - title: CloudWatch 監控權限
+      url: "/cloudwatch-monitoring-permissions.html"
+  - title: 資料治理、隱私和生命週期
+    entries:
+    - title: 資料處理和駐留
+      url: "/data-handling-residency.html"
+    - title: 加密和金鑰管理
+      url: "/encryption-key-management.html"
+    - title: 帳戶刪除
+      url: "/account-deletion.html"
+  - title: 可觀測性（日誌、計量、遙測）
+    entries:
+    - title: 可觀測性總覽
+      url: "/observability-overview.html"
+    - title: 計量與遙測參考
+      url: "/metrics-telemetry.html"
+  - title: 生成式 AI 安全性控制
+    entries:
+    - title: AI 控制總覽
+      url: "/ai-controls-overview.html"
+    - title: Amazon Bedrock 選擇加入 AI 診斷
+      url: "/amazon-bedrock-opt-in.html"
+    - title: AI 工具邊界
+      url: "/ai-tool-boundaries.html"
+    - title: AI 模型參數和計費
+      url: "/ai-model-parameters-billing.html"
+    - title: Ask Me AI 助理
+      entries:
+      - title: Ask Me 安全性架構
+        url: "/ask-me-security-architecture.html"
+      - title: Ask Me 存取控制
+        url: "/ask-me-access-control.html"
+      - title: Ask Me 執行模式
+        url: "/ask-me-execution-modes.html"
+      - title: Ask Me 隱私與可用度
+        url: "/ask-me-privacy-availability.html"
+  - title: ONTAP 操作和 Lambda 連結（客戶 VPC 元件）
+    entries:
+    - title: Lambda 連結總覽
+      url: "/lambda-link-overview.html"
+    - title: Lambda 連結埠和呼叫
+      url: "/lambda-link-ports-calls.html"
+    - title: Lambda 連結 IAM 權限
+      url: "/lambda-link-iam-permissions.html"
+    - title: Lambda 連結生命週期
+      url: "/lambda-link-lifecycle.html"
+  - title: 知識與支援
+    entries:
+    - title: 註冊以取得支援
+      url: "/register-support.html"
+    - title: 取得協助
+      url: "/get-help.html"
+  - title: 法律聲明
+    url: "/legal-notices.html"
+product-family:
+  name: NetApp Workload Factory
+  repo: workload-family

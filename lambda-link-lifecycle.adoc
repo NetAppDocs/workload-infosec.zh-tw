@@ -1,0 +1,26 @@
+---
+sidebar: sidebar 
+permalink: lambda-link-lifecycle.html 
+keywords: Lambda link lifecycle, deployment, health monitoring, image updates, lambda UpdateFunctionCode, CloudFormation, Terraform, removal 
+summary: NetApp Workload Factory 使用 Lambda 連結生命週期控制來管理部署、健全狀況監控和受控映像更新，同時最大限度地減少運作風險。 
+---
+= NetApp Workload Factory 的 Lambda 連結生命週期
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+NetApp Workload Factory 使用 Lambda 連結生命週期控制來管理部署、健全狀況監控和受控映像更新，將維運風險降至最低。您可以使用 `lambda:UpdateFunctionCode`權限來更新 Lambda 連結 Container 映像，以部署改進或安全性修補程式，而無需重新部署 Amazon CloudFormation 堆疊。生命週期控制也定義如何監控連結健全狀況，以及在不再需要時如何移除 Lambda 連結及其關聯資源。
+
+
+
+[[lifecycle-control-points]]
+== 生命週期控制點
+
+* 部署：透過 Amazon CloudFormation 或 Terraform 堆疊部署自動化
+* 監控：健全狀況檢查偵測連線問題；故障計數器追蹤可靠性
+* 移除：刪除 CloudFormation 堆疊會從您的 AWS 帳戶移除 Lambda 及相關資源
+

@@ -1,0 +1,51 @@
+---
+sidebar: sidebar 
+permalink: aws-account-integration.html 
+keywords: AWS account integration, sts assume role, IAM role, external ID, temporary credentials, cross-account access, confused deputy attack, role trust policy, onboarding 
+summary: Workload Factory 使用 AWS sts AssumeRole 取得 AWS 帳戶的臨時認證資料，因此該服務不會儲存長期 AWS 存取金鑰。 
+---
+= AWS 帳戶與 NetApp Workload Factory 整合
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Workload Factory 使用 AWS `sts:AssumeRole` 取得您 AWS 帳戶的臨時認證資料，因此該服務不會儲存長期 AWS 存取金鑰。在上線期間，您設定一個 IAM 角色，Workload Factory 可以擔任該角色以進行核准的 AWS API 操作，並使用外部 ID 來協助防止未經授權的跨帳戶存取。Workload Factory 隨後會在執行階段使用產生的短期認證資料，AWS 會在每次工作階段後自動使其過期。
+
+
+
+[[aws-account-configuration]]
+== AWS 帳戶組態
+
+若要讓 Workload Factory 存取您的 AWS 帳戶：
+
+. 在您的 AWS 帳戶中部署 IAM 角色（使用 CloudFormation 或手動）。
+. 確保角色信任原則允許 Workload Factory 的服務主體透過外部 ID 來承擔該角色。
+. 使用外部 ID 作為客戶與 Workload Factory 之間專屬共享的唯一秘密識別碼（UUID v4）。
++
+將其作為條件嵌入到您的 IAM 角色信任原則中 (`sts:ExternalId`）。
+
++
+外部 ID 可防止混淆代理人攻擊。在跨帳戶存取模型中，發現客戶角色 ARN 的攻擊者若沒有對應的外部 ID，就無法擔任該角色。AWS 建議將此模式用於第三方跨帳戶存取。如需詳細資訊，請參閱 AWS IAM 文件頁面 link:https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_common-scenarios_third-party.html["存取第三方擁有的 AWS 帳戶"^]。
+
++
+外部 ID 在認證資料註冊期間產生一次，並與角色 ARN 一起加密儲存在 Workload Factory 資料庫中。
+
+. 在 Workload Factory 中註冊角色 ARN 和外部 ID。
+
+
+
+
+[[runtime]]
+== 執行階段
+
+在執行階段，Workload Factory 會代入您的 IAM 角色，以便為每個 AWS API 操作取得短期認證資料：
+
+. Workload Factory 會使用您的角色 ARN 和外部 ID 來呼叫 `sts:AssumeRole`。
+. AWS 傳回臨時認證資料（存取金鑰、秘密金鑰和工作階段權杖）。
+. Workload Factory 會使用臨時認證資料來進行您帳戶中的 AWS API 操作。
+. 認證資料會自動過期（預設為一小時）。
+

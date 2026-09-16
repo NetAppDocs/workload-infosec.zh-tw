@@ -1,0 +1,18 @@
+---
+sidebar: sidebar 
+permalink: compliance-security-posture.html 
+keywords: compliance, security posture, SOC 2, HIPAA, FSx for ONTAP, AWS Well-Architected, AWS security features 
+summary: NetApp Workload Factory 的建置以法規遵循和安全性為核心優先事項。 
+---
+= NetApp Workload Factory 的法規遵循與安全性狀態
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+NetApp Workload Factory 以法規遵循和安全性為核心優先順序進行建置。Workload Factory 中的所有工作負載均在 Amazon FSx for NetApp ONTAP 上執行。除了 link:https://docs.aws.amazon.com/fsx/latest/ONTAPGuide/security.html["AWS 安全功能"^] 之外，NetApp Workload Factory 還具有 link:https://trust.netapp.com/["SOC2 Type 1、SOC2 Type 2 和 HIPAA 法規遵循"^]。
+
+Amazon FSx for NetApp ONTAP for NetApp Workload Factory 是一個 link:https://aws.amazon.com/solutions/guidance/deploying-enterprise-apps-with-netapp-bluexp-workload-factory-for-aws-and-amazon-fsx-for-netapp-ontap/["用於部署企業應用程式的 AWS 解決方案"^]，它遵循 AWS 架構完善的最佳實務。

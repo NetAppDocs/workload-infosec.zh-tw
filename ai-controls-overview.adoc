@@ -1,0 +1,48 @@
+---
+sidebar: sidebar 
+permalink: ai-controls-overview.html 
+keywords: AI controls, generative AI, AI security, Ask Me assistant, latency analysis, EMS event analysis, error log analysis, Amazon Bedrock, AI diagnostics 
+summary: NetApp Workload Factory 包含生成式 AI 功能，可加快診斷速度，同時對模型存取、資料範圍和執行時間行為實施安全性控制。 
+---
+= 了解 NetApp Workload Factory 中的 AI 控制
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+NetApp Workload Factory 包含生成式 AI 功能，可加快診斷速度，同時對模型存取、資料範圍和執行時間行為實施安全性控制。
+
+Workload Factory 預設啟用 AI 診斷。您可以隨時透過 Workload Factory *Administration* 設定停用生成式 AI 功能。link:https://docs.netapp.com/us-en/workload-setup-admin/manage-genai-features.html["了解更多關於管理 GenAI 功能的資訊。"^]
+
+
+
+[[security-scoped-ai-feature-overview]]
+== 安全性範圍 AI 功能總覽
+
+Workload Factory 目前將生成式 AI 套用至以下功能：
+
+* Ask Me 助手（RAG，包含精選 NetApp 文件和有來源支援的回應）
+* 延遲分析
+* EMS 事件分析
+* 錯誤日誌分析
+
+
+
+
+[[aws-bedrock-overview-for-ai-diagnostics]]
+== 適用於 AI 診斷的 AWS Bedrock 總覽
+
+Workload Factory 使用 Amazon Bedrock 進行 AI 推論。推論在您的 AWS 帳戶中執行，使用您設定的憑證和推論設定檔。
+
+
+
+[[related-information]]
+== 相關資訊
+
+* link:amazon-bedrock-opt-in.html["Amazon Bedrock 選擇加入 NetApp Workload Factory AI 診斷"]
+* link:ai-tool-boundaries.html["NetApp Workload Factory 的人工智慧工具邊界"]
+* link:ai-model-parameters-billing.html["NetApp Workload Factory 的 AI 模型參數與計費"]
+

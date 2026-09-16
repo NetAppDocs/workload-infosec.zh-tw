@@ -1,0 +1,39 @@
+---
+sidebar: sidebar 
+permalink: ask-me-privacy-availability.html 
+keywords: Ask Me privacy, data handling, ephemeral storage, availability, multi-model fallback, audit logging, knowledge base content, feedback data, isolation controls 
+summary: 在 NetApp Workload Factory 中，Ask Me 隱私控制可限制資料暴露，保持工作階段處理隔離的，並維護使用者互動的隱私邊界。 
+---
+= NetApp Workload Factory 的 Ask Me 隱私權與可用度
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+在 NetApp Workload Factory 中，Ask Me 隱私控制可限制資料暴露，讓工作階段處理保持隔離的，並維護使用者互動的隱私邊界。您的輸入由代管 AI 服務處理，該服務不會使用這些資料來訓練或改進基礎模型。擷取到的操作資料在工作階段期間保留在短暫的記憶體儲存設備中，不會持久化或是共享的。跨多個雲端區域的多模型後援鏈可在主要模型受限或無法使用時支援可用度，同時相同的安全性控制適用於所有後援模型。
+
+
+
+[[data-handling-and-privacy]]
+== 資料處理和隱私
+
+* 提示中的使用者資料：由代管 AI 服務處理，該服務不會使用您的輸入來訓練或改進基礎模型。
+* 知識庫內容：僅包含精選、已發佈的 NetApp 文件；不包含您的資料。
+* 操作資料：僅當使用者查詢自己的資源時才會擷取；在工作階段期間保存在短暫的記憶體容量儲存設備中，不會持續保留或共享的。
+* 稽核記錄：已記錄查詢中繼資料（匿名使用者 ID、時間戳記、持續時間），並清理敏感欄位。
+* 回饋資料：單獨儲存並與查詢 ID 關聯，不與匿名使用者 ID 以外的個人識別資訊關聯。
+
+
+
+
+[[availability-and-isolation-controls]]
+== 可用性和隔離控制
+
+Ask Me 採用跨多個雲端區域的多模型回退鏈。
+
+如果主模型受到限制或無法使用，系統可以容錯移轉至替代模型。
+
+所有模型均受到相同的安全性控制、系統提示強化與隔離保證所規範。

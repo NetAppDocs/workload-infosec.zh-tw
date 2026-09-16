@@ -1,0 +1,65 @@
+---
+sidebar: sidebar 
+permalink: lambda-link-iam-permissions.html 
+keywords: Lambda link, IAM permissions, execution role, Secrets Manager, ONTAP credentials, VPC networking, lambda InvokeFunction, resource-based policy 
+summary: NetApp Workload Factory 使用 Lambda 連結權限邊界來定義 Lambda 執行和 Workload Factory 呼叫所需的 IAM 存取。這些權限是選用的，但對於 ONTAP 原生操作是必需的。 
+---
+= 適用於 NetApp Workload Factory 的 Lambda 連結 IAM 權限
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+NetApp Workload Factory 使用 Lambda 連結權限邊界來定義 Lambda 執行和 Workload Factory 呼叫所需的 IAM 存取。這些權限是選用的，但對於 ONTAP 原生作業是必要的。設定 Secrets Manager 支援後，連結會在執行階段直接從您的 AWS Secrets Manager 取得 ONTAP 認證資料，且密碼僅在您的 VPC 內傳輸，從 Secrets Manager 到 Lambda 函數，然後再到 ONTAP 終端節點。
+
+有關請求路徑和連接埠要求，請參閱link:lambda-link-ports-calls.html["Lambda 連結埠和呼叫"]。
+
+
+
+[[lambda-execution-role-permissions]]
+== Lambda 執行角色權限
+
+在 VPC 中部署連結時，Lambda 執行角色需要以下權限：
+
+[cols="2,3"]
+|===
+| 權限 | 目的 
+
+
+| ec2:CreateNetworkInterface / ec2:DescribeNetworkInterfaces / ec2:DeleteNetworkInterface | 標準 VPC 連接的 Lambda 連網 
+
+
+| ec2:AssignPrivateIpAddresses / ec2:UnassignPrivateIpAddresses | VPC ENI IP 管理 
+
+
+| secretsmanager:GetSecretValue （作用域為 FSxSecret*） | 擷取 ONTAP 認證資料（僅在啟用 Secrets Manager 時） 
+
+
+| CloudWatch 日誌（代管原則） | Lambda 執行記錄 
+|===
+
+
+[[workload-factory-invocation-permissions]]
+== Workload Factory 呼叫權限
+
+Lambda 連結資源型原則授予 Workload Factory 服務主體以下權限：
+
+[cols="2,3"]
+|===
+| 權限 | 目的 
+
+
+| lambda:InvokeFunction | 執行 Lambda 
+
+
+| lambda:GetFunction | 健全狀況與狀態檢查 
+
+
+| lambda:UpdateFunctionCode | 版本升級（映像更新） 
+
+
+| lambda:GetFunctionConfiguration | 設定驗證 
+|===

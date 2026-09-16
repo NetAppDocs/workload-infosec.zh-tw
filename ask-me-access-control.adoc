@@ -1,0 +1,44 @@
+---
+sidebar: sidebar 
+permalink: ask-me-access-control.html 
+keywords: Ask Me access control, authentication, JWT, secrets vault, credential protection, log scrubbing, CORS, non-root container, user identity scoping 
+summary: 在 NetApp Workload Factory 中，Ask Me 存取安全性以經過驗證的工作階段、使用者層級的當責，以及執行階段作業期間受保護的機密處理為中心。 
+---
+= NetApp Workload Factory 的 Ask Me 存取控制
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+在 NetApp Workload Factory 中，Ask Me 存取安全性的核心在於經過驗證的工作階段、使用者層級的責任歸屬，以及在執行階段作業期間受保護的機密處理。驗證控制會驗證每個工作階段，並將互動與特定使用者建立關聯。敏感憑證會在執行階段從代管的機密保存庫中擷取，並從記錄中刪除。該服務也套用基礎架構控制，包括非根目錄 Container 執行和受限的 CORS 允許清單。
+
+
+
+[[authentication]]
+== 驗證
+
+* 使用加密驗證進行簽署 JWT 驗證（包括對象、發行者和演算法檢查，例如 RS256）
+* 服務邊界處的中介軟體強制驗證
+* 使用者身分範圍限定，以便將互動歸因於特定使用者
+
+
+
+
+[[credential-protection-and-secret-handling]]
+== 憑證保護和機密處理
+
+* 安全保存庫儲存設備：服務使用的敏感憑證儲存在代管的機密保存庫中，並在執行階段擷取。應用程式程式碼、組態檔案或 Container 映像檔中均不儲存任何機密。
+* 日誌清理：在寫入日誌之前，會將敏感值（認證、權杖、密碼、存取金鑰、憑證）從日誌中遮蔽。
+
+
+
+
+[[infrastructure-security]]
+== 基礎架構安全性
+
+* 非根目錄 Container 執行
+* CORS 僅限於受信任 NetApp 網域的明確允許清單
+

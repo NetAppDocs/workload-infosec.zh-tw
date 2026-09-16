@@ -1,0 +1,166 @@
+---
+sidebar: sidebar 
+permalink: metrics-telemetry.html 
+keywords: metrics, telemetry, CloudWatch metrics, volume-level metrics, file system-level metrics, computed metrics, throughput, retention, DynamoDB 
+summary: NetApp Workload Factory 在 AWS CloudWatch 中收集並儲存 Volume 層級與檔案系統層級的計量，為您提供儲存效能與容量的營運可見度。 
+---
+= NetApp Workload Factory 的計量與遙測
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+NetApp Workload Factory 會在 AWS CloudWatch 中收集並儲存 Volume 級和檔案系統級計量，讓您對儲存效能和容量具有營運可見度。計算出的計量（例如處理量）是從這些收集的值衍生而來。了解計量定義、收集頻率、重新整理行為和保留詳細資訊。
+
+
+
+[[metrics-included]]
+== 包含的計量
+
+NetApp Workload Factory 針對操作日誌和事件使用這些計量：
+
+* Volume 層級 CloudWatch 計量（每個 Volume 收集）
+* 檔案系統層級 CloudWatch 計量（按檔案系統收集）
+* 計算計量
+* 收集排程與保留
+
+
+
+
+[[about-operational-metrics]]
+== 關於營運計量
+
+計算計量使用以下公式：
+
+* 處理量（位元組/秒）=（NetworkSentBytes + NetworkReceivedBytes）/ 週期
+
+
+重新整理行為：
+
+* Volume 和叢集計量每 12 小時重新整理一次。
+* 延遲計量每 20 分鐘重新整理一次。
+* DynamoDB 項目會在 14 天後自動過期。
+
+
+
+
+[[about-telemetry-data-collection]]
+== 關於遙測資料收集
+
+* OpenTelemetry 追蹤透過 OTLP HTTP 匯出至 SigNoz（內部可觀測性）
+* AI 使用情況計量（權杖計數、模型成本）儲存在 AWS Timestream 中
+* NetApp Console 稽核記錄（行動名稱、狀態、請求/回應中繼資料、時間戳記）
+
+
+
+
+[[volume-level-cloudwatch-metrics-collected-per-volume]]
+== Volume 層級 CloudWatch 計量（每個 Volume 收集）
+
+[cols="2,2,1,3"]
+|===
+| 指標 | AWS CloudWatch 名稱 | 單元 | 它測量的內容 
+
+
+| Volume 儲存容量 | StorageCapacity | 位元組 | 總配置容量 
+
+
+| 已使用的儲存設備 | StorageUsed | 位元組 | 實際儲存的資料 
+
+
+| 資料讀取位元組 | DataReadBytes | 位元組 | 讀取處理量 
+
+
+| 資料寫入位元組 | DataWriteBytes | 位元組 | 寫入處理量 
+
+
+| 資料讀取作業 | DataReadOperations | 計數 | 讀取 IOPS 
+
+
+| 資料寫入作業 | DataWriteOperations | 計數 | 寫入 IOPS 
+
+
+| 元資料操作 | MetadataOperations | 計數 | 中繼資料 IOPS 
+
+
+| 資料讀取作業時間 | DataReadOperationTime | 秒 | 讀取延遲 
+
+
+| 資料寫入作業時間 | DataWriteOperationTime | 秒 | 寫入延遲 
+
+
+| 中繼資料作業時間 | MetadataOperationTime | 秒 | 中繼資料延遲 
+|===
+
+
+[[file-system-level-cloudwatch-metrics]]
+== 檔案系統層級 CloudWatch 計量
+
+[cols="2,2,1,3"]
+|===
+| 指標 | AWS CloudWatch 名稱 | 單元 | 它測量的內容 
+
+
+| SSD 儲存容量 | StorageCapacity | 位元組 | 總 SSD 分層容量 
+
+
+| 已使用的 SSD 儲存設備 | StorageUsed（SSD 分層） | 位元組 | SSD 分層消耗 
+
+
+| 已使用的容量資源池 | StorageUsed（容量資源池） | 位元組 | 容量資源池消耗 
+
+
+| CPU 使用率 | CPU 使用率 | 百分比 | 檔案伺服器 CPU 
+
+
+| SSD 容量使用率 | StorageCapacityUtilization | 百分比 | SSD 分層使用率 
+
+
+| 網路處理量使用率 | NetworkThroughputUtilization | 百分比 | 網路使用率百分比 
+
+
+| 磁碟 IOPS 使用率 | DiskIopsUtilization | 百分比 | 磁碟 IOPS 使用率百分比 
+
+
+| 磁碟處理量使用率 | FileServerDiskThroughputUtilization | 百分比 | 磁碟處理量已使用百分比 
+
+
+| 磁碟 IOPS 使用率（伺服器） | FileServerDiskIopsUtilization | 百分比 | 伺服器磁碟 IOPS 利用率 
+
+
+| 儲存設備效率節省 | StorageEfficiencySavings | 位元組 | 效率節省的空間 
+
+
+| 網路接收 | NetworkReceivedBytes | 位元組 | 傳入網路 
+
+
+| 網路傳送 | NetworkSentBytes | 位元組 | 傳出網路 
+|===
+
+
+[[collection-schedule-and-retention]]
+== 收集排程與保留
+
+[cols="1,1,1,1,1"]
+|===
+| 時間範圍 | 收集期間 | 資料點 | 儲存 | 保留 
+
+
+| 1 天 | 24 分鐘 | 約 60 | DynamoDB | 14 天（TTL） 
+
+
+| 1 週 | 約 2.8 小時 | 約 60 | DynamoDB | 14 天（TTL） 
+
+
+| 1 個月 | 12 小時 | 約 60 | DynamoDB | 14 天（TTL） 
+
+
+| 3 個月 | 約 1.5 天 | 約 60 | DynamoDB | 14 天（TTL） 
+
+
+| 1 年 | 約 6 天 | 約 60 | DynamoDB | 14 天（TTL） 
+|===

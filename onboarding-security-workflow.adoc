@@ -1,0 +1,99 @@
+---
+sidebar: sidebar 
+permalink: onboarding-security-workflow.html 
+keywords: onboarding, security workflow, IAM role, external ID, permission scoping, connectivity setup, AI diagnostics, Lambda link, trust configuration 
+summary: 上線至 NetApp Workload Factory 可在您開始使用產品之前，建立對您 AWS 環境的安全的存取。 
+---
+= NetApp Workload Factory 上線安全性工作流程
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+上線至 NetApp Workload Factory 可在您開始使用產品之前，建立對您 AWS 環境的安全的存取。此流程結合了 AWS 信任組態、權限界定、連線設定、可觀測性驗證，以及選用的 AI 診斷能力開發。
+
+
+
+[[step-1-decide-your-onboarding-posture]]
+== 步驟 1：決定您的上線方式
+
+* 確定 AWS 帳戶和環境邊界（例如，生產環境與非生產環境的分隔）。
+* 識別所需的工作流程（唯讀探索、資源配置與 ONTAP 原生作業）。
+* 根據工作流程需求決定是否部署 VPC 執行元件（例如 Lambda 連結）。
+* 決定是否啟用 AI 診斷（預設啟用）。
+
+
+.相關資訊
+* link:credential-types.html["認證資料類型"]
+* link:lambda-link-overview.html["Lambda 連結總覽"]
+* link:ai-controls-overview.html["AI 控制總覽"]
+
+
+
+
+[[step-2-establish-aws-trust-and-access]]
+== 步驟 2：建立 AWS 信任與存取
+
+. 在您的 AWS 帳戶中部署 IAM 角色。
+. 使用信任原則中的外部 ID 來控管角色代入。
+. 在 Workload Factory 中註冊角色 ARN 和外部 ID。
+
+
+.相關資訊
+link:aws-account-integration.html["AWS 帳戶整合"]
+
+
+
+[[step-3-apply-least-privilege-permissions]]
+== 步驟 3：套用最小權限
+
+. 選擇支援您預期工作流程的最低權限分層。
+. 驗證每個請求的工作階段原則是否將動作限制為正在執行的作業。
+
+
+.相關資訊
+link:least-privilege-permissions.html["NetApp Workload Factory 的最小權限層級"]。
+
+
+
+[[step-4-configure-connectivity-and-vpc-boundaries-as-needed]]
+== 步驟 4：設定連線與 VPC 邊界（視需要）
+
+. 驗證到 AWS 端點的必要網路路徑。
+. 如果您需要 ONTAP 原生操作，請在您的 VPC 中部署並驗證適當的執行選項。
+
+
+.相關資訊
+* link:connectivity-trust-paths.html["NetApp Workload Factory 的連線能力與信任路徑"]
+* link:ontap-execution-options.html["NetApp Workload Factory 的 ONTAP 執行選項"]
+
+
+
+
+[[step-5-verify-observability]]
+== 步驟 5：驗證可觀測性
+
+. 確認計量和遙測資料已如預期收集和保留。
+. 請確認您可以存取所需的運作記錄，以便進行疑難排解和調查。
+
+
+.相關資訊
+* link:observability-overview.html["NetApp Workload Factory 的可觀測性總覽"]
+* link:metrics-telemetry.html["NetApp Workload Factory 的計量與遙測"]
+
+
+
+
+[[step-6-enable-ai-diagnostics-optional]]
+== 步驟 6：啟用 AI 診斷（選用）
+
+AI 診斷預設為啟用。若啟用，請確認您符合所有先決條件，並將權限範圍限定在最低要求。
+
+.相關資訊
+* link:amazon-bedrock-opt-in.html["Bedrock 選擇加入 NetApp Workload Factory AI 診斷"]
+* link:ai-tool-boundaries.html["NetApp Workload Factory 的人工智慧工具邊界"]
+

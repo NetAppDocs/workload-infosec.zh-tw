@@ -1,0 +1,339 @@
+---
+sidebar: sidebar 
+permalink: data-handling-residency.html 
+keywords: data handling, data residency, data retention, configuration and metadata, operational logs, telemetry, KMS encryption, audit records, Redis cache 
+summary: NetApp Workload Factory 將資料處理組織成類別，這些類別描述了服務處理的操作資料、每個資料類別如何適應安全性模型、資料儲存在哪裡、保留多長時間以及是否離開客戶環境。 
+---
+= NetApp Workload Factory 的資料處理與駐留
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+NetApp Workload Factory 將資料處理組織成不同的類別，這些類別描述了服務處理的運行資料、每類資料在安全性模型中的定位、資料儲存位置、保留期限以及是否會離開客戶環境。主要資料類別包括組態和中繼資料、運行日誌和事件以及遙測資料。保留的資料可能包括 FSx for ONTAP 組態快照、認證資料引用、AI 使用情況和成本資料、稽核記錄以及短期回應快取。儲存和處理位置因資料類型而異：某些資訊保留在客戶的 AWS 帳戶中，而其他運行資料則儲存在 NetApp 帳戶中。
+
+
+
+[[data-classes-handled-by-workload-factory]]
+== Workload Factory 處理的資料類別
+
+Workload Factory 處理下列資料類別：
+
+* 組態和中繼資料
+* 操作日誌和事件
+* 遙測
+
+
+
+
+[[data-classes-retained-by-workload-factory]]
+== Workload Factory 保留的資料類別
+
+Workload Factory 儲存以下資料：
+
+* FSx 組態快照（每次掃描時刷新）
+* ONTAP 認證資料參照，或使用 KMS 信封加密所加密的認證資料素材（取決於所選的認證資料模式）
+* EDA 計量
+* CloudFormation 範本（7 天 `Expires`標頭）
+* AI 使用和成本資料
+* 稽核記錄
+* Redis 快取（FSx 回應），TTL 為 20 分鐘
+
+
+
+
+[[where-information-is-kept]]
+== 資訊保存位置
+
+
+
+[[aws-account]]
+=== AWS 帳戶
+
+* ONTAP 管理員密碼儲存在您的 AWS Secrets Manager 中。
+* Amazon Bedrock 透過您 AWS 帳戶中 STS 承擔的角色，使用您的推理設定檔 ARN 處理 AI 推理（EMS 分析）。
+
+
+
+
+[[netapp-account]]
+=== NetApp 帳戶
+
+* FSx 組態、平衡計畫、ARP 組態和 AI 使用限制
+* 臨時 AWS STS 認證資料（快取在 Redis 中）、回應快取、鎖定和部署狀態
+* CloudFormation/Terraform 範本、WAD 組態描述元和壓縮報告
+* AI 使用計量和收集器效能計量
+* EDA 彙總計量
+* 操作稽核追蹤
+* OpenTelemetry 追蹤
+
+
+
+
+[[region-considerations]]
+=== 區域考量
+
+* 存放在 Amazon Bedrock 服務可用的地區。
+* NetApp 內部在 `us-east-1`和 `us-west-2`中運作。
+
+
+
+
+[[how-long-information-is-kept]]
+== 資訊保留時長
+
+本節概述保留類別。有關詳細數值和原則行為，請參閱相關連結頁面。
+
+* 認證資料和臨時 AWS STS 認證資料保留：link:credential-retention.html["NetApp Workload Factory 的認證資料保留"]
+* 營運計量和遙測保留：link:metrics-telemetry.html["NetApp Workload Factory 的計量與遙測參考"]
+* 稽核記錄保留：受 NetApp Console 保留政策約束（不受 Workload Factory 控制）
+
+
+
+
+[[what-information-leaves-the-vpc]]
+== 哪些資訊會離開虛擬私人網路（VPC）
+
+本節概述傳出資料類別。如需通訊協定層級與功能層級的詳細資訊，請參閱連結頁面。
+
+
+
+[[management-plane-traffic-to-the-workload-factory-service]]
+=== 至 Workload Factory 服務的管理平面流量
+
+對於管理操作，FSx 組態、Volume 中繼資料、資源識別碼和操作指令會透過 HTTPS 流向 Workload Factory 服務分層。
+
+
+
+[[audit-records-to-the-netapp-console-audit-service]]
+=== 稽核記錄至 NetApp Console 稽核服務
+
+每個追蹤的作業都會傳送下列資訊：
+
+* `accountId`
+* `actionName`
+* `status`
+* `resourceId`
+* `userId`
+* `requestData`
+* `responseData`
+* `timestamps`
+* `IP address`
+* `workspaceId`
+
+
+
+
+[[ai-analysis-traffic]]
+=== AI 分析流量
+
+提交給 AI 診斷的 FSx for ONTAP 緊急管理系統 (EMS) 事件、延遲資料與錯誤日誌，會透過您的 AWS 帳戶使用您設定的推論設定檔傳輸至 Amazon Bedrock，因此此流量會保留在您的環境中，而不會到達 NetApp 系統。
+
+如需有關 AI 分析流量的詳細資訊，請參閱：
+
+* link:ai-controls-overview.html["NetApp Workload Factory 的 AI 控制總覽"]
+* link:amazon-bedrock-opt-in.html["Bedrock 選擇加入 NetApp Workload Factory AI 診斷"]
+* link:ai-tool-boundaries.html["NetApp Workload Factory 的人工智慧工具邊界"]
+
+
+
+
+[[aws-service-api-traffic]]
+=== AWS 服務 API 流量
+
+請參閱link:connectivity-trust-paths.html["NetApp Workload Factory 的連結性和信任路徑"]。
+
+
+
+[[telemetry-and-metrics-collection]]
+=== 遙測和計量收集
+
+請參閱 link:metrics-telemetry.html["計量和遙測參考"]。
+
+
+
+[[configuration-and-metadata-collection-scope]]
+== 組態和中繼資料收集範圍
+
+
+
+[[file-system-level]]
+=== 檔案系統層級
+
+* 檔案系統組態（部署類型 Gen1/Gen2、處理量容量、儲存容量、儲存設備類型）
+* 首選子網路、安全性群組、VPC 組態
+* KMS 加密金鑰中繼資料
+* 檔案系統標籤
+* 檔案系統生命週期狀態
+* 維護時段設定
+
+
+
+
+[[volume-level-comprehensive]]
+=== Volume 層級（綜合）
+
+* 識別與狀態：Volume 名稱、UUID、類型（rw/dp/ls）、樣式（FlexVol/FlexGroup）、狀態（線上/離線/受限）、建立時間
+* 容量：總容量、已使用容量、可用容量、實體已使用容量、已使用百分比、SSD 實體佔用空間、容量資源池實體佔用空間、非活動資料位元組數/百分比
+* 分級：原則（all/auto/none/snapshot_only），最短冷卻天數
+* QoS：已指派的 QoS 原則名稱
+* NAS 組態：交會路徑、匯出原則指派、UNIX 權限、安全樣式（unix/ntfs/混合）
+* Snapshot 快照技術：Snapshot 快照技術保留大小/百分比/已用量，自動刪除設定
+* 資料效率：壓縮類型/狀態、重複資料刪除、資料精簡、空間節約效益
+* 自動調整大小：模式（grow/grow_shrink/off）、最小/最大大小、增大/縮小臨界值
+* SnapLock：類型（法規遵循/企業/non_snaplock），保留期間（最短/最長/預設），自動提交期間
+* 複製：父 Volume/Snapshot 快照技術/儲存設備 VM，是 FlexClone，分割狀態
+* Inodes/檔案：最大可能數量、最大配置數量、已用數量
+* 加密：已啟用/已停用狀態
+* 存取時間：atime 更新已啟用/已停用和更新週期
+* SnapMirror：保護狀態、目的地類型（雲端 / ONTAP）
+* FlexGroup 再平衡：失衡百分比，最大臨界值
+* Volume 移動：目的地 Aggregate，移動狀態
+* FlexCache 端點類型：無/快取/來源
+* 標籤：ONTAP 層級 Volume 標籤
+
+
+
+
+[[snapshot-data]]
+=== Snapshot 快照技術資料
+
+* Snapshot 快照技術名稱、UUID、建立時間、過期時間
+* 大小（位元組）
+* SnapMirror 標籤
+* SnapLock 到期和鎖定狀態
+* 狀態（有效/無效/部分有效）
+* 使用者評論
+* Snapshot 快照技術原則：名稱、啟用狀態、排程複本（數量、保留期間、排程名稱、前綴、SnapMirror 標籤）
+
+
+
+
+[[export-policies]]
+=== 匯出原則
+
+* 原則名稱、ID、關聯的儲存設備 VM
+* 規則：協定清單（NFS/CIFS/FlexCache）、用戶端比對模式、唯讀規則、讀寫規則、超級使用者規則、規則索引/優先權
+* SUID、裝置建立、chown 模式、匿名使用者對映、NTFS UNIX 安全性設定
+
+
+
+
+[[s3-access-points]]
+=== S3 存取點
+
+* 生命週期狀態（可用/建立中/刪除中/失敗/配置錯誤）
+* 建立時間、ARN、別名、名稱
+* 檔案所有者使用者和類型（UNIX/WINDOWS）
+* 網路組態（網際網路存取與 VPC 存取、VPC ID）
+* AWS 標籤
+* 中繼資料掃描能力開發、日誌記錄能力開發、CloudTrail ARN
+
+
+
+
+[[anti-ransomware-protection-arp]]
+=== 反勒索軟體保護（ARP）
+
+Workload Factory 會收集組態狀態和事件詳細資訊：
+
+* 每個 Volume 的狀態（啟用/停用/試運行/暫停）
+* 攻擊機率（無/低/中/高）
+* 帶有時間戳記的攻擊報告
+* 偵測參數：檔案副檔名臨界值、重新命名率激增百分比、熵率激增百分比、檔案建立/刪除率激增百分比
+* 可疑檔案：檔案路徑、檔案名稱、檔案格式、可疑時間、關聯 Volume
+
+
+
+
+[[replication-snapmirror]]
+=== 複寫 / SnapMirror
+
+* 關係 UUID、狀態、健康狀態
+* 來源和目的地（儲存設備虛擬機器、路徑、叢集）
+* 傳輸統計資料（傳輸位元組數、持續時間、結束時間、狀態）
+* 原則（名稱，類型：非同步/同步/連續）
+* 節流設定
+* 滯後時間
+* 不健康的原因（訊息和代碼）
+* 目前傳輸錯誤
+
+
+
+
+[[igroups]]
+=== iGroups
+
+* 名稱、UUID、協定（FCP/iSCSI/混合）、作業系統類型
+* 啟動器（IQN/WWPN）、連線狀態、最後出現時間
+* LUN 對應（邏輯單元編號，LUN 詳細資料）
+
+
+
+
+[[luns]]
+=== LUN
+
+* 名稱、UUID、序號、作業系統類型、啟用狀態
+* 大小、已使用空間、資源隨需配置設定
+* 位置（Volume、節點、邏輯單元路徑）
+* 自動刪除設定
+* 容器狀態、映射狀態、唯讀狀態
+* QoS 原則
+* 效能計量（IOPS、延遲、每次讀寫/總處理量）
+* 一致性群組成員資格
+
+
+
+
+[[flexcache]]
+=== FlexCache
+
+* 來源 Volume/儲存設備虛擬機器/叢集、快取大小、路徑
+* 已啟用回寫功能，DR 快取狀態
+* 相對規模組態
+* 預先填入目錄路徑
+* 快取與來源之間的連線狀態
+
+
+
+
+[[storage-vm-level]]
+=== 儲存虛擬機器層級
+
+* 名稱、UUID、狀態（執行中/停止）、子類型
+* 已啟用/允許的協定（NFS、CIFS、iSCSI、FCP、NVMe、S3）
+* DNS 伺服器和網域
+* 名稱服務交換器組態（passwd、group、hosts 等）
+* IP 介面（名稱、IP 位址、服務）
+* 已指派的 Aggregate
+* 反勒索軟體預設 Volume 狀態
+* 空間強制執行設定
+* 對等關係（應用程式、狀態、遠端叢集/儲存設備虛擬機器）
+
+
+
+
+[[aggregate-storage-level]]
+=== Aggregate / 儲存設備層級
+
+* Aggregate 名稱、UUID、狀態、RAID 狀態
+* 區塊儲存設備：磁碟數量、RAID 大小、可用/已使用/總空間、實體已使用
+* 已使用的雲端儲存設備
+* 效率：比率、邏輯已用、節省
+* 加密、鏡射、SnapLock 設定
+* 效能計量（IOPS、延遲、處理量）
+
+
+
+
+[[utilization-metrics-eda]]
+=== 利用率計量（EDA）
+
+* 資料擷取頻率：容量/處理量每 12 小時擷取一次；延遲每 20 分鐘擷取一次
+* 粒度：每個時間範圍內標準化至約 60 個資料點
+* 保留和儲存設備詳情：link:metrics-telemetry.html["計量與遙測參考"]
+

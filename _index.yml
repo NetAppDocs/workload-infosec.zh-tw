@@ -1,0 +1,73 @@
+---
+indexpage:
+  title: NetApp Workload Factory 的資訊安全性
+  summary: Workload Factory 包含安全性和資料保護指南，涵蓋資料的收集、儲存、保留和存取方式。使用此參考資料可以了解架構、權限和法規遵循狀況，並支援更快、一致的安全性審查和就職程序。
+  keywords: information security, data protection, NetApp, Workload Factory
+  lead: Workload Factory 包含安全性和資料保護指南，涵蓋資料的收集、儲存、保留和存取方式。使用此參考資料可以了解架構、權限和法規遵循狀況，並支援更快、一致的安全性審查和就職程序。
+  tiles:
+  - title: 開始使用
+    links:
+    - title: 了解 NetApp Workload Factory 的資訊安全性
+      url: "/learn-about-workload-factory-infosec.html"
+    - title: 就職安全性工作流程
+      url: "/onboarding-security-workflow.html"
+  - title: 安全性和連線能力
+    links:
+    - title: 安全性模型概覽
+      url: "/security-model.html"
+    - title: 法規遵循和安全性態勢
+      url: "/compliance-security-posture.html"
+    - title: 連結性和信任路徑
+      url: "/connectivity-trust-paths.html"
+  - title: 身分、憑證和最小權限
+    links:
+    - title: AWS 認證資料流程
+      url: "/aws-credential-flow.html"
+    - title: 認證資料類型
+      url: "/credential-types.html"
+    - title: 認證資料儲存設備選項
+      url: "/credential-storage-options.html"
+    - title: 最小權限要求
+      url: "/least-privilege-permissions.html"
+  - title: 資料治理、隱私和生命週期
+    links:
+    - title: 資料處理和駐留
+      url: "/data-handling-residency.html"
+    - title: 加密和金鑰管理
+      url: "/encryption-key-management.html"
+  - title: 可觀測性（日誌、計量、遙測）
+    links:
+    - title: 可觀測性總覽
+      url: "/observability-overview.html"
+    - title: 計量與遙測參考
+      url: "/metrics-telemetry.html"
+  - title: 生成式 AI 安全性控制
+    links:
+    - title: AI 控制總覽
+      url: "/ai-controls-overview.html"
+    - title: Bedrock 選擇加入 AI 診斷
+      url: "/amazon-bedrock-opt-in.html"
+    - title: AI 工具邊界
+      url: "/ai-tool-boundaries.html"
+    - title: AI 模型參數和計費
+      url: "/ai-model-parameters-billing.html"
+  - title: ONTAP 操作和 Lambda 連結
+    links:
+    - title: Lambda 連結總覽
+      url: "/lambda-link-overview.html"
+    - title: Lambda 連結 IAM 權限
+      url: "/lambda-link-iam-permissions.html"
+  - title: 知識與支援
+    links:
+    - title: 註冊以取得支援
+      url: "/register-support.html"
+    - title: 取得協助
+      url: "/get-help.html"
+  - title: 部落格與社群
+    links:
+    - title: NetApp Console
+      url: https://www.netapp.com/console
+    - title: NetApp Data Services
+      url: https://www.netapp.com/data-services/
+    - title: NetApp 社群
+      url: https://community.netapp.com/

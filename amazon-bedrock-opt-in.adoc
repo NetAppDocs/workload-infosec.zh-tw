@@ -1,0 +1,65 @@
+---
+sidebar: sidebar 
+permalink: amazon-bedrock-opt-in.html 
+keywords: Amazon Bedrock, AI diagnostics, opt-in, inference profile, IAM permissions, Lambda link, SSH 
+summary: NetApp Workload Factory AI 診斷使用 Amazon Bedrock 分析事件，此功能預設為啟用。 
+---
+= Amazon Bedrock 選擇加入 NetApp Workload Factory AI 診斷
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+NetApp Workload Factory AI 診斷使用 Amazon Bedrock 分析事件，此功能預設為啟用。在 Workload Factory 呼叫選定的 Bedrock 模型並收集診斷資料之前，您必須設定 IAM 權限、推論設定檔以及具有 SSH 功能的 Lambda 連結。如果缺少任何元件或 Bedrock 組態已移除，AI 診斷將無法使用。
+
+AI 診斷功能預設為啟用。
+
+
+
+[[before-you-begin]]
+== 開始之前
+
+* 請確保您的帳戶包含 AWS Bedrock 推論設定檔。
+* 擁有具備 SSH 功能的已連線 Lambda 連結，以進行診斷資料收集。
+
+
+
+
+[[steps]]
+== 步驟
+
+. 在您的 IAM 角色中授予 Bedrock 權限：
++
+** `bedrock:InvokeModel`
+** `bedrock:InvokeModelWithResponseStream`
+** `bedrock:ListInferenceProfiles`
+** `bedrock:GetInferenceProfile`
+
+
+. 在 Workload Factory 設定中設定推論設定檔 ARN。
+
+
+如果缺少任何先決條件，系統會報告特定缺少的元件，且 AI 功能將保持非作用中狀態。
+
+
+
+[[disable-ai-diagnostics]]
+== 停用 AI 診斷
+
+若要停用 AI 診斷：
+
+* 從您的 IAM 角色中移除 Bedrock 權限，或者
+* 在 Workload Factory 設定中刪除 Bedrock 組態。
+
+
+AI 診斷立即無法使用，且不會進行任何剩餘資料處理。
+
+
+
+[[region-and-cross-region-inference-profiles]]
+== 區域和跨區域推論設定檔
+
+Bedrock 推理會在您推理設定檔指定的 AWS 區域中執行。如果您使用跨區域推理設定檔，根據 AWS Bedrock 的標準行為，AWS 可能會將請求路由到設定檔組態中的任何區域。資料不會離開 AWS 基礎架構。

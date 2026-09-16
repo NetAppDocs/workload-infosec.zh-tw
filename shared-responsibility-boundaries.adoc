@@ -1,0 +1,57 @@
+---
+sidebar: sidebar 
+permalink: shared-responsibility-boundaries.html 
+keywords: shared responsibility, NetApp responsibilities, AWS responsibilities, customer responsibilities, IAM roles, VPC controls, credential governance, encryption, evidence to capture 
+summary: NetApp Workload Factory 的安全性責任由 NetApp（SaaS 營運）、AWS（雲端基礎架構和代管服務）以及您（客戶組態）共享的。 
+---
+= NetApp Workload Factory 的共享的責任邊界
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+NetApp Workload Factory 安全性責任是由 NetApp（SaaS 營運）、AWS（雲端基礎架構與代管服務）以及您（客戶組態）共享的。了解各方責任的起訖範圍，有助於您正確設定 AWS 環境並避免安全性漏洞。這些界限釐清了 NetApp 營運的內容、AWS 保護的內容，以及您必須自行設定與維護的內容。
+
+
+
+[[netapp-responsibilities-service-side]]
+== NetApp 職責（服務方）
+
+NetApp 負責營運和保障 Workload Factory SaaS 平台的安全。這包括對儲存的組態參考和營運資料的服務端處理。
+
+
+
+[[aws-responsibilities-cloud-platform]]
+== AWS 職責（雲端平台）
+
+AWS 負責您的部署和工作流程使用的雲端基礎架構和代管服務的安全性（例如 IAM/STS、FSx for ONTAP、CloudWatch、KMS、Secrets Manager、CloudFormation、Lambda 和連網原語）。
+
+
+
+[[customer-responsibilities-your-configuration]]
+== 客戶責任（您的組態）
+
+您負責：
+
+* AWS IAM 角色、信任原則和最小權限
+* VPC 控制（子網路、安全性群組、路由、端點和出口）
+* 認證資料治理（包括工作流程所需的 ONTAP 認證資料）
+* 加密和金鑰管理決策（例如，FSx for ONTAP 的選用客戶代管 KMS 金鑰）
+* 監控、警報、保留原則和事件回應流程
+
+
+
+
+[[evidence-to-capture]]
+== 要收集的證據
+
+* IAM 角色信任關係（包括外部 ID 條件）
+* IAM 權限分層選擇與原則工件
+* 網路邊界決策（僅限 AWS API 與 VPC 執行元件，例如 Lambda 連結）
+* 可觀測性決策與保留預期
+* AI 能力開發決策（除非明確停用，否則 AI 診斷預設為啟用）
+

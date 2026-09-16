@@ -1,0 +1,91 @@
+---
+sidebar: sidebar 
+permalink: learn-about-workload-factory-infosec.html 
+keywords: infosec, security, data handling, data retention, data collection, permissions, credentials, iam, assume role, least privilege, compliance, soc 2, govcloud, amazon bedrock, lambda, link, fsx for ontap, logging, audit, access control, onboarding, hardening 
+summary: NetApp Workload Factory 非常重視資訊安全性和資料保護實務，重點關注資料處理實務和存取要求，並提供最小權限組態和潛力加固方面的指導。 
+---
+= 了解 NetApp Workload Factory 的資訊安全性
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+資訊安全性是 NetApp Workload Factory 設計和營運的核心組成部分。資訊安全、雲端平台和儲存設備團隊可以利用這些詳細資訊來評估和就職 Workload Factory，以支援企業安全性需求。
+
+
+
+[[what-workload-factory-is]]
+== 什麼是 Workload Factory
+
+Workload Factory 是一個 SaaS 生命週期管理平台，旨在協助您使用 Amazon FSx for NetApp ONTAP 最佳化和管理工作負載（例如儲存設備、VMware 遷移、EDA 專案和資料庫環境）。您的工作負載在 AWS 中運作。
+
+Workload Factory 使用 AWS API 來執行所有可透過 AWS 原生提供的 FSx for ONTAP 操作，並使用 ONTAP REST API 來執行平台支援但無法透過 AWS API 原生提供的 Workload Factory 操作。
+
+
+
+[[core-security-principles-used-in-this-guide]]
+== 本指南中所使用的核心安全性原則
+
+保密性:: 透過身分控制、最小權限原則、加密和網路邊界來保護資料免受未經授權的存取。
+完整性:: 使用權限範圍、變更控制和可稽核性來保護系統和組態免受未經授權或意外變更的影響。
+可用性:: 透過具有恢復能力的 AWS 設計和運作監控，確保授權使用者可以存取服務和工作負載。
+
+
+
+
+[[types-of-information-covered-in-this-guide]]
+== 本指南涵蓋的資訊類型
+
+以下各節提供資訊，協助您評估與就職 Workload Factory，以支援企業安全性要求。
+
+. 安全性模型和職責
++
+** link:security-model.html["安全性模型概覽"]
+** link:shared-responsibility-boundaries.html["共同責任邊界"]
+
+
+. 架構與連線
++
+** link:connectivity-trust-paths.html["連結性和信任路徑"]
+** link:ontap-execution-options.html["ONTAP 執行選項"]
+
+
+. 身分、憑證和最小權限
++
+** link:aws-account-integration.html["AWS 帳戶整合"]
+** link:least-privilege-permissions.html["最小權限層級"]
+
+
+. 資料治理、隱私和生命週期
++
+** link:data-handling-residency.html["資料處理和駐留"]
+** link:account-deletion.html["帳戶刪除清單"]
+
+
+. 可觀測性和監控
++
+** link:metrics-telemetry.html["指標和遙測"]
+
+
+. AI 控制和 VPC 元件
++
+** link:ai-controls-overview.html["AI 控制總覽"]
+** link:lambda-link-overview.html["Lambda 連結總覽"]
+
+
+
+
+
+
+[[get-started-quickly]]
+== 快速入門
+
+* 從_檢視、規劃和分析_（唯讀）權限開始，並僅在需要時擴充。
+* 使用 AWS CloudTrail 驗證 `sts:AssumeRole`整合角色的活動。
+* 事先決定您是否需要部署 Lambda 連結或 NetApp Console 代理程式的 ONTAP 原生作業。
+* 事先決定是否允許生成式 AI，以及駐留限制是否需要單一區域推論設定檔。
+

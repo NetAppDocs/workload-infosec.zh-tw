@@ -1,0 +1,1218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<blocks>
+  <block id="2b859bdd0724463bc73eb5932ed2ed66" category="summary">帳戶刪除並非自助服務操作。這是一個涉及 Workload Factory 服務和您 AWS 帳戶中資源的退出工作流程。</block>
+  <block id="5ff9ed8c4178ec2e9c10e6d1d3da1217" category="doc">NetApp Workload Factory 帳戶刪除</block>
+  <block id="7fde2ba3bd37d747ed35a03c577bb9d1" category="paragraph">帳戶刪除並非自助服務操作；這是一個退出工作流程，涉及 Workload Factory 服務和您 AWS 帳戶中的資源。清理過程包括安全地移除與 Workload Factory 帳戶、FSx for ONTAP 檔案系統、憑證、連結、通知通道，以及相關的 IAM、AWS Lambda 和 Amazon CloudWatch 資源相關聯的任何資料。此操作不可逆。</block>
+  <block id="410ae14faf47c279f9bdedb5819f9a60" category="inline-link-macro">聯絡 NetApp 支援。</block>
+  <block id="3f9baa755be3c9ccf5080ea27b0772b2" category="paragraph">當您需要移除 Workload Factory 帳戶時，您必須<block ref="7f02e71bcfb1d0f39a81070d94f8a643" category="inline-link-macro-rx"></block></block>
+  <block id="6bbb30b8b8c8fe5560c2804da49e6af7" category="summary">NetApp Workload Factory 包含生成式 AI 功能，可加快診斷速度，同時對模型存取、資料範圍和執行時間行為實施安全性控制。</block>
+  <block id="e8c4c2868ea0fa769118dd556706e4d1" category="doc">了解 NetApp Workload Factory 中的 AI 控制</block>
+  <block id="9bcb6f26ba53c54499d5f5026b646e0b" category="inline-link-macro">了解更多關於管理 GenAI 功能的資訊。</block>
+  <block id="fecb06443f7f948d4a2ea111e6b5f107" category="paragraph">Workload Factory 預設啟用 AI 診斷。您可以隨時透過 Workload Factory *Administration* 設定停用生成式 AI 功能。<block ref="853233ea0a21fe68ecb7e12de39d4670" category="inline-link-macro-rx"></block></block>
+  <block id="c077dab057b370330c1646eadd7f70ab" category="section-title">安全性範圍 AI 功能總覽</block>
+  <block id="53d966acb83fbf13237edc79bfaea056" category="paragraph">Workload Factory 目前將生成式 AI 套用至以下功能：</block>
+  <block id="5df9c2deaf80db2928ed1cf29bfd0aea" category="list-text">Ask Me 助手（RAG，包含精選 NetApp 文件和有來源支援的回應）</block>
+  <block id="f8e5e7514e924e1f8218ff0dc23c7274" category="list-text">延遲分析</block>
+  <block id="c7662117373f4644bd1a3497e82f1ce5" category="list-text">EMS 事件分析</block>
+  <block id="9b5a66520940453b03f844cb38d72d2f" category="list-text">錯誤日誌分析</block>
+  <block id="8be01ddbf61005f350dbf7cbdfb2d66f" category="section-title">適用於 AI 診斷的 AWS Bedrock 總覽</block>
+  <block id="5dd43a0cfc93fdd19830298ed84d8c44" category="paragraph">Workload Factory 使用 Amazon Bedrock 進行 AI 推論。推論在您的 AWS 帳戶中執行，使用您設定的憑證和推論設定檔。</block>
+  <block id="30f60d67f457bb040dffde52197a54da" category="section-title">相關資訊</block>
+  <block id="a7305f17c9c78120a105937788840ac9" category="inline-link-macro">Amazon Bedrock 選擇加入 NetApp Workload Factory AI 診斷</block>
+  <block id="d148b43a3ae9d5e82a59c193e49eee9e" category="list-text"><block ref="d148b43a3ae9d5e82a59c193e49eee9e" category="inline-link-macro-rx"></block></block>
+  <block id="dbe91f3531ce822c66e2f77bf0ff1200" category="inline-link-macro">NetApp Workload Factory 的人工智慧工具邊界</block>
+  <block id="c03ef281041f188eacb73ae1d18cde8d" category="list-text"><block ref="c03ef281041f188eacb73ae1d18cde8d" category="inline-link-macro-rx"></block></block>
+  <block id="4410d8f2a84d1b14222e0e159f0d9a61" category="inline-link-macro">NetApp Workload Factory 的 AI 模型參數與計費</block>
+  <block id="38e6bd55e31b82c14c3d9744d049ba77" category="list-text"><block ref="38e6bd55e31b82c14c3d9744d049ba77" category="inline-link-macro-rx"></block></block>
+  <block id="1c15bf90be726f196464953bbb4dc136" category="summary">NetApp Workload Factory 定義了與 AI 治理相關的模型組態、使用情況和計費邊界。</block>
+  <block id="494fc894e95696554ebeb72dc8f2037a" category="paragraph">NetApp Workload Factory 定義了與 AI 治理相關的模型組態、使用情況和計費邊界。設定的模型使用確定性參數並傳回結構化 JSON，以支援一致的分析結果。AWS 會將 Amazon Bedrock 推理費用計入您的帳戶，而 Workload Factory 則會追蹤 AI 使用情況並提供每個帳戶的每月成本可見度。這些小節說明了模型參數以及適用於 AI 消耗的限制。</block>
+  <block id="d9f2d6e495b2cb0502320b8ef3623859" category="section-title">模型和參數</block>
+  <block id="83f499a540b1323009c200d6f8cc9396" category="cell">參數</block>
+  <block id="689202409e48743b914713f96d93947c" category="cell">價值</block>
+  <block id="a559b87068921eec05086ce5485e9784" category="cell">模型</block>
+  <block id="93cb7849f8e4782ae2bfa21720c598ac" category="cell">Anthropic Claude（使用跨區域推論設定檔）</block>
+  <block id="ee7a8e262285ed49ea1b4e4ae11525bd" category="cell">溫度</block>
+  <block id="48e9fc36b204a2099ab831b365b6e5e6" category="cell">0（確定性，無隨機性）</block>
+  <block id="0c4b2e159710159da14ab6848bcac93c" category="cell">最大輸出 Token</block>
+  <block id="4546199e2bcb9ae49a13edef9675fd03" category="cell">2,048</block>
+  <block id="8ac70ea8d0c793b3e8ee7af67cb91f60" category="cell">最大推理步驟</block>
+  <block id="342841a028831d0c3b2feae7cee698d0" category="cell">每次分析 15</block>
+  <block id="b1fd524d1a770d5164c7a33f8ca7cd6d" category="cell">輸出格式</block>
+  <block id="7c7d74fa530af6d305077a3f4d6f814b" category="cell">結構化 JSON（總結、嚴重程度、根目錄原因、糾正措施）</block>
+  <block id="98c6394b6621e399cd73126ff36140cd" category="section-title">計費和使用限制</block>
+  <block id="a1f52b0194ce78e15d6ef482a5321f72" category="list-text">AWS 會將 Bedrock 推論費用計入您的帳戶（您的推論設定檔、您的憑證）。</block>
+  <block id="771181943926b1da411e87179f0ab27f" category="list-text">Workload Factory 會在內部追蹤 AI 使用情況。</block>
+  <block id="769d47774022d6c80c69dd93ee66d933" category="list-text">Workload Factory 提供每個帳戶的每月成本可見度。</block>
+  <block id="6e214930ad4c4be61200c2a216575e81" category="inline-link-macro">在 NetApp Workload Factory 中追蹤儲存設備成本</block>
+  <block id="5196ee3fb77ce0848eae57833ca62aed" category="paragraph"><block ref="5196ee3fb77ce0848eae57833ca62aed" category="inline-link-macro-rx"></block></block>
+  <block id="e97ab6f4131f5b9ec5e45328dcb325ae" category="summary">NetApp Workload Factory 對其 AI 功能如何與您的 AWS 和 ONTAP 環境互動施加了嚴格的限制，因此您可以信任 AI 輔助診斷，而無需擔心發生意外變更。</block>
+  <block id="1c59ac37dd5834d4e80a55468a38e065" category="paragraph">NetApp Workload Factory 對其 AI 功能與您的 AWS 和 ONTAP 環境互動的方式實施嚴格的界線，因此您可以信賴 AI 輔助診斷，而不會有意外變更的風險。Amazon Bedrock 使用唯讀的 AWS CLI 和 ONTAP CLI 診斷工具，這些工具會區塊修改命令並依大小和執行限制輸出，且所使用的任何資料僅為暫時性，不會由 NetApp Workload Factory 或 AWS 保留。</block>
+  <block id="99e36afa6e809a7a0a4694de97f43eac" category="section-title">工具安全控制</block>
+  <block id="d421fd439cd14456726791338b3b397e" category="cell">工具</block>
+  <block id="fa97f6975c9b94a252d204cd22159ff4" category="cell">功能</block>
+  <block id="1c548bf536628d534b09d62e0a545943" category="cell">安全控制</block>
+  <block id="069bdc3d0a3d5b5daf28a9d6a85d6dfe" category="cell">AWS CLI（唯讀）</block>
+  <block id="299f207659f3c98b5c59d74487ca3f31" category="cell">執行唯讀的 AWS CLI 指令（describe、list、get）</block>
+  <block id="30ab48a36cdf117f820d3e0d6b4aad35" category="cell">阻止所有修改動詞（建立、刪除、修改、更新、放置、移除）。每步最多 10 個命令。輸出大小截斷至 20 KB。</block>
+  <block id="cd8f980146ff8887a23ad9f4b343d055" category="cell">ONTAP CLI（唯讀）</block>
+  <block id="93574d2a3e4102c66ff8c1f7087506b6" category="cell">使用 SSH 執行唯讀 ONTAP CLI 指令</block>
+  <block id="ff0c011b6e2082290213b8388b19ad5d" category="cell">封鎖所有變動動詞（刪除、毀損、建立、修改、移動）。輸出已截斷。</block>
+  <block id="6668dbaebbef204707cbe35fa766a0c6" category="paragraph">代理程式無法修改、建立或刪除資源。它只能觀察和診斷。</block>
+  <block id="a00c4cab5e9d364ce369935f94fee391" category="section-title">資料保留和模型訓練邊界</block>
+  <block id="9864c955d82f2ecb1f1a031b8fbd7d3e" category="paragraph">根據 AWS 原則，Amazon Bedrock 不會儲存或使用您的輸入和輸出來訓練或改進基礎模型。對於隨需推論（由 Workload Factory 使用），AWS 會暫時處理您的資料，並在回傳回應後不予保留。</block>
+  <block id="9d531c975ce097da7725355ae17fb1c3" category="summary">NetApp Workload Factory AI 診斷使用 Amazon Bedrock 分析事件，此功能預設為啟用。</block>
+  <block id="ba71c1cb5d07fb91003d787902c2a3f1" category="paragraph">NetApp Workload Factory AI 診斷使用 Amazon Bedrock 分析事件，此功能預設為啟用。在 Workload Factory 呼叫選定的 Bedrock 模型並收集診斷資料之前，您必須設定 IAM 權限、推論設定檔以及具有 SSH 功能的 Lambda 連結。如果缺少任何元件或 Bedrock 組態已移除，AI 診斷將無法使用。</block>
+  <block id="9dc1b11166e27edee2fda460e005866d" category="paragraph">AI 診斷功能預設為啟用。</block>
+  <block id="135b308ed83c53f1516b7c754566d1c4" category="section-title">開始之前</block>
+  <block id="6b9e93ed2ca4995ed5020e829ee74872" category="list-text">請確保您的帳戶包含 AWS Bedrock 推論設定檔。</block>
+  <block id="e52c186bb2ec666bad706eac58c11684" category="list-text">擁有具備 SSH 功能的已連線 Lambda 連結，以進行診斷資料收集。</block>
+  <block id="f3a29486bed19a90f2da6d007818b427" category="section-title">步驟</block>
+  <block id="ed9925e33f059da661be93824fabe524" category="list-text">在您的 IAM 角色中授予 Bedrock 權限：</block>
+  <block id="f80c2c54334d4ddca4016b89152c6684" category="list-text"><block ref="93804e96d3f417a0088c564647dd28e9" prefix="" category="inline-code"></block></block>
+  <block id="1ed1b1bc988715ea858abe38c168d87a" category="list-text"><block ref="00fe52afa6e3b9a0d389f529a2b88242" prefix="" category="inline-code"></block></block>
+  <block id="71d01806cd25e89067c25b4f03e9a607" category="list-text"><block ref="9aa5a97dfe3f7608d8ee28e7db3c4e2c" prefix="" category="inline-code"></block></block>
+  <block id="4e736cb1760a43a4bf2b5d861b6deb96" category="list-text"><block ref="fdd997ab8b4252f76acdda855bb7b890" prefix="" category="inline-code"></block></block>
+  <block id="8d2f944126aa3776530914d9cce41ac3" category="list-text">在 Workload Factory 設定中設定推論設定檔 ARN。</block>
+  <block id="2e46c4f22dd5fbcf4b0021f46ce46d88" category="paragraph">如果缺少任何先決條件，系統會報告特定缺少的元件，且 AI 功能將保持非作用中狀態。</block>
+  <block id="e964ca39b2e842b42299bc712f166a01" category="section-title">停用 AI 診斷</block>
+  <block id="7cae80ae4bd977a217c945958096022a" category="paragraph">若要停用 AI 診斷：</block>
+  <block id="961cab9afeeea01bea4a84253b010868" category="list-text">從您的 IAM 角色中移除 Bedrock 權限，或者</block>
+  <block id="0be5f97a00a16175aec818af4317ed81" category="list-text">在 Workload Factory 設定中刪除 Bedrock 組態。</block>
+  <block id="ed6aaceb654c5cac96be1119defd1a29" category="paragraph">AI 診斷立即無法使用，且不會進行任何剩餘資料處理。</block>
+  <block id="feb8c117671c9de82b7c6352b3d52cc1" category="section-title">區域和跨區域推論設定檔</block>
+  <block id="f21e73c1489ac2e57ffa406d97b2d73b" category="paragraph">Bedrock 推理會在您推理設定檔指定的 AWS 區域中執行。如果您使用跨區域推理設定檔，根據 AWS Bedrock 的標準行為，AWS 可能會將請求路由到設定檔組態中的任何區域。資料不會離開 AWS 基礎架構。</block>
+  <block id="726a9a8fb885f84a6d2dfe878f59fbe0" category="summary">在 NetApp Workload Factory 中，Ask Me 存取安全性以經過驗證的工作階段、使用者層級的當責，以及執行階段作業期間受保護的機密處理為中心。</block>
+  <block id="3d618645d3498f69f5d37e67c9b379e0" category="doc">NetApp Workload Factory 的 Ask Me 存取控制</block>
+  <block id="dcd80fd5edfa6ead4efd9478b1c0cc95" category="paragraph">在 NetApp Workload Factory 中，Ask Me 存取安全性的核心在於經過驗證的工作階段、使用者層級的責任歸屬，以及在執行階段作業期間受保護的機密處理。驗證控制會驗證每個工作階段，並將互動與特定使用者建立關聯。敏感憑證會在執行階段從代管的機密保存庫中擷取，並從記錄中刪除。該服務也套用基礎架構控制，包括非根目錄 Container 執行和受限的 CORS 允許清單。</block>
+  <block id="c75f7811d70d17dbcd88e9d03752cbed" category="section-title">驗證</block>
+  <block id="1cc70d8a654c4e9b5c941e389ad489cb" category="list-text">使用加密驗證進行簽署 JWT 驗證（包括對象、發行者和演算法檢查，例如 RS256）</block>
+  <block id="67b6862f2cf6dae107611df50c352214" category="list-text">服務邊界處的中介軟體強制驗證</block>
+  <block id="f997fbce46729230f1ad5564b7f519e3" category="list-text">使用者身分範圍限定，以便將互動歸因於特定使用者</block>
+  <block id="41fa2c5097cbc21e84d4106110404422" category="section-title">憑證保護和機密處理</block>
+  <block id="9f8cb2c7fbe5efb43ba2888cd4dc5f8e" category="list-text">安全保存庫儲存設備：服務使用的敏感憑證儲存在代管的機密保存庫中，並在執行階段擷取。應用程式程式碼、組態檔案或 Container 映像檔中均不儲存任何機密。</block>
+  <block id="c75876bb514e678e9a12f221684262f6" category="list-text">日誌清理：在寫入日誌之前，會將敏感值（認證、權杖、密碼、存取金鑰、憑證）從日誌中遮蔽。</block>
+  <block id="e5317fc5d3796683a4c93e248a4c5275" category="section-title">基礎架構安全性</block>
+  <block id="8c0bd5d5c2dcfa444a51e4e703f2a839" category="list-text">非根目錄 Container 執行</block>
+  <block id="f3d694bf7f865bf170f15710c70a99a2" category="list-text">CORS 僅限於受信任 NetApp 網域的明確允許清單</block>
+  <block id="29b544b7f9105464ed90d087fc012be3" category="summary">Workload Factory 為 Ask Me 提供了多種執行模式，每種模式都有不同的安全性和隱私特性。</block>
+  <block id="0bc7779ba04609f0114d1e54d6d8bd6a" category="doc">NetApp Workload Factory 的 Ask Me 執行模式</block>
+  <block id="176c0c672c45c0b4a8ffa7f56e8301b8" category="paragraph">NetApp Workload Factory 為 Ask Me 提供多種執行模式，每種模式都有不同的安全性和隱私特性。當 Ask Me 使用工具整合時（例如查詢客戶本身的 Workload Factory 資源），工具的執行會透過分層防護來控制。啟用工具的執行會在經過驗證的使用者權限範圍內運作，並對每次操作的持續時間和範圍套用限制。擷取到的資料會保留在短暫的工作階段沙箱中，該沙箱會封鎖外部存取，並在工作階段結束時毀損。獨立的提示與程式碼控制會強制執行唯讀查詢，而稽核記錄會擷取工具活動，並清除敏感值。</block>
+  <block id="066686cff38824dd878357963f1513a2" category="section-title">工具執行安全措施</block>
+  <block id="10012e9b651267c0ec9b822714cc02d4" category="list-text">授權範圍工具在已驗證使用者的權限範圍內運作。</block>
+  <block id="4cc276b05e83bdc6b175983b4378edda" category="list-text">工具執行逾時限制了長時間運行的操作。</block>
+  <block id="cb1ea3340234c342d8d94ee35c51f607" category="list-text">臨時資料沙箱將工具檢索的資料儲存在工作階段範圍內，阻止外部存取、檔案 I/O、網路呼叫和引擎層級的擴充載入，並在工作階段結束時毀損。</block>
+  <block id="4a18b8cd4094d5f672b0a8dae417eb5d" category="list-text">唯讀查詢強制執行透過嚴格的允許清單來驗證產生的查詢。</block>
+  <block id="d710010e0d2baa783791784e3d57d143" category="list-text">提示強制執行與程式碼強制執行的安全性會獨立套用。</block>
+  <block id="872510473c7f763a017cbe86ee5ae176" category="list-text">工具呼叫稽核會記錄工具名稱、參數、時間戳記和結果狀態，並進行敏感值清理。</block>
+  <block id="3cd81a828d8fa1bac1b008b4c892fc23" category="section-title">輸出控制</block>
+  <block id="fea2b723bd0e8247849d583b847768f7" category="list-text">Token 限制執行</block>
+  <block id="5043a8cc5b2c5f7970099e63eeae7adc" category="list-text">用於分類/安全性關鍵操作的確定性輸出（溫度 0）</block>
+  <block id="1193cc315470e6651ba59bf15a1b680e" category="list-text">具有提前終止與清理的串流</block>
+  <block id="84e51729284810e633d934f0d3530ddb" category="summary">在 NetApp Workload Factory 中，Ask Me 隱私控制可限制資料暴露，保持工作階段處理隔離的，並維護使用者互動的隱私邊界。</block>
+  <block id="ab2cc103bc81d3687636957d91d9d4c7" category="doc">NetApp Workload Factory 的 Ask Me 隱私權與可用度</block>
+  <block id="0856dac79486a675def47f589855eb64" category="paragraph">在 NetApp Workload Factory 中，Ask Me 隱私控制可限制資料暴露，讓工作階段處理保持隔離的，並維護使用者互動的隱私邊界。您的輸入由代管 AI 服務處理，該服務不會使用這些資料來訓練或改進基礎模型。擷取到的操作資料在工作階段期間保留在短暫的記憶體儲存設備中，不會持久化或是共享的。跨多個雲端區域的多模型後援鏈可在主要模型受限或無法使用時支援可用度，同時相同的安全性控制適用於所有後援模型。</block>
+  <block id="7893c40302bea4a7c251158a7d5c0560" category="section-title">資料處理和隱私</block>
+  <block id="70c67cc51ddcc6fae98db335264b7e66" category="list-text">提示中的使用者資料：由代管 AI 服務處理，該服務不會使用您的輸入來訓練或改進基礎模型。</block>
+  <block id="990df1a42608bc2b2f98daf2372c949c" category="list-text">知識庫內容：僅包含精選、已發佈的 NetApp 文件；不包含您的資料。</block>
+  <block id="6f9e6664636f4e61aafb8a438a443823" category="list-text">操作資料：僅當使用者查詢自己的資源時才會擷取；在工作階段期間保存在短暫的記憶體容量儲存設備中，不會持續保留或共享的。</block>
+  <block id="bbc49b83eca8142ad967876a2a0f5d12" category="list-text">稽核記錄：已記錄查詢中繼資料（匿名使用者 ID、時間戳記、持續時間），並清理敏感欄位。</block>
+  <block id="5e255b6263c3cb5dc5faeff30dd532ca" category="list-text">回饋資料：單獨儲存並與查詢 ID 關聯，不與匿名使用者 ID 以外的個人識別資訊關聯。</block>
+  <block id="4587c55d0b69068ae905e1c801815913" category="section-title">可用性和隔離控制</block>
+  <block id="9ba597a84273f48354e8d317f59a6d51" category="paragraph">Ask Me 採用跨多個雲端區域的多模型回退鏈。</block>
+  <block id="2647a2a20846fca38169bcfbe422b9b2" category="paragraph">如果主模型受到限制或無法使用，系統可以容錯移轉至替代模型。</block>
+  <block id="6ffc50082367ca8f241ae15499f60a8f" category="paragraph">所有模型均受到相同的安全性控制、系統提示強化與隔離保證所規範。</block>
+  <block id="3dee54594ab631b026c7e35e2abfa494" category="summary">Ask Me 是 NetApp Workload Factory 內建的生成式 AI 助理。它為 Amazon FSx for NetApp ONTAP 和 Workload Factory 相關主題提供即時對話式支援。</block>
+  <block id="94024b6a9341753eb9da595d43050c94" category="doc">NetApp Workload Factory 的 Ask Me 安全性架構</block>
+  <block id="58c3a153b26b04a5c316be8db2cd9894" category="paragraph">Ask Me 是內建於 NetApp Workload Factory 的生成式 AI 助手。它為 Amazon FSx for NetApp ONTAP 和 Workload Factory 主題提供即時的對話式支援。回應均基於經過驗證的 NetApp 文件，且 Ask Me 無法存取公共網際網路或使用客戶資料來訓練模型。多層安全性機制有助於區塊惡意查詢，將回應限制在支援的網域內，並防止使用者輸入覆寫系統指令。當 Ask Me 使用工具時，授權邊界、唯讀查詢強制執行、臨時沙箱和稽核記錄有助於約束和監控執行。</block>
+  <block id="ff9736052d7d370e1ae69ebad07f33ce" category="paragraph">您可以隨時透過 Workload Factory *管理* 設定選擇退出 Ask Me，這將停用您使用者帳戶的助理。<block ref="853233ea0a21fe68ecb7e12de39d4670" category="inline-link-macro-rx"></block></block>
+  <block id="577bc4dc112ab4c8e8cfd8d0eb5d2555" category="section-title">Ask Me 中的 RAG 架構</block>
+  <block id="3f6e9bab53072788746350d594a7477c" category="paragraph">Ask Me 使用擷取增強生成（RAG）。</block>
+  <block id="71c2afaad99cc83074d032f50f7c0aa9" category="list-text">精心整理的知識庫：回覆基於經過驗證、已發佈的 NetApp 文件所組成的代管語料庫。</block>
+  <block id="62f4e2a9ed32fda438dea78edd8195b1" category="list-text">擷取評分與篩選：模型上下文中僅包含足夠相關的內容。</block>
+  <block id="bed822d85b12d7b58e908843396f1831" category="list-text">沒有網路存取：此模型無法取得、瀏覽或抓取外部內容。</block>
+  <block id="b57c15f3dddf9dda115cede5a25159c3" category="list-text">來源標註：回覆包含所用來源文件的引用。</block>
+  <block id="a5330c33254c7de8524f5af332093beb" category="section-title">多層提示安全性</block>
+  <block id="7914eee5de8e36104a935bc5f579ff80" category="list-text">第 1 層：安全性分類器（LLM 作為評判者）封鎖惡意查詢（提示注入、權限提報、資料外洩、社交工程、原則違規）。</block>
+  <block id="60030dd1ccbbd007fac3eb9138c6d6b8" category="paragraph">系統會記錄被封鎖的查詢，生成式模型永遠不會看到它們。</block>
+  <block id="1a677807db2508d9a4ac051ebb0768f0" category="list-text">第 2 層：系統提示強化可防止使用者輸入覆寫系統指令。</block>
+  <block id="cd06628512deeae8de6374922492f098" category="list-text">第 3 層：網域範圍限制對 FSx ONTAP 和 Workload Factory 主題的回應。</block>
+  <block id="7122169c4ce3d9548bc6c731862439c8" category="list-text">第 4 層：工具使用治理在加固的沙箱中驗證參數並執行查詢；此模型不能執行任意操作。</block>
+  <block id="834723095a53fd6c3836a747278150c0" category="section-title">模型資料隔離和隱私</block>
+  <block id="b314be9d9ebeb25a953d4aeb372ad8e8" category="list-text">沒有使用客戶資料進行模型訓練</block>
+  <block id="2d3a4fbfbff6299ecccaffe37805e49a" category="list-text">要求層級隔離（無跨租戶資料外洩）</block>
+  <block id="2cddd5749bee96ef05087d9e156ae048" category="list-text">工作階段範圍的對話上下文，具有有限的歷史記錄</block>
+  <block id="e1a684c5e3ea611e1593cd7f7e98aff0" category="list-text">無持久模型記憶體容量</block>
+  <block id="b26bd5f1116880b759dac4b86835199b" category="list-text">代管推論基礎架構</block>
+  <block id="82bf388a0c134ce533abd56ca4b81b19" category="section-title">工具使用和代理安全性</block>
+  <block id="b7c11ddb40ea8519a253c41e63aa5205" category="list-text">授權範圍工具（強制執行使用者權限邊界）</block>
+  <block id="43bd3f99dad60cf3b504a4806e8efd85" category="list-text">嚴格的工具執行逾時</block>
+  <block id="f2814302f049d180ba3b82794f4bde8a" category="list-text">用於擷取資料的臨時性、工作階段範圍沙箱</block>
+  <block id="7063379399c7234cf2a4a22caafffd10" category="list-text">使用允許清單強制執行唯讀查詢</block>
+  <block id="6ceab7740d1de6752dfd5477ffa1324a" category="list-text">工具呼叫稽核及敏感參數清理</block>
+  <block id="ab1f4185efcb5bbc4a214ec19d6cec54" category="summary">Workload Factory 使用 AWS sts AssumeRole 取得 AWS 帳戶的臨時認證資料，因此該服務不會儲存長期 AWS 存取金鑰。</block>
+  <block id="9ee176a641628479b814c7b6505dd012" category="doc">AWS 帳戶與 NetApp Workload Factory 整合</block>
+  <block id="e02c505f6e0ac7acc608da217d247668" category="paragraph">Workload Factory 使用 AWS<block ref="60cfe31830d467874bb430da1683504e" prefix=" " category="inline-code"></block> 取得您 AWS 帳戶的臨時認證資料，因此該服務不會儲存長期 AWS 存取金鑰。在上線期間，您設定一個 IAM 角色，Workload Factory 可以擔任該角色以進行核准的 AWS API 操作，並使用外部 ID 來協助防止未經授權的跨帳戶存取。Workload Factory 隨後會在執行階段使用產生的短期認證資料，AWS 會在每次工作階段後自動使其過期。</block>
+  <block id="0c0a16a32f49497826e028a8b6b9f599" category="section-title">AWS 帳戶組態</block>
+  <block id="78835ee24522289d341130fb462c9a92" category="paragraph">若要讓 Workload Factory 存取您的 AWS 帳戶：</block>
+  <block id="c4a7461079c708a80600df48eb4848b6" category="list-text">在您的 AWS 帳戶中部署 IAM 角色（使用 CloudFormation 或手動）。</block>
+  <block id="c47ea185adaafb616a13323425ebdc62" category="list-text">確保角色信任原則允許 Workload Factory 的服務主體透過外部 ID 來承擔該角色。</block>
+  <block id="0e553e6ebc436676db40a8ec7f3401e3" category="list-text">使用外部 ID 作為客戶與 Workload Factory 之間專屬共享的唯一秘密識別碼（UUID v4）。</block>
+  <block id="dab52193c0b7c96f8de0abae60f44f02" category="paragraph">將其作為條件嵌入到您的 IAM 角色信任原則中 <block ref="527e02a980144079bed759572965ad4d" prefix="(" category="inline-code"></block>）。</block>
+  <block id="480d88e8a83656a3c985ca1a2daa8503" category="inline-link-macro">存取第三方擁有的 AWS 帳戶</block>
+  <block id="9244f4828a0e324379c40dc6922f1438" category="paragraph">外部 ID 可防止混淆代理人攻擊。在跨帳戶存取模型中，發現客戶角色 ARN 的攻擊者若沒有對應的外部 ID，就無法擔任該角色。AWS 建議將此模式用於第三方跨帳戶存取。如需詳細資訊，請參閱 AWS IAM 文件頁面 <block ref="2c76028f2b337dbbc4926ab3a4b72246" category="inline-link-macro-rx"></block>。</block>
+  <block id="1cc4e80bf3d683ba0c17a5f883d61e1d" category="paragraph">外部 ID 在認證資料註冊期間產生一次，並與角色 ARN 一起加密儲存在 Workload Factory 資料庫中。</block>
+  <block id="53596345adb986d3efd38de411c6622d" category="list-text">在 Workload Factory 中註冊角色 ARN 和外部 ID。</block>
+  <block id="bc366f2d0ba3d681e7a3899917c5d3de" category="section-title">執行階段</block>
+  <block id="fecc61dc968737f49adcc9da1d230b37" category="paragraph">在執行階段，Workload Factory 會代入您的 IAM 角色，以便為每個 AWS API 操作取得短期認證資料：</block>
+  <block id="d06efa837f099cb67d03c9c8456d7185" category="list-text">Workload Factory 會使用您的角色 ARN 和外部 ID 來呼叫<block ref="60cfe31830d467874bb430da1683504e" prefix=" " category="inline-code"></block>。</block>
+  <block id="a9861e24343346cefc9f830bf263cf54" category="list-text">AWS 傳回臨時認證資料（存取金鑰、秘密金鑰和工作階段權杖）。</block>
+  <block id="1e1e222f383e069dc246730cecaa1214" category="list-text">Workload Factory 會使用臨時認證資料來進行您帳戶中的 AWS API 操作。</block>
+  <block id="597b9b5592f84d1d919062ea85bd5626" category="list-text">認證資料會自動過期（預設為一小時）。</block>
+  <block id="14e4912a8a586505d94c971d1bbacaf7" category="summary">AWS 認證資料流程描述了 NetApp Workload Factory 在上線和執行階段作業期間如何處理角色識別碼、外部 ID 和短期 AWS STS 認證資料。</block>
+  <block id="ff6863b54000efd45e784f2fcde7a378" category="doc">AWS 認證資料如何流經 NetApp Workload Factory</block>
+  <block id="e2755506152c1befe07b6549cacb488a" category="paragraph">AWS 認證資料流程描述了 NetApp Workload Factory 在部署和執行階段操作期間如何處理角色識別碼、外部 ID 和短期 AWS STS 認證資料。在一次性設定期間，您需要在 AWS 帳戶中建立 IAM 角色，並設定信任原則，該原則要求 Workload Factory 服務主體和正確的外部 ID。在執行階段，Workload Factory 會使用已儲存的角色 ARN 和外部 ID 來要求由每個要求的工作階段原則限定範圍的臨時認證資料，並會重複使用快取的認證資料，直到它們過期為止。</block>
+  <block id="19ecd0e6c9086587f816b66d648b47a0" category="section-title">一次性設定</block>
+  <block id="c936ac94240f4645f36732d7fb10d2fd" category="paragraph">對於一次性設定，流程如下：</block>
+  <block id="fe67198c1e61538ba905b539fd8365e2" category="list-text">您產品發表 CloudFormation 堆疊或在您的 AWS 帳戶中手動建立 IAM 角色。</block>
+  <block id="1ba365e306fd4fa2e5f0b295b879e929" category="list-text">IAM 角色信任原則規定了兩個條件：</block>
+  <block id="4461fa81f59d85d9924c88c7fb7e00ac" category="list-text">只有 Workload Factory 的服務主體才能承擔此責任。</block>
+  <block id="3188da71d8ac17967ea36eb802da03b8" category="list-text">呼叫者必須提供正確的外部識別碼。</block>
+  <block id="8d7ca58b12ae38bbb1942760b031d1d0" category="list-text">Workload Factory 將角色 ARN 和外部 ID（加密）儲存在其資料庫中。</block>
+  <block id="fa3de990b5bcccf151926839424e09f2" category="section-title">執行階段（每次 API 操作）</block>
+  <block id="294ce8b7d63bd1401a67312d0a505fa7" category="paragraph">在執行階段，Workload Factory 使用儲存的角色 ARN 和外部 ID 來為每個 API 作業取得臨時的 AWS STS 認證資料。流程如下：</block>
+  <block id="10b56ad2521ef13efb640687235e47f1" category="list-text">Workload Factory 從 MySQL 擷取儲存的角色 ARN 和外部 ID。</block>
+  <block id="9e710733e20056d09fcd47395661b9e6" category="list-text">它會檢查 Redis 中是否有此角色的一組快取臨時 AWS STS 認證資料。</block>
+  <block id="e3b8d472293eec41e076ebabdfbcc8a1" category="list-text">當快取未命中時，Workload Factory 會使用角色 ARN 和外部 ID 呼叫<block ref="60cfe31830d467874bb430da1683504e" prefix=" " category="inline-code"></block>。此呼叫包含每個請求的即時工作階段原則，該原則將權限限制為僅該作業所需的特定 AWS 動作。</block>
+  <block id="53ec05b6f2d9b229782f2b6125e01735" category="list-text">AWS STS 傳回帶有過期時間戳記的臨時認證資料（存取金鑰 ID、秘密存取金鑰、工作階段權杖）。</block>
+  <block id="1e90c36cf67ae2cb0157b04801355f96" category="list-text">Workload Factory 將這些認證資料快取在 Redis 中，並使用它們來呼叫目標 AWS API。</block>
+  <block id="02d70cc371a9167688107fc1a6d13f09" category="list-text">發生快取命中率時，Workload Factory 會略過 STS 呼叫，並直接使用快取的認證資料。</block>
+  <block id="cb4c3e01aaf122703ac7e52a63b3d3b1" category="section-title">工作階段原則</block>
+  <block id="6852a3c8e320698878834ab376d990c2" category="paragraph">每個 STS 呼叫都包含一個即時工作階段原則，其範圍限定為所需的最少 AWS 操作。</block>
+  <block id="e7f393434307ad9a8555a9c67321f258" category="inline-link-macro">最小權限層級</block>
+  <block id="cbb5e9804027df0b96e7fe02b879a62c" category="list-text"><block ref="cbb5e9804027df0b96e7fe02b879a62c" category="inline-link-macro-rx"></block></block>
+  <block id="fc837fc5e6e014ebc97c4593d87fb98f" category="summary">CloudWatch 監控權限在 NetApp Workload Factory 中是選用的，並且僅在部署分隔的監控堆疊時才適用。</block>
+  <block id="664f9ba53f2826e4420c8dffbb62d0d9" category="doc">Amazon CloudWatch 針對 NetApp Workload Factory 的監控權限</block>
+  <block id="9719a757e141d3a745b73519b80dfdb4" category="paragraph">Amazon CloudWatch 監控權限在 NetApp Workload Factory 中是選用的，且僅在您部署分隔的監控堆疊時才適用。監控堆疊透過收集檔案系統計量、發佈事件記錄、管理 CloudWatch 儀表板和警示，以及透過 Amazon SNS 發送警示通知，來提供營運可見度。該堆疊還需要存取權限，以便在監控需要時擷取 ONTAP 認證資料。</block>
+  <block id="dc7dfccd96c7694a7bb6d1e2e275bcbb" category="section-title">所需的 CloudWatch 監控權限</block>
+  <block id="e6f8079e099bab7dc2575e253443a2e2" category="paragraph">可選的監控堆疊需要以下權限：</block>
+  <block id="ed5dea09095f671b801bee34ea28a319" category="cell">權限</block>
+  <block id="261addf78c7b2c961032b3dd08ba0b1f" category="cell">目的</block>
+  <block id="8ce8bcb12a8bdce04c2f81be55e9ba4c" category="cell">fsx:Describe* / fsx:ListTagsForResource</block>
+  <block id="f85fc6b453431db91ab150460d6d922a" category="cell">收集檔案系統計量</block>
+  <block id="2761ae92090e17b2ca52b943588b546d" category="cell">cloudwatch:PutMetricData / cloudwatch:PutDashboard / cloudwatch:PutMetricAlarm / cloudwatch:DescribeAlarms / cloudwatch:Delete*</block>
+  <block id="1a3512c5b855d05b62b6fe9909e8bfb2" category="cell">管理儀表板和警報</block>
+  <block id="c5e696d75d884128f5099a46bf6d21ed" category="cell">logs:CreateLogGroup / logs:CreateLogStream / logs:PutLogEvents</block>
+  <block id="9e50c3b37fb8fcf0aa6ecada4fc3a9ce" category="cell">發布事件記錄</block>
+  <block id="79b450f031f5478d5e79ee9957707c72" category="cell">sns:Publish</block>
+  <block id="17b5cdd3c71b1f00faeb23cc4b91d700" category="cell">發送提醒通知</block>
+  <block id="e6b67e3118c0caaf2206ab3d3fba8d67" category="cell">secretsmanager:GetSecretValue</block>
+  <block id="598f6048863cecce556922afa8d291e4" category="cell">擷取用於監控的 ONTAP 認證資料</block>
+  <block id="6c40d30bb1ca07be160278b9f994579a" category="summary">NetApp Workload Factory 的建置以法規遵循和安全性為核心優先事項。</block>
+  <block id="cc81080b6d546bec3b01cabf6f36aa2e" category="doc">NetApp Workload Factory 的法規遵循與安全性狀態</block>
+  <block id="de7642ec23585171e85481d37460d1b2" category="inline-link-macro">AWS 安全功能</block>
+  <block id="35f62e923d44055320a12d6c838d458d" category="inline-link-macro">SOC2 Type 1、SOC2 Type 2 和 HIPAA 法規遵循</block>
+  <block id="cddc0a69475707b84763a676a1727546" category="paragraph">NetApp Workload Factory 以法規遵循和安全性為核心優先順序進行建置。Workload Factory 中的所有工作負載均在 Amazon FSx for NetApp ONTAP 上執行。除了 <block ref="ccc35ad3502dffbee7f06fd01d3728f9" category="inline-link-macro-rx"></block> 之外，NetApp Workload Factory 還具有 <block ref="e86a36a05fdd4305f4b311c13761ae3b" category="inline-link-macro-rx"></block>。</block>
+  <block id="5bc45c9bf327952786de480d68cc107d" category="inline-link-macro">用於部署企業應用程式的 AWS 解決方案</block>
+  <block id="0441d5bf0a23a68dbdd7f9feb476efee" category="paragraph">Amazon FSx for NetApp ONTAP for NetApp Workload Factory 是一個 <block ref="eada645bedd6ca3d760173ba22baf6b0" category="inline-link-macro-rx"></block>，它遵循 AWS 架構完善的最佳實務。</block>
+  <block id="7983e147954dfa2e8743f23572229520" category="summary">NetApp Workload Factory 與 AWS API、客戶 AWS 帳戶資源、AWS Lambda 連結和 Amazon Bedrock 通訊，各自具有專屬的通訊協定、連接埠和驗證方法。</block>
+  <block id="1920d251d691069accc22a3d1bcaba44" category="doc">NetApp Workload Factory 的連線能力與信任路徑</block>
+  <block id="f8fc59f0e6818f6c3db56e8dc00c8822" category="paragraph">NetApp Workload Factory 與 AWS API、客戶 AWS 帳戶資源、AWS Lambda 連結和 Amazon Bedrock 通訊，每個服務都有其自身的協定、連接埠和驗證方法。這些連線組織成不同的群組，分隔 AWS 管理平面、ONTAP 資料平面和 Lambda 連結流量，以便您可以獨立評估信任邊界。</block>
+  <block id="9ec30f7c36c152443984edea0e6e14a7" category="section-title">連接路徑</block>
+  <block id="934eedda48f3691ea5465efd3e113f2f" category="paragraph">Workload Factory 建立了多個不同的連線路徑，每條路徑都有特定的用途，用於探索、配置和管理您的 AWS 和 ONTAP 資源。部分路徑源自 Workload Factory 本身，使用假定的 AWS 認證資料，而其他路徑則透過 Lambda 連結執行，該連結在您的 VPC 內部運作，以連線至 ONTAP 管理端點，而無需將其公開。前往 Amazon Bedrock 的選用路徑支援 AI 輔助診斷，且只有在您的組織啟用該功能時才會作用中。</block>
+  <block id="b8a51f2bd780535b70d478986aa11589" category="paragraph">以下各節說明每條路徑，包括涉及的 AWS 或 ONTAP API、使用的認證資料或驗證，以及決定路徑是否為作用中的任何條件。了解這些路徑有助於您評估 Workload Factory 所需的網路存取和權限，以及資料跨越帳戶或 VPC 邊界的位置。</block>
+  <block id="2004d03d60d8b2cd77e1461c5b61565b" category="section-title">Workload Factory 到 AWS API</block>
+  <block id="59de850a29dedc0d2f42708e8e05cc74" category="paragraph">Workload Factory 使用<block ref="6e107a5a94df0112b15951ab1b891bfb" prefix=" " category="inline-code"></block>,<block ref="5aa5dc5dd39a96a6cc15d632e81a9e79" prefix=" " category="inline-code"></block>,<block ref="ef35f4b009bf7f09451d75684de74ccd" prefix=" " category="inline-code"></block>,<block ref="accc0694bafd8ddabcad8b6cb26a1516" prefix=" " category="inline-code"></block>,<block ref="7e0b7635b07893eb3257107ea13a1f5b" prefix=" " category="inline-code"></block>,<block ref="86b9655fc5dc5294de71caed3e1659c2" prefix=" " category="inline-code"></block>,<block ref="91ba632194abd61293c8cc67e8cdc7e2" prefix=" " category="inline-code"></block>,<block ref="a42fab80239a4985ad316ffb95a3377b" prefix=" " category="inline-code"></block> 以及 EC2/VPC API 進行子網路和安全性群組探索。</block>
+  <block id="d86c221fde6a9b4d41d725a4818d4f75" category="list-text">採集服務大約每五小時進行一次掃描。</block>
+  <block id="9aa2184f9fcc796f33e0cf4f126cf634" category="list-text">CRUD 操作隨需執行。</block>
+  <block id="5724df2ebd894289f5bdbbcbdea3cd15" category="list-text">所有呼叫均使用具備外部 ID 的 STS 假設臨時認證資料。</block>
+  <block id="bccd3fac644cfc4a607107429fcceee1" category="section-title">Workload Factory 到客戶 AWS 帳戶資源（協調和自動化）</block>
+  <block id="46e471bcde178f2b76e1abfe67f8f181" category="paragraph">Workload Factory 與 AWS 互動，以進行通訊和建立資源。協調與自動化以多種方式進行。</block>
+  <block id="e4e1db11f250481b7137a90139432b88" category="list-text">AWS CloudFormation 範本：Workload Factory 使用 AWS CloudFormation 範本建立角色和檔案系統等資源。例如，當您在使用者介面中建立檔案系統時，Workload Factory 會直接呼叫 CloudFormation 並將您重新導向至您的 AWS 帳戶。</block>
+  <block id="60ed1107d1dada0e9646b0cbb4fcb255" category="list-text">AWS API 呼叫：Workload Factory 使用 AWS API 呼叫（STS<block ref="1c3820ee21e6a64fa15846545bcc066a" prefix=" " category="inline-code"></block>）來傳送 FSx for ONTAP 相關活動的 API 命令。</block>
+  <block id="a961e934a62decc83935d2d2e5fa0cb9" category="list-text">AWS Lambda：Workload Factory 使用 CloudFormation 為與 ONTAP 通訊的連結部署 AWS Lambda 函數。</block>
+  <block id="e1db8e2a56ea8cf0d41f276c56ecb6f8" category="paragraph">下圖顯示 Workload Factory 如何使用 NetApp AWS 帳戶與具有 FSx for ONTAP 檔案系統的客戶 AWS 帳戶之間的信任關係。</block>
+  <block id="d237790c579caeb1fa9125d550e5b50c" category="inline-image-macro">圖表顯示 Workload Factory 如何使用 NetApp AWS 帳戶與具有 FSx for ONTAP 檔案系統的客戶 AWS 帳戶之間的信任關係。（AssumeRole）</block>
+  <block id="2e7d22b5813df99c9d9038aced922c7f" category="paragraph"><block ref="2e7d22b5813df99c9d9038aced922c7f" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="c18d9a133a8ed541eb29fce415a3a84b" category="list-text">Workload Factory 使用來自 AWS IAM 服務的客戶專屬外部 ID，向 AWS STS<block ref="1c3820ee21e6a64fa15846545bcc066a" prefix=" " category="inline-code"></block> 提出要求。</block>
+  <block id="43adaf57f3a0770da3e705c838ba62a2" category="list-text">AWS IAM 服務會擷取角色並建立工作階段。</block>
+  <block id="aa4616f724e40e68d3716ef9782640fb" category="list-text">Workload Factory 發出具有工作階段權限的 AWS API 請求。</block>
+  <block id="c373ba4fa35adcb6bca182d793c4f3b6" category="list-text">Workload Factory 從 FSx for ONTAP 控制平面接收 AWS API 回應。</block>
+  <block id="4607a346e8e47e521cfb07d41a147f61" category="section-title">Lambda 連結到 ONTAP 管理端點</block>
+  <block id="332b1f00995da68f479e8b217c104d72" category="paragraph">Lambda 連結在客戶 VPC 內部執行，用於私有子網路存取，而無需公開 ONTAP。從連結到 ONTAP 管理端點的所有連線僅限傳出，因此不需要傳入連線或公開的端點。此連結僅用於 Amazon FSx for NetApp ONTAP API 未公開的 ONTAP 原生作業。</block>
+  <block id="ece05f8e2d4972922e2fcb291dc12529" category="paragraph">Workload Factory 使用以下協定進行 Volume、儲存設備 VM 和叢集操作，以及唯讀診斷和效能資料：</block>
+  <block id="b66ff2d3ece48d89bce3d36ed76c5f49" category="list-text">HTTPS/443（REST）</block>
+  <block id="fb32b80ba4f3e6cd22920df0d52425f5" category="list-text">SSH/22（CLI）</block>
+  <block id="a99ed38ae07ad9ed8a94e6efb071e5b8" category="section-title">Lambda 連結到 AWS Secrets Manager（ONTAP 認證資料擷取）</block>
+  <block id="ed9a2ed13c5aeb621e7b0ee815e893ce" category="paragraph">僅當 ONTAP 管理員認證資料儲存在 AWS Secrets Manager 中時使用（替代方案：在 Workload Factory 中使用信封加密的認證資料）。</block>
+  <block id="ace9144505ea6857a27aadde01578b34" category="list-text">代理轉發器在標頭中傳遞<block ref="25e31edc72bcf3571062157f991e9de1" prefix=" " category="inline-code"></block>（Base64 編碼）。</block>
+  <block id="510c7a3c568f469b5511b5d791746cc5" category="list-text">Lambda 連結會在執行時呼叫<block ref="94ed9c32bf92d650a520e3998280d7af" prefix=" " category="inline-code"></block>來擷取密碼。</block>
+  <block id="cfba9eedfac50a9cabbeb1cd0ed61724" category="paragraph">這樣可以確保密碼在您的帳戶範圍內，並防止從 Workload Factory 傳輸出去。</block>
+  <block id="7cc4f01f9125ae6ace52544648757a6a" category="section-title">Workload Factory 和客戶元件到 Amazon Bedrock（AI 診斷）</block>
+  <block id="9ed233c5665b4bf8f1fee486b4e095c3" category="paragraph">僅當啟用 AI 診斷時才會使用此路徑。</block>
+  <block id="8eb74886680dead600f77367a6a32f6a" category="list-text">Event Analyzer 使用此路徑進行 EMS 分析和延遲診斷。</block>
+  <block id="7ce55a0cf5e1eb9eb7a93c26c18de122" category="list-text">Bedrock 會使用您假定的認證資料和推論設定檔 ARN 執行，因此資料不會流向 NetApp 的帳戶。</block>
+  <block id="f7c0f9cc515ca345268126e6176ea429" category="paragraph">傳送到 Bedrock 的資料可以包括 EMS 事件 JSON、QoS 統計資料、Volume 組態、彙總資料和節點資訊。只有為每個組織 <block ref="79d60968532630a7b0a00dfbd03dc2a0" prefix="(" category="inline-code"></block> 表格設定了推論設定檔時，此路徑才作用中）。</block>
+  <block id="345134d00b30745e8c2faf3e0dbbb1ad" category="section-title">連線群組（協定、連接埠和驗證）</block>
+  <block id="81d1746f1ef7e0ba5475a05ab2faae31" category="section-title">A 組 — AWS 管理平面信任路徑（假定認證資料）</block>
+  <block id="c2cc7082a89c1ad6631a2f66af5f00c0" category="cell">連線</block>
+  <block id="888a77f5ac0748b6c8001822417df8b6" category="cell">傳輸協定</block>
+  <block id="60aaf44d4b562252c04db7f98497e9aa" category="cell">連接埠</block>
+  <block id="02674a4ef33e11c879283629996c8ff8" category="cell">方向</block>
+  <block id="632c9594449737188c71ee1c8534f893" category="cell">驗證</block>
+  <block id="e8730100794872b5467c7f3b5b33cba0" category="cell">理由</block>
+  <block id="1435bf5191023e27f6e0247733a8a2ff" category="cell">STS AssumeRole</block>
+  <block id="0e8433f9a404f1f3ba601c14b026d321" category="cell">HTTPS</block>
+  <block id="13f3cf8c531952d72e5847c4183e6910" category="cell">443</block>
+  <block id="22deca082ade85414f1df367d6f74f40" category="cell">WF → AWS STS（客戶帳戶）</block>
+  <block id="05bd4cc2777d48d996089a39b2bf1a96" category="cell">IAM 認證資料 + ExternalId</block>
+  <block id="c3c6e9eea8ead32fc1107eca2f3b5cff" category="cell">取得臨時跨帳戶認證資料</block>
+  <block id="215b75cf50d25d149785877a0cdee99d" category="cell">FSx API（描述/建立/更新/刪除）</block>
+  <block id="1784104faa2efe08ebfd46bdf81bd21e" category="cell">WF → AWS FSx 端點（客戶區域）</block>
+  <block id="48b85158c2f518d8291b4c5edbec0b15" category="cell">STS 臨時認證資料</block>
+  <block id="48cb0c774af3b484586e1d944f326c26" category="cell">檔案系統和 Volume 生命週期管理</block>
+  <block id="3ff0627bd67a8e73f7e0577dcaf36ca9" category="cell">EC2/VPC API</block>
+  <block id="f147cc2c1c1c75f0d245d922e00ca14e" category="cell">WF → AWS EC2 端點</block>
+  <block id="76e1f28b9ea9ca6f3a929b8934714b05" category="cell">安全群組、子網路和 VPC 探索</block>
+  <block id="d08e1e5c214ca079fb6edac5a0bcc4cc" category="cell">CloudFormation API</block>
+  <block id="c4488e6cd34268dfbd153847b3b05b54" category="cell">WF → AWS CFN 端點</block>
+  <block id="fd8725aab834a72e787820da0786d209" category="cell">IAM 角色和 FSx 配置的堆疊部署</block>
+  <block id="53f562889d47914ba6a4012a3d790ed8" category="cell">Secrets Manager GetSecretValue</block>
+  <block id="1a74af026a026acb447766806965c174" category="cell">WF → AWS Secrets Manager 端點（客戶帳戶）</block>
+  <block id="407e425eb179fc3fd901ad3f84ae4efb" category="cell">擷取 ONTAP 管理員密碼（當儲存在 Secrets Manager 中時）</block>
+  <block id="b2d4c16b0e16c2606fb037d3b1338b89" category="cell">KMS 加密/解密</block>
+  <block id="8e80963862f59fd4f72d80d7dceda51d" category="cell">WF → AWS KMS 端點</block>
+  <block id="8ce7424e8f11fdf4956fde6f8c3fa0c1" category="cell">Volume 加密金鑰操作</block>
+  <block id="d0695a081ddb999a9f6ffb4949df5f9c" category="paragraph">所有 AWS API 呼叫均使用客戶的區域端點，如果已設定，則可透過 VPC 端點進行路由。</block>
+  <block id="b2f384d65099250d715074232d9a5401" category="section-title">B 組 — ONTAP 資料平面</block>
+  <block id="6f3d26af5808431dfe7b8403f9426f42" category="paragraph">ONTAP 資料平面始終透過 Lambda 連結進行代理；Workload Factory 服務永遠不會直接連接到 ONTAP。</block>
+  <block id="0ec641cfacd36c8e22a334135e2abdac" category="cell">ONTAP REST API</block>
+  <block id="cb2eb02735afff3074257392e93bd8d6" category="cell">連結（客戶 VPC）→ ONTAP 管理 LIF</block>
+  <block id="edf996b862da8280affd18f1d5c5fe99" category="cell">基本驗證（使用者名稱/密碼）或 Secrets Manager ARN</block>
+  <block id="0f1f9a9e38e9658619ade4a1e2759ff0" category="cell">叢集、Volume 和儲存設備 VM 組態；QoS；EMS 事件；ARP 狀態</block>
+  <block id="e026e036b530166555fa06f9fea01cb6" category="cell">ONTAP SSH CLI</block>
+  <block id="765553e6c7ac8592c389acb9878a050a" category="cell">SSH</block>
+  <block id="b6d767d2f8ed5d21a44b0e5886680cb9" category="cell">22</block>
+  <block id="2dd289d7d0075e1eff0d718e46ee27aa" category="cell">密碼驗證</block>
+  <block id="2e2e0e0de0b7fef17e4a62aaab50459e" category="cell">診斷命令（QoS 統計資料、df、事件日誌、效率）</block>
+  <block id="d059a1aef56a182931e83c3209af931e" category="paragraph">代理轉發器的路由策略（優先順序）：</block>
+  <block id="b4a3d39b46cef574ddb21b2e356e0be7" category="list-text">明確<block ref="f86acaea49af96bf23ee15da456e27fd" prefix=" " category="inline-code"></block>標頭：從資料庫中尋找 Lambda ARN</block>
+  <block id="04658116be5c64f65b1be9fd8fb7448e" category="list-text">目標 ID（FSx 檔案系統 ID）：尋找關聯連結</block>
+  <block id="12f1f76b96cbaafddb282fc4b44c47b7" category="list-text">Console 代理程式 ID：透過訊息代理人路由至 Console 代理程式</block>
+  <block id="ecd9ebf7b001e928559f1fd3bc8a6052" category="section-title">C 組 — AWS Lambda 連結（部署在您的 VPC 中）</block>
+  <block id="bbb58b10e7d40c0b0deb812ef9011856" category="cell">Lambda 呼叫</block>
+  <block id="e4a0c6e6e08ac1cb4147af60b54c55d8" category="cell">HTTPS（AWS SDK）</block>
+  <block id="79bf968d90afe68994150bf7698f1df8" category="cell">WF → AWS Lambda API（客戶帳戶）</block>
+  <block id="a9254769a1dd76a0df73e8a71260e4a9" category="cell">IAM <block ref="f83f9c33f721f289d66ffd89e3a3ce41" prefix="(" category="inline-code"></block>）</block>
+  <block id="76cdeb60cdefc3b4c94f2cb2660fec4e" category="cell">從客戶 VPC 內部執行 ONTAP REST/SSH 命令</block>
+  <block id="e3ad54e422aab7218874c1863b96090f" category="cell">Lambda → ONTAP</block>
+  <block id="2d741f7abc04423a9862bf9ae62fb088" category="cell">HTTPS + SSH</block>
+  <block id="2f31c40986e8dc0c132986cbda5d2c9d" category="cell">443 、 22</block>
+  <block id="1b6a81e86895083fc926a69be35e188e" category="cell">Lambda（客戶 VPC）→ ONTAP 管理 LIF</block>
+  <block id="db7f4c250b3ae4a01e8989aade5d09ba" category="cell">基本驗證 / 密碼</block>
+  <block id="9384938bfde199d4b353206639d3a0b0" category="cell">無需公開暴露即可透過私有子網路存取 ONTAP</block>
+  <block id="fc0adf9103af87ce46bc0c5898c47ca6" category="section-title">群組 D — NetApp Console 代理程式（您的 VPC 中的 EC2，僅限傳出）</block>
+  <block id="622827a382eeb9d54331c790d60db214" category="cell">代理程式輪詢</block>
+  <block id="9b34cad0c53b3668e6641d03697b5661" category="cell">控制台代理程式（客戶 VPC）→ WF 訊息代理人</block>
+  <block id="2dded2d9f97ac53225e4ef68c72df2f1" category="cell">持有者權杖（occm-access 範圍）</block>
+  <block id="dc9b5ad560d443b6cf0838e87aa25415" category="cell">對待處理的 ONTAP 命令進行長輪詢（7 秒逾時；重新連線）</block>
+  <block id="c581d9d815c200e9df3184d5174af5b6" category="cell">代理程式回應</block>
+  <block id="25d95961a44037e555767a429cb7864e" category="cell">Bearer 權杖</block>
+  <block id="08214390845cc5df8204bf7e96d9f4f9" category="cell">傳回 ONTAP 命令結果（可選擇 zlib 壓縮）</block>
+  <block id="cf0f9c52a31e1b44fd76f48980248e43" category="cell">主控台代理程式 → ONTAP</block>
+  <block id="492fe6a6827e44fd0e6547762b4b6bd5" category="cell">控制台代理程式（客戶 VPC）→ ONTAP 管理 LIF</block>
+  <block id="480f741ef152272acee96ce742387aff" category="cell">執行代理 ONTAP 作業</block>
+  <block id="b9444cb3dc5b83d033f6c6af1c2e1f86" category="paragraph">關鍵設計：Workload Factory 從不主動發起與 Console 代理程式的傳入連線。工作在 Redis 串流中佇列；Console 代理程式輪詢<block ref="4d65a6c19dca928e21a88ff37c0e9735" prefix=" " category="inline-code"></block>並做出回應<block ref="1c3043a429b07721823d6155a5b9acc9" prefix=" " category="inline-code"></block>。</block>
+  <block id="79348c7e721a0c008afa6b95f39dc565" category="section-title">E 組 — CloudFormation 自訂資源回呼</block>
+  <block id="40c3bbddeabbec3d59d6eda35b29a052" category="cell">CloudFormation → WF Lambda</block>
+  <block id="1eca54c93ec125f91c117e07ec64d10b" category="cell">CloudFormation（客戶）→ WF Lambda（NetApp）</block>
+  <block id="fb895963c1d44b95c209bcd153fd59b2" category="cell">JWT 權杖 + 參考權杖</block>
+  <block id="e0322ca439031aafda614b08583cc83f" category="cell">報告 IAM 角色建立狀態並傳回角色 ARN</block>
+  <block id="e856e69322c7ed0ca0680e75aeb17385" category="cell">ONTAP CloudFormation 資源提供者 → 連結</block>
+  <block id="333771fb25aca81e54ebde0acec9cc10" category="cell">CloudFormation 資源 Lambda（客戶）→ 連結 Lambda（客戶）</block>
+  <block id="41dff7155cc7aeb11c06434f6a450bb3" category="cell">IAM</block>
+  <block id="25a63b73aacca9172dfaceae94ff97af" category="cell">在堆疊操作期間建立/更新/刪除 ONTAP 資源</block>
+  <block id="555bdfb3056b97d947bb3fdd0a60b675" category="section-title">總結：VPC 的網路要求</block>
+  <block id="2cb05e4bb7830be982f0922fed86b4cd" category="cell">元件</block>
+  <block id="6c7e3200049198face0d2648e9d1a27d" category="cell">傳入</block>
+  <block id="4c32be4a0b4f48cdd593aef35fd69e44" category="cell">傳出</block>
+  <block id="36df1b975561708b246ef1801ea416e5" category="cell">FSx for ONTAP</block>
+  <block id="fac8b42eed2e54d710207bfcae1c12f6" category="cell">來自 Link Lambda 或控制台代理程式安全性群組的連接埠 443 和 22</block>
+  <block id="382b0f5185773fa0f67a8ed8056c7759" category="cell">N/A</block>
+  <block id="96694e180ec2ada52bf7f4ddb312791d" category="cell">連結 Lambda</block>
+  <block id="6adf97f83acf6453d4a6a4b1070f3754" category="cell">無</block>
+  <block id="ad61932eaa32879e1e1efa0ac272c785" category="cell">連接埠 443（ONTAP、AWS API）和連接埠 22（ONTAP SSH）</block>
+  <block id="44ab4625cea7bdb83a5e0691d3d51e55" category="cell">主控台代理程式 EC2</block>
+  <block id="bd09c091dfa886af1c9be6289a3c9134" category="cell">連接埠 443（WF 端點、ONTAP、AWS API）和連接埠 22（ONTAP SSH）</block>
+  <block id="7e67cec0ea4d32171dc5347d7661f5d2" category="cell">VPC 端點（可選）</block>
+  <block id="6be22adf48f6d9343a5352951dfb4c69" category="cell">STS、FSx、S3、Secrets Manager、Lambda、CloudFormation</block>
+  <block id="1872703bb79282695d90f8cda83ecc06" category="paragraph">客戶 VPC 中的任何元件都不需要傳入網際網路存取。所有連線皆為傳出起始（Console 代理程式輪詢），或是透過 AWS 服務 API 呼叫（Lambda Invoke）。</block>
+  <block id="f6c34d9d3d48c5b5879c227d4d6e12dc" category="summary">Workload Factory 透過短期的 AWS STS 認證資料、加密的角色中繼資料和受限的保留行為來確保認證資料處理的安全性。。</block>
+  <block id="3b0c3383d5d61f15cdad27bf2775b98a" category="doc">適用於 NetApp Workload Factory 的 AWS 認證資料保留</block>
+  <block id="a0b52584d62a1d7d7af4d3239d5da90a" category="paragraph">Workload Factory 透過短期有效的 AWS STS 認證資料、加密的角色中繼資料和限時保留機制來確保認證資料處理的安全性。此認證資料模型將保留的角色中繼資料與用於 API 操作的臨時 AWS 認證資料分隔。臨時認證資料僅在有限的時間內快取，並根據 AWS 的強制執行機制自動過期。刪除認證資料會阻止 Workload Factory 為該帳戶取得新的認證資料，而任何快取的認證資料也會在不久後過期。</block>
+  <block id="0502b5cf725a36e1c041a01526a92234" category="section-title">關鍵行為</block>
+  <block id="1d4440ce26a05dd9649a2eb43eb33d00" category="list-text">Workload Factory 不儲存長期 AWS 存取金鑰。</block>
+  <block id="d06411141baae93e4d511d325cfcf320" category="paragraph">Workload Factory 僅儲存一個指標（角色 ARN）和一個共享的機密（外部 ID）。兩者本身均不授予 AWS 存取。</block>
+  <block id="0273ce2abd44ea0cf868da9524d2b5b1" category="list-text">臨時 AWS STS 認證資料的壽命最長為一小時（AWS 強制執行）。</block>
+  <block id="0197863e4b0839b457522adb30167125" category="paragraph">Workload Factory 會將它們快取在 Redis 中最多 30 分鐘，然後強制執行新的 STS 呼叫。</block>
+  <block id="d45b70bec369ec4ccef2172b4f94fd1e" category="list-text">如果快取的認證資料集剩餘時間少於 15 分鐘，Workload Factory 會將其捨棄並取得新的認證資料集。</block>
+  <block id="0338e06f5f0fe5bf55fa157e087eb46f" category="list-text">客戶刪除認證資料將立即撤銷 Workload Factory 存取該帳戶的權限。</block>
+  <block id="9a24c8efbb44dfb87cda7bb90a926c59" category="paragraph">下一次 AssumeRole 呼叫失敗，快取的認證資料會在幾分鐘內過期。</block>
+  <block id="fad8988fa9bd966996b025d9c24dbf66" category="section-title">保留和儲存設備總結</block>
+  <block id="f6068daa29dbb05a7ead1e3b5a48bbee" category="cell">資料</block>
+  <block id="3841f7bd4e64aaa7d347cd96086a9586" category="cell">儲存位置</block>
+  <block id="5907dfa776d7446e825f07d4102d8c19" category="cell">保留時間</block>
+  <block id="b28360efbf9aa709ed13e0fdc7e88ad8" category="cell">自動過期？</block>
+  <block id="1d53b2f5b5014a41f2d49e4a97babb90" category="cell">刪除方法</block>
+  <block id="88c812ee1df5f6fff7cd6eeaf9c27396" category="cell">IAM 角色 ARN + 外部 ID</block>
+  <block id="d4c405864e047749f9ee7b2e5f6d9a66" category="cell">MySQL（靜態加密）</block>
+  <block id="0b9a60f3ef83b3e7cba2fce93fab0a25" category="cell">無限期保存（直至客戶明確刪除）</block>
+  <block id="bafd7322c6e97d25b6299b5d6fe8920b" category="cell">否</block>
+  <block id="f96b06354f68e652066d2cae454f333f" category="cell">客戶在 UI 中點選「刪除認證資料」</block>
+  <block id="ae9185f4e446e982b33d0c3b9edf1f04" category="cell">暫時 AWS STS 認證資料（存取金鑰 + 機密 + 工作階段權杖）</block>
+  <block id="715eb1967cffaf99ff237fb87a6fa8c8" category="cell">Redis（記憶體快取）</block>
+  <block id="c035c153ae48de66f6010380d94b2c2f" category="cell">最長 30 分鐘（快取 TTL）。底層 STS 認證資料的有效期限最長為一小時（AWS 預設值）。快取會在過期前五分鐘清除，作為安全利潤。</block>
+  <block id="6e6effbec912a7a4b8d5b91212bb4c58" category="cell">是的（Redis TTL 會自動驅逐；AWS 認證資料過期由 AWS 強制執行）</block>
+  <block id="086247a9b57fde6eefee2a0c4752242d" category="cell">自動</block>
+  <block id="a6f8d02fe54d516a28587f26a6544237" category="cell">ONTAP 管理員密碼</block>
+  <block id="f6f8ff1a50d889758847f4fa56e8f275" category="cell">MySQL（使用 KMS 的 AES-256-CBC 信封加密）</block>
+  <block id="e3c47f368261eb6682877685ca7eac19" category="cell">無限期保存（直至客戶移除認證資料或刪除檔案系統）</block>
+  <block id="f0f0b7c2eedc262f1af4d00cf3ad2ecf" category="cell">客戶刪除認證資料，或檔案系統刪除觸發清理操作</block>
+  <block id="a495a707f1cf261731c9b527fc225823" category="cell">已解密的 ONTAP 密碼（明文）</block>
+  <block id="6fb94d64de368eebaefc11376a92ac5a" category="cell">僅限記憶體（絕不寫入磁碟或快取）</block>
+  <block id="9aa83b2f84c624d29688c3194f41e7f4" category="cell">單一請求持續時間（毫秒）</block>
+  <block id="26d7bd352f185ff7c6a9dd43caa896ca" category="cell">是的（請求完成後會被垃圾回收）</block>
+  <block id="cf320560bda533883e94b5b7d9dc9878" category="section-title">安全性控制</block>
+  <block id="c186ea202488f330bcfaaafc64c85ce4" category="list-text">外部 ID 可防止混淆代理攻擊。</block>
+  <block id="f9f189e023be339bbd33d48431556a4c" category="list-text">工作階段原則強制執行每次請求的最小權限。</block>
+  <block id="481a301175dd4247d5b9556a6374dda4" category="list-text">Workload Factory 會在風險較高的過期視窗之前刷新短期的臨時 AWS STS 認證資料。</block>
+  <block id="eeab7c3969fdae921adb118fbf3d3f1d" category="list-text">在標準、GovCloud 和中國環境中，區域和帳戶類型的處理方式有所不同。</block>
+  <block id="ef60c259e73872c938221f42a2ccb690" category="list-text">Workload Factory 從不儲存長期 AWS 存取金鑰。</block>
+  <block id="4626d3608ccdf498e764b541de73a548" category="list-text">Workload Factory 絕對不會修改您的 IAM 角色權限。</block>
+  <block id="af4f3da4970cd851c41eec659122c5b7" category="list-text">Workload Factory 的權限永遠不會超出您的角色原則所授予的權限。</block>
+  <block id="e69cafbaeb332cd983cd466cf8d9d5e0" category="list-text">工作階段原則只能減少權限；Workload Factory 永遠不會增加權限。</block>
+  <block id="f154a6da0f2a341f9257f0017b75add0" category="summary">NNetApp Workload Factory 支援認證資料處理模式，以保持最小權限並減少 ONTAP 管理機密的暴露。</block>
+  <block id="cc06be1fbef58f121936fed2e204eb2a" category="doc">NetApp Workload Factory 的認證資料儲存設備選項</block>
+  <block id="30b961c4b0e9eccb28df6abed8b42814" category="paragraph">NetApp Workload Factory 支援認證資料處理模式，以保留最低權限並減少 ONTAP 管理機密的暴露。AI 驅動的診斷功能在可用時會使用唯讀的 ONTAP 認證資料，以便診斷代理程式可以在不修改儲存環境的情況下進行觀察和診斷。您可以使用 Workload Factory 代管的加密儲存設備，或將 ONTAP 密碼儲存在 AWS Secrets Manager 中，並提供參考給 Workload Factory。此選擇會影響密碼的儲存位置、加密方式，以及您如何管理 GovCloud 支援和認證資料輪替等要求。</block>
+  <block id="a1e428bcb8f0fcd4da467f687d79332b" category="section-title">唯讀 ONTAP 存取模型</block>
+  <block id="cf372876151e0497c59db8caa9ca8795" category="paragraph">對於事件分析和延遲診斷等 AI 功能，Workload Factory 會在可用時使用唯讀 ONTAP 認證資料。唯讀認證資料模型可確保 AI 診斷代理程式無法修改您的儲存環境—它只能觀察和診斷。</block>
+  <block id="8791c33a430986b264a8b4c3bc32a84e" category="section-title">認證資料儲存設備選項比較</block>
+  <block id="2c4eed705dd3e0adf6e7194858d8dff7" category="section-title">AWS 憑證</block>
+  <block id="78939fd96f284c76d571a9a3d22ef758" category="paragraph">AWS 認證資料始終透過 IAM 角色取得。Workload Factory 可以在內部管理角色資訊，或從 AWS Secrets Manager 參照該資訊。</block>
+  <block id="054b4f3ea543c990f6b125f41af6ebf7" category="cell">選項</block>
+  <block id="4ca56180e8e052a0e5eb0e7fac208e41" category="cell">儲存的內容</block>
+  <block id="d7f2615c71a1567cc13cf3a7f7de0aea" category="cell">加密</block>
+  <block id="070bc13d076e31921b125cd73c84d926" category="cell">Workload Factory 代管</block>
+  <block id="20a0556d28df1507e2c212ce240c90c3" category="cell">角色 ARN 不是秘密（原樣儲存）</block>
+  <block id="823a6e1d7fe661be55dd3af05f972b11" category="section-title">ONTAP 憑證</block>
+  <block id="e73709ff72218cd920943c718b7a2ff5" category="paragraph">Workload Factory 既可以內部使用加密儲存設備管理 ONTAP 認證資料，也可以從 AWS Secrets Manager 引用這些認證資料。選擇哪種方式會影響密碼的儲存、加密和輪換方式。</block>
+  <block id="86a68e9c459458056330c045a41c57d0" category="inline-link-macro">Lambda 連結</block>
+  <block id="0fc01eb31152a65b65b06aca8d1f646e" category="paragraph">Workload Factory 需要 ONTAP 認證資料，才能透過 <block ref="c27ea3a8c01bd7d77df27cfe5e3cb732" category="inline-link-macro-rx"></block> 與 ONTAP 檔案系統 API 互動。</block>
+  <block id="7c8da047234438ff6fdcefafe9d5972d" category="cell">密碼（加密）</block>
+  <block id="fd7f8327e07980d08a5fe599b9d70007" category="cell">ONTAP 管理員密碼（已加密）</block>
+  <block id="66202572295b92a52a1cf66db6641421" category="cell">ONTAP 密碼使用 AES-256 信封加密</block>
+  <block id="7898cb92c418aeed6974ede9cb146462" category="cell">AWS Secrets Manager</block>
+  <block id="9919d79621f5578f34be0b47eeca41a5" category="cell">Secrets Manager ARN 參考</block>
+  <block id="34e1604282f26e4b436a72426b6f2e49" category="cell">Secrets Manager ARN</block>
+  <block id="7a43aa1893ca5ec50f552ce86c77808b" category="cell">Secrets ARN 本身並非機密（原樣儲存）；AWS Secrets Manager 會對您帳戶中的機密進行加密</block>
+  <block id="015f8c34f52b6ef8a3361958660f5e88" category="section-title">其他考量</block>
+  <block id="c78765cb187d7e26cb0281a5350f4fde" category="list-text">GovCloud 要求</block>
+  <block id="fc34305055476598b077329368330811" category="list-text">使用標準 IAM 角色；ONTAP 認證資料必須使用 Secrets Manager（不允許儲存密碼）。</block>
+  <block id="f1a42bd417390fc63b030a519624607a" category="list-text">輪替</block>
+  <block id="442e83ed97b11c0d48e2d9535e640ed9" category="list-text">角色原則已在您的帳戶中更新。在 Workload Factory（代管選項）中更新 ONTAP 密碼，或在 AWS Secrets Manager 中輪換密碼。</block>
+  <block id="f3389b2a27ac62e216c0a923d7fbdbcc" category="summary">NetApp Workload Factory 使用分離認證資料模型將 AWS 控制平面權限與直接 ONTAP 管理存取分隔。</block>
+  <block id="e9922b016c33bba7c9c9d84ecf29ebe5" category="doc">NetApp Workload Factory 的認證資料類型</block>
+  <block id="beff09878665e703140b837eede1c7a6" category="paragraph">NetAppWorkload Factory 使用分離認證資料模型，將 AWS 控制平面權限與直接的 ONTAP 管理存取分隔。AWS IAM 角色會驗證 Workload Factory 對 AWS API 的存取，以進行檔案系統管理、備份管理和資源探索等操作。ONTAP 認證資料會透過 Lambda 連結驗證對 ONTAP 管理端點的直接存取，以進行需要管理組態或診斷的操作。當某些工作流程結合 AWS API 操作與直接的 ONTAP 管理任務時，會需要同時使用這兩種認證資料。</block>
+  <block id="565fa5e1db93c634426be4d41f1710dd" category="section-title">認證資料類型</block>
+  <block id="9d99bc1b95915d546ee3708e10fe5161" category="paragraph">下表總結了 Workload Factory 中使用的兩種認證資料類型及其各自的驗證目標。</block>
+  <block id="a99975719c36ede95f1c37579513e813" category="cell">認證資料類型</block>
+  <block id="4a2d26d9fd7ead6ac2f9f353f67b8b1e" category="cell">驗證至</block>
+  <block id="f5791a18ace280c34a57c2ee7a726d7b" category="cell">用於</block>
+  <block id="43341b30f0fabcf9416309f9cca12fb5" category="cell">AWS 認證資料（AssumeRole）</block>
+  <block id="0dab9570ddf213c6e0fae718434ef3ba" category="cell">AWS API</block>
+  <block id="dd5f3936e73de2983ecb500b865b02de" category="cell">所有透過 AWS FSx 服務 API 進行的操作</block>
+  <block id="cd8ea50a5f63ab458b3a22aa4cd48dcc" category="cell">ONTAP 認證資料（管理員密碼）</block>
+  <block id="8e317d80f529ce1d7ca46db73b54d17d" category="cell">ONTAP 管理端點</block>
+  <block id="410d0e70b1edbf079a9b78970a4238d7" category="cell">需要直接存取 ONTAP REST API 或 CLI 的操作</block>
+  <block id="a7e2192ad1330d46664dfa273976aa8c" category="section-title">僅限 AWS 認證資料的操作</block>
+  <block id="1ae410e165862e7ca5a8f296e1c62fca" category="paragraph">這些操作僅與 AWS API 互動，並且只需要 IAM 角色：</block>
+  <block id="5e089350e1f2af6ed6097e31f62344a1" category="list-text">檔案系統的建立和刪除</block>
+  <block id="76a2788635926d5e1cbf4d35efcbf110" category="list-text">檔案系統容量和處理量變化</block>
+  <block id="ddc9fa18196ccc730276667a00b659f2" category="list-text">備份建立和管理</block>
+  <block id="9d99215728c3ef14ea731f7e24e62cc6" category="list-text">VPC、子網路和安全性群組探索</block>
+  <block id="786f29a84e083c5322cd588fbbdb2e79" category="list-text">KMS 金鑰列舉</block>
+  <block id="9822b0866423384a1582df70c4489c0e" category="list-text">CloudWatch 計量擷取</block>
+  <block id="f50c7eb48093f9eaddec2d98cb0f13a3" category="list-text">Cost Explorer 查詢</block>
+  <block id="fb65541527bd19a3fd6a0585dbcb1391" category="list-text">使用 FSx API 進行標籤管理</block>
+  <block id="589addd8de85b5b5e23b0906b1f6e5cc" category="section-title">僅限 ONTAP 認證資料的操作</block>
+  <block id="bed3ec9056f364e4b3e9b912033803ba" category="paragraph">這些操作透過 Lambda 連結直接與 ONTAP 管理端點通訊，並且需要 ONTAP 管理員認證資料：</block>
+  <block id="73887a7216c7862eedeafdaf79470ef1" category="list-text">Volume 層級 QoS 原則組態</block>
+  <block id="639e157060f989b9087ec38832d9ff93" category="list-text">匯出原則和規則管理</block>
+  <block id="d3c798a3ac54591ca732ef509eddbe09" category="list-text">儲存設備 VM 協定組態（NFS、CIFS、iSCSI）</block>
+  <block id="fc775abf552f5107cf58118acdca4554" category="list-text">igroup 和 LUN 管理</block>
+  <block id="759bc87efd1777e5afcb7f422a3db510" category="list-text">SnapMirror（複寫）組態</block>
+  <block id="0f4f3b8a73497ee8f80b121c91126025" category="list-text">Snapshot 原則管理（ONTAP 等級）</block>
+  <block id="cc35664c288da71f93905e9116fff34d" category="list-text">效能診斷（QoS 統計資料、延遲細分）</block>
+  <block id="a6b4fd909af5d2fcde72b7c2e3a2cfdb" category="list-text">EMS 事件擷取與分析</block>
+  <block id="18e2f2ac274e1fb217141394b64a9c41" category="list-text">反勒索軟體保護狀態監控</block>
+  <block id="c393bc160f4e5923fa7685752ed84f61" category="list-text">FlexCache 管理</block>
+  <block id="0a8a6a1ee58c6fddca9b280613ac93ac" category="list-text">網路介面（LIF）查詢</block>
+  <block id="39cdb72cc6d2e3ebdf0700e691887da7" category="section-title">需同時具備 AWS 和 ONTAP 認證資料的操作</block>
+  <block id="24f47cdbe9ddba774a7cc53e51d9032e" category="cell">工作流程</block>
+  <block id="e8bdf02bd1cb481bc9557c4d22266ad4" category="cell">AWS 認證資料用於</block>
+  <block id="2f82e6524b9401514cbbf62932cff72e" category="cell">ONTAP 認證資料用於</block>
+  <block id="f6bd336f77d6bbbcd4b917f4fba4c7d9" category="cell">人工智慧驅動的事件分析</block>
+  <block id="977bd7e63b1d884a419ddeebf4afd5f5" category="cell">呼叫 Bedrock，描述檔案系統</block>
+  <block id="51052b9cf94a763b7f4c86958af6f045" category="cell">使用 SSH 擷取 EMS 事件並執行診斷</block>
+  <block id="f43f59d4458b9306194ab73d939775d8" category="cell">建立檔案系統並設定儲存設備 VM</block>
+  <block id="e86c9624181c46d2083d2e8dee7c2dfa" category="cell">建立檔案系統（AWS API）</block>
+  <block id="ac69e99e7bed81acc8545785cdb709a9" category="cell">設定儲存設備虛擬機器協定（ONTAP REST）</block>
+  <block id="904efc62c0cd751e33561b4846f6fa42" category="cell">使用匯出原則建立 Volume</block>
+  <block id="db0b00f9d52f5ac7797006741bcf16aa" category="cell">建立 Volume（AWS API）</block>
+  <block id="dacf0b194d617e3f1561ab80799219fd" category="cell">設定匯出原則規則（ONTAP REST）</block>
+  <block id="3961fbd94fe41b05ca98e9abb78be253" category="cell">儲存容量管理</block>
+  <block id="00cb9ee7c3ac056df5aaeb769ec82b59" category="cell">更新檔案系統容量（AWS API）</block>
+  <block id="f233f678066d205d60bc5cb3ebfcf93f" category="cell">檢查彙總使用率（ONTAP SSH）</block>
+  <block id="6bed2e358e670cfa98d1b39afb879b37" category="inline-link-macro">ONTAP 執行選項</block>
+  <block id="1e796dbf2aac382810411df3b6bdb144" category="list-text"><block ref="1e796dbf2aac382810411df3b6bdb144" category="inline-link-macro-rx"></block></block>
+  <block id="6b02296fc7ee1a5b3b9fb737bdb79ade" category="inline-link-macro">Lambda 連結總覽</block>
+  <block id="3a637c891389507f09b4ec7b6a87013d" category="list-text"><block ref="3a637c891389507f09b4ec7b6a87013d" category="inline-link-macro-rx"></block></block>
+  <block id="cbaba8a28a6d67e1ca8f691ad6cb56c9" category="summary">NetApp Workload Factory 將資料處理組織成類別，這些類別描述了服務處理的操作資料、每個資料類別如何適應安全性模型、資料儲存在哪裡、保留多長時間以及是否離開客戶環境。</block>
+  <block id="9bf00e1866b80ca4c74002ffeb0dc074" category="doc">NetApp Workload Factory 的資料處理與駐留</block>
+  <block id="028dfcf31e9eec96422b70079f977e80" category="paragraph">NetApp Workload Factory 將資料處理組織成不同的類別，這些類別描述了服務處理的運行資料、每類資料在安全性模型中的定位、資料儲存位置、保留期限以及是否會離開客戶環境。主要資料類別包括組態和中繼資料、運行日誌和事件以及遙測資料。保留的資料可能包括 FSx for ONTAP 組態快照、認證資料引用、AI 使用情況和成本資料、稽核記錄以及短期回應快取。儲存和處理位置因資料類型而異：某些資訊保留在客戶的 AWS 帳戶中，而其他運行資料則儲存在 NetApp 帳戶中。</block>
+  <block id="5566db23d46fd91cc060c15b48ecce53" category="section-title">Workload Factory 處理的資料類別</block>
+  <block id="80fa7f030dd7000ce682d92f705809d1" category="paragraph">Workload Factory 處理下列資料類別：</block>
+  <block id="ea85cca4ee16476132db6c57669ee213" category="list-text">組態和中繼資料</block>
+  <block id="be292b22182c421b45477939fefef343" category="list-text">操作日誌和事件</block>
+  <block id="aa96a21412def0d916f43b639424f8e4" category="list-text">遙測</block>
+  <block id="c39856a3026084916d0ed99e1692077f" category="section-title">Workload Factory 保留的資料類別</block>
+  <block id="8b32b7c4f869653ee5a83a9028fe6ebd" category="paragraph">Workload Factory 儲存以下資料：</block>
+  <block id="280ba10bc1ac9ebbc6864d7f3be046c1" category="list-text">FSx 組態快照（每次掃描時刷新）</block>
+  <block id="18d323c192f98b783bbed221966e40f2" category="list-text">ONTAP 認證資料參照，或使用 KMS 信封加密所加密的認證資料素材（取決於所選的認證資料模式）</block>
+  <block id="b5dcf21ad460fbac332b249a4e832e9e" category="list-text">EDA 計量</block>
+  <block id="ebc254b99fca0e4afb09548ef258dcb2" category="list-text">CloudFormation 範本（7 天<block ref="cfc36842a01da69c484ffdcc6782f437" prefix=" " category="inline-code"></block>標頭）</block>
+  <block id="d727de0d06bec7d2b9099bd508d056ea" category="list-text">AI 使用和成本資料</block>
+  <block id="59db218f773d8d5db413822cf5c7426c" category="list-text">稽核記錄</block>
+  <block id="956215ed6b96661f51142c0f12bd813d" category="list-text">Redis 快取（FSx 回應），TTL 為 20 分鐘</block>
+  <block id="23d2539ac7151e683b8105c95f1a66c7" category="section-title">資訊保存位置</block>
+  <block id="c6368ae044df0f7bb26ed60afda5c591" category="section-title">AWS 帳戶</block>
+  <block id="d207a3a124203dec0c75846dcfa10a7b" category="list-text">ONTAP 管理員密碼儲存在您的 AWS Secrets Manager 中。</block>
+  <block id="0d38e2f79c2b365df7f3616017e1407f" category="list-text">Amazon Bedrock 透過您 AWS 帳戶中 STS 承擔的角色，使用您的推理設定檔 ARN 處理 AI 推理（EMS 分析）。</block>
+  <block id="ac252743de820aac9183d9f76d4bed67" category="section-title">NetApp 帳戶</block>
+  <block id="fa6063b1c2f2305250c0e4398ff9f643" category="list-text">FSx 組態、平衡計畫、ARP 組態和 AI 使用限制</block>
+  <block id="bf287b813cd334fda1fc42e415bf3dc7" category="list-text">臨時 AWS STS 認證資料（快取在 Redis 中）、回應快取、鎖定和部署狀態</block>
+  <block id="f61c0a27e4ead4113f37e307fceeac09" category="list-text">CloudFormation/Terraform 範本、WAD 組態描述元和壓縮報告</block>
+  <block id="9f80825b2d67b8ccab25b67e670760f5" category="list-text">AI 使用計量和收集器效能計量</block>
+  <block id="919e790bde6c7da375d06d2d8a044fef" category="list-text">EDA 彙總計量</block>
+  <block id="92d894d5716ae374c87da601cbacccdb" category="list-text">操作稽核追蹤</block>
+  <block id="6b40fe616e882e0944d26d3ea87d304a" category="list-text">OpenTelemetry 追蹤</block>
+  <block id="bbd9411a6d291854c60271d3439ee880" category="section-title">區域考量</block>
+  <block id="abe9242cef0da471dbc68d909c9d8621" category="list-text">存放在 Amazon Bedrock 服務可用的地區。</block>
+  <block id="954fb89224dcaf3dd7429bab96fb407c" category="list-text">NetApp 內部在<block ref="c800b6d9163b0db7d28f86c1470a9542" prefix=" " category="inline-code"></block>和<block ref="66990c43bceabd79ab8196895199b083" prefix=" " category="inline-code"></block>中運作。</block>
+  <block id="a92d3e715ef2a7ed211e6009563a902c" category="section-title">資訊保留時長</block>
+  <block id="73322e9e35cee6da3c337caeb533ff2d" category="paragraph">本節概述保留類別。有關詳細數值和原則行為，請參閱相關連結頁面。</block>
+  <block id="8589dfb0bb3b523f38b239ab559e2c72" category="inline-link-macro">NetApp Workload Factory 的認證資料保留</block>
+  <block id="0733fef15d62ccf9c261431ef42df61b" category="list-text">認證資料和臨時 AWS STS 認證資料保留：<block ref="a9a578100b37b86aeb2cd5835626afc6" category="inline-link-macro-rx"></block></block>
+  <block id="a25827110bb291fd46755a302146f425" category="inline-link-macro">NetApp Workload Factory 的計量與遙測參考</block>
+  <block id="ff7b6d010ddfebcfc6e3fd38585677ce" category="list-text">營運計量和遙測保留：<block ref="fd0027182a45ff3b7d4b9d95b6132a74" category="inline-link-macro-rx"></block></block>
+  <block id="dda292edb7b8a84b69c1339c4c0e646d" category="list-text">稽核記錄保留：受 NetApp Console 保留政策約束（不受 Workload Factory 控制）</block>
+  <block id="5a2452943f7e87634a32c49f7bd84c26" category="section-title">哪些資訊會離開虛擬私人網路（VPC）</block>
+  <block id="071a0bfcf2ce46fea69a3f9c6b68aa38" category="paragraph">本節概述傳出資料類別。如需通訊協定層級與功能層級的詳細資訊，請參閱連結頁面。</block>
+  <block id="aada4803ecda33fbdba50eaa75990db0" category="section-title">至 Workload Factory 服務的管理平面流量</block>
+  <block id="329a732eb354c664b01d5b328cf2b3dc" category="paragraph">對於管理操作，FSx 組態、Volume 中繼資料、資源識別碼和操作指令會透過 HTTPS 流向 Workload Factory 服務分層。</block>
+  <block id="3f810d26a3649952649e73f15de7fc3a" category="section-title">稽核記錄至 NetApp Console 稽核服務</block>
+  <block id="86b11b03fdd00c1cdbe3af29e34d067d" category="paragraph">每個追蹤的作業都會傳送下列資訊：</block>
+  <block id="0b7816c36349fcccd699c7b0fd9d3afd" category="list-text"><block ref="caf9278667917c3aef31103d6fbe1703" prefix="" category="inline-code"></block></block>
+  <block id="55db2526c0581960f3596b52b27da887" category="list-text"><block ref="b35f75a8f71e57273061dd1a7e1c2ae5" prefix="" category="inline-code"></block></block>
+  <block id="cf9f9fbbb24544659ae4b59937ecb570" category="list-text"><block ref="9acb44549b41563697bb490144ec6258" prefix="" category="inline-code"></block></block>
+  <block id="00ccb764446d7498da09822aba3bdd4e" category="list-text"><block ref="ddbe01c861a066cc39136cbb178aaf7d" prefix="" category="inline-code"></block></block>
+  <block id="1fdf5a1a678d589d9ca7aa8789749632" category="list-text"><block ref="8e44f0089b076e18a718eb9ca3d94674" prefix="" category="inline-code"></block></block>
+  <block id="9a32d65a58550b7b8f3f756adcf02edf" category="list-text"><block ref="be579a850a97252f923168786a91703e" prefix="" category="inline-code"></block></block>
+  <block id="09ee8c1a7f266b5250eacba69484d747" category="list-text"><block ref="b08a2cadfbe48fb12bb2195a940a6784" prefix="" category="inline-code"></block></block>
+  <block id="f524c30054851604bd82fc7cff367a56" category="list-text"><block ref="705ec82ef96f67a4e58b9b0d5ed0e5ef" prefix="" category="inline-code"></block></block>
+  <block id="bcade9c0ff948ba3ee93f782d7ce8364" category="list-text"><block ref="75ba8d70e3692ba200f0e0df37b4d2ae" prefix="" category="inline-code"></block></block>
+  <block id="fc6665a8d61fbacff5523be209186adf" category="list-text"><block ref="eed79b69e88b6b19eb0f840ab8262891" prefix="" category="inline-code"></block></block>
+  <block id="b58041d95740524919a73ab4ec0670f1" category="section-title">AI 分析流量</block>
+  <block id="63ef8f38acf0e114ad2336eb184a5505" category="paragraph">提交給 AI 診斷的 FSx for ONTAP 緊急管理系統 (EMS) 事件、延遲資料與錯誤日誌，會透過您的 AWS 帳戶使用您設定的推論設定檔傳輸至 Amazon Bedrock，因此此流量會保留在您的環境中，而不會到達 NetApp 系統。</block>
+  <block id="8a2bac91e3ae37c74dba268e2ef6915f" category="paragraph">如需有關 AI 分析流量的詳細資訊，請參閱：</block>
+  <block id="30ca66abb463fca0fd22112bf4667ff2" category="inline-link-macro">NetApp Workload Factory 的 AI 控制總覽</block>
+  <block id="aafd021def53891d88f564665606d572" category="list-text"><block ref="aafd021def53891d88f564665606d572" category="inline-link-macro-rx"></block></block>
+  <block id="0a0ca7728ee80f15b7af15f173e1e56e" category="inline-link-macro">Bedrock 選擇加入 NetApp Workload Factory AI 診斷</block>
+  <block id="b3ea09b77a8374fc60e5eb2669a918d6" category="list-text"><block ref="b3ea09b77a8374fc60e5eb2669a918d6" category="inline-link-macro-rx"></block></block>
+  <block id="2373e1b58a2ed340e05fba577fa94365" category="section-title">AWS 服務 API 流量</block>
+  <block id="7eb8a4b8c5520978da3c0e025457d759" category="inline-link-macro">NetApp Workload Factory 的連結性和信任路徑</block>
+  <block id="af855410bc4a58d90213bfbee056d855" category="paragraph">請參閱<block ref="71ee473288a155db0dbd0d5fefa71686" category="inline-link-macro-rx"></block>。</block>
+  <block id="5b9c1b2903f034b469924c617b47b67c" category="section-title">遙測和計量收集</block>
+  <block id="f406f0b73874e6cafd827de163156c75" category="inline-link-macro">計量和遙測參考</block>
+  <block id="e57e2bc923995837ff538d9c024282a7" category="paragraph">請參閱 <block ref="b9d4e31ca583f2187be09222de7f9453" category="inline-link-macro-rx"></block>。</block>
+  <block id="48697474293da820e5a7c005448df7fa" category="section-title">組態和中繼資料收集範圍</block>
+  <block id="0068a0323bd6539def06d8b0fa5c57ad" category="section-title">檔案系統層級</block>
+  <block id="f0dd3cec1ec6bb4658e61813fabe935c" category="list-text">檔案系統組態（部署類型 Gen1/Gen2、處理量容量、儲存容量、儲存設備類型）</block>
+  <block id="2f0ee28dcfcad6a8a12c9ac5f115aab6" category="list-text">首選子網路、安全性群組、VPC 組態</block>
+  <block id="80ee4d109dd1f1caae1a49f62b6a3c79" category="list-text">KMS 加密金鑰中繼資料</block>
+  <block id="7f4a88a55d2a158b3e00a64c6b68ae6f" category="list-text">檔案系統標籤</block>
+  <block id="90d5fd11904139ccdbcdada35530e0fa" category="list-text">檔案系統生命週期狀態</block>
+  <block id="bfeaf9cab567bb7e7f3e1a174332067d" category="list-text">維護時段設定</block>
+  <block id="cd94bbed2b285afe8fe6102e61bbced9" category="section-title">Volume 層級（綜合）</block>
+  <block id="305c999fbe2fbfa8b16d07bfeab14cb3" category="list-text">識別與狀態：Volume 名稱、UUID、類型（rw/dp/ls）、樣式（FlexVol/FlexGroup）、狀態（線上/離線/受限）、建立時間</block>
+  <block id="1956d59bfbd3088ba4a2baaeabdc000b" category="list-text">容量：總容量、已使用容量、可用容量、實體已使用容量、已使用百分比、SSD 實體佔用空間、容量資源池實體佔用空間、非活動資料位元組數/百分比</block>
+  <block id="12e308f72cf6862315cd9ed96f225204" category="list-text">分級：原則（all/auto/none/snapshot_only），最短冷卻天數</block>
+  <block id="9ba13ee93698fd39a84c0e67a39f243d" category="list-text">QoS：已指派的 QoS 原則名稱</block>
+  <block id="ea0f6e9564afc5dac07cfeb15db25b04" category="list-text">NAS 組態：交會路徑、匯出原則指派、UNIX 權限、安全樣式（unix/ntfs/混合）</block>
+  <block id="a16b25d52d57487eebef05811787ba8d" category="list-text">Snapshot 快照技術：Snapshot 快照技術保留大小/百分比/已用量，自動刪除設定</block>
+  <block id="b59e8ed799230d3db57beeed9bfe6725" category="list-text">資料效率：壓縮類型/狀態、重複資料刪除、資料精簡、空間節約效益</block>
+  <block id="01d53635596f8ad9f6299afa93a85e4e" category="list-text">自動調整大小：模式（grow/grow_shrink/off）、最小/最大大小、增大/縮小臨界值</block>
+  <block id="ea523b9edeec037a21f317186b3aa0ed" category="list-text">SnapLock：類型（法規遵循/企業/non_snaplock），保留期間（最短/最長/預設），自動提交期間</block>
+  <block id="20088a6d0fc4ba8f8d04b07b69646ac2" category="list-text">複製：父 Volume/Snapshot 快照技術/儲存設備 VM，是 FlexClone，分割狀態</block>
+  <block id="090d9f7653873cc2e446f1fbc158dcb1" category="list-text">Inodes/檔案：最大可能數量、最大配置數量、已用數量</block>
+  <block id="219cde5b32e59e157749084e7603d6be" category="list-text">加密：已啟用/已停用狀態</block>
+  <block id="b30a237b47062f46f72582ac798008f9" category="list-text">存取時間：atime 更新已啟用/已停用和更新週期</block>
+  <block id="96aaa53169282f191b43594cf13d10c9" category="list-text">SnapMirror：保護狀態、目的地類型（雲端 / ONTAP）</block>
+  <block id="cc3343c2b7423a1c37f8801b55489add" category="list-text">FlexGroup 再平衡：失衡百分比，最大臨界值</block>
+  <block id="b40cc3eae64c70eb1298bab33c3eb077" category="list-text">Volume 移動：目的地 Aggregate，移動狀態</block>
+  <block id="8dba558a09f6dd70879843fcb6e20902" category="list-text">FlexCache 端點類型：無/快取/來源</block>
+  <block id="78232bc87f587a46c8d6efd4eca900ad" category="list-text">標籤：ONTAP 層級 Volume 標籤</block>
+  <block id="d4c0272cdd163cfabd658e71a506d7af" category="section-title">Snapshot 快照技術資料</block>
+  <block id="48fef1ea10a1255f6db1a93dd1b7766d" category="list-text">Snapshot 快照技術名稱、UUID、建立時間、過期時間</block>
+  <block id="a0516efcc065f2263cdec72234f66f5a" category="list-text">大小（位元組）</block>
+  <block id="81eee41fc5f53ae53fde1f2f554b0b98" category="list-text">SnapMirror 標籤</block>
+  <block id="e15a2a28325c4904f1c82e77e0362f30" category="list-text">SnapLock 到期和鎖定狀態</block>
+  <block id="2b83268f011f292ffcd0044c34ee8663" category="list-text">狀態（有效/無效/部分有效）</block>
+  <block id="1b692c18891d951595efc9f917074ba9" category="list-text">使用者評論</block>
+  <block id="e90c5d804d494501af208a17a1594ae8" category="list-text">Snapshot 快照技術原則：名稱、啟用狀態、排程複本（數量、保留期間、排程名稱、前綴、SnapMirror 標籤）</block>
+  <block id="bd4308f8ba5f92aa81fb16563206441d" category="section-title">匯出原則</block>
+  <block id="235be3b036d762defee1e938c775ef06" category="list-text">原則名稱、ID、關聯的儲存設備 VM</block>
+  <block id="a70c3e25ae44702d8cab292471a81364" category="list-text">規則：協定清單（NFS/CIFS/FlexCache）、用戶端比對模式、唯讀規則、讀寫規則、超級使用者規則、規則索引/優先權</block>
+  <block id="ee1422b5d6e290df18dfcf978e3d5406" category="list-text">SUID、裝置建立、chown 模式、匿名使用者對映、NTFS UNIX 安全性設定</block>
+  <block id="e9e162df12af32bc52325a7d223f243b" category="section-title">S3 存取點</block>
+  <block id="2f44341fac9cb3aaa4a6d5664a514ef1" category="list-text">生命週期狀態（可用/建立中/刪除中/失敗/配置錯誤）</block>
+  <block id="d93bd0414d4decbb2b2b727e948a15a1" category="list-text">建立時間、ARN、別名、名稱</block>
+  <block id="9c07439301d0e730fc14a78108195359" category="list-text">檔案所有者使用者和類型（UNIX/WINDOWS）</block>
+  <block id="9bd768b301099000068db6ae5625a147" category="list-text">網路組態（網際網路存取與 VPC 存取、VPC ID）</block>
+  <block id="7361a183281559c3437dc1e10f08e1a2" category="list-text">AWS 標籤</block>
+  <block id="37dc968fdafaf34d4746b11c74790e49" category="list-text">中繼資料掃描能力開發、日誌記錄能力開發、CloudTrail ARN</block>
+  <block id="6890e4bdb0b9c4290869f51695b40541" category="section-title">反勒索軟體保護（ARP）</block>
+  <block id="556739c2e4ffe5768eead14e6e30733a" category="paragraph">Workload Factory 會收集組態狀態和事件詳細資訊：</block>
+  <block id="e3ed5a338aa91870c3bf5995d5b8d6fd" category="list-text">每個 Volume 的狀態（啟用/停用/試運行/暫停）</block>
+  <block id="ec44638b9ae40796b6bd010682505f98" category="list-text">攻擊機率（無/低/中/高）</block>
+  <block id="9bd4c97545ee7a41521272a2ea2a4310" category="list-text">帶有時間戳記的攻擊報告</block>
+  <block id="e9eefcbbb416c4731b6e4204f2774b48" category="list-text">偵測參數：檔案副檔名臨界值、重新命名率激增百分比、熵率激增百分比、檔案建立/刪除率激增百分比</block>
+  <block id="3d3b8c2b290857c7ecae49444149ff56" category="list-text">可疑檔案：檔案路徑、檔案名稱、檔案格式、可疑時間、關聯 Volume</block>
+  <block id="cd5a3837e1ec8006d10bc8671c7bc53f" category="section-title">複寫 / SnapMirror</block>
+  <block id="1add1ab7b9f43f69569c0a72f307e1b0" category="list-text">關係 UUID、狀態、健康狀態</block>
+  <block id="0de40dc0da2ec628694fa942edc071de" category="list-text">來源和目的地（儲存設備虛擬機器、路徑、叢集）</block>
+  <block id="ad969e28ca2ca61cb8385ba4664c425d" category="list-text">傳輸統計資料（傳輸位元組數、持續時間、結束時間、狀態）</block>
+  <block id="c5c000b9caddef2e96d8b292596c45b3" category="list-text">原則（名稱，類型：非同步/同步/連續）</block>
+  <block id="7e37cf9a3f8489cdee79c6ca4b091a6a" category="list-text">節流設定</block>
+  <block id="70ecbeb2eea97451a3d59a4722c51fc9" category="list-text">滯後時間</block>
+  <block id="ad2fc7793e3b5f70a62c76c25c5229b6" category="list-text">不健康的原因（訊息和代碼）</block>
+  <block id="54ea695e0584e00f7d97c136afa8d803" category="list-text">目前傳輸錯誤</block>
+  <block id="4cb91dd8573cd91819465297b1e6ea4e" category="section-title">iGroups</block>
+  <block id="fbc8d259f078f29c42ae03a064aa5f68" category="list-text">名稱、UUID、協定（FCP/iSCSI/混合）、作業系統類型</block>
+  <block id="de128858496a0ba83813c6dbf1a182b2" category="list-text">啟動器（IQN/WWPN）、連線狀態、最後出現時間</block>
+  <block id="3820b97fa8822b722c7bd71859b5dd6b" category="list-text">LUN 對應（邏輯單元編號，LUN 詳細資料）</block>
+  <block id="7b3c6a2d089eb1b6f8959e7e61a50c07" category="section-title">LUN</block>
+  <block id="de713001d8ffcd76acc3403b473c4d3f" category="list-text">名稱、UUID、序號、作業系統類型、啟用狀態</block>
+  <block id="a184c48d6808e36982cf0333a9c6e033" category="list-text">大小、已使用空間、資源隨需配置設定</block>
+  <block id="7b10b7583cf0513528827416bdbb364c" category="list-text">位置（Volume、節點、邏輯單元路徑）</block>
+  <block id="7b1400db5556123f415f390a01234596" category="list-text">自動刪除設定</block>
+  <block id="473dfbfaa1fe0147a2683e79f246600c" category="list-text">容器狀態、映射狀態、唯讀狀態</block>
+  <block id="0f7e668ff93662e5d101fdb4d6a5daf7" category="list-text">QoS 原則</block>
+  <block id="894b687401632f32a70d809d71c5bcf5" category="list-text">效能計量（IOPS、延遲、每次讀寫/總處理量）</block>
+  <block id="01777c324edecc4a479530e122ec62a3" category="list-text">一致性群組成員資格</block>
+  <block id="f24ce81f056d5acd59788df7f5ab36a1" category="section-title">FlexCache</block>
+  <block id="96fc9da10a6107f2b0bca54f2527adf0" category="list-text">來源 Volume/儲存設備虛擬機器/叢集、快取大小、路徑</block>
+  <block id="088688948761447e5026b4d760a078c6" category="list-text">已啟用回寫功能，DR 快取狀態</block>
+  <block id="f6d39e7a003fdd7c26f9cee861d14e0b" category="list-text">相對規模組態</block>
+  <block id="7a9c294cdd63a31ab612a74f0034b7fc" category="list-text">預先填入目錄路徑</block>
+  <block id="7729d2ed0f6230a427c9f0aae01b2ca0" category="list-text">快取與來源之間的連線狀態</block>
+  <block id="fa0550db6a832cbd9782e9deb684d61b" category="section-title">儲存虛擬機器層級</block>
+  <block id="a2b69e4b1101ff2b26a08cc88e0ac019" category="list-text">名稱、UUID、狀態（執行中/停止）、子類型</block>
+  <block id="bd586d65170f401ac6cfdeff15beec79" category="list-text">已啟用/允許的協定（NFS、CIFS、iSCSI、FCP、NVMe、S3）</block>
+  <block id="b748ba2539622d3d57ae6a0daf0a20be" category="list-text">DNS 伺服器和網域</block>
+  <block id="048bbe95f17ffd7de393dc4b4f4a48f9" category="list-text">名稱服務交換器組態（passwd、group、hosts 等）</block>
+  <block id="82134d02ea7239ee72d84f019376be3c" category="list-text">IP 介面（名稱、IP 位址、服務）</block>
+  <block id="9b71cdd2d3a51376864cbcb7c43b206a" category="list-text">已指派的 Aggregate</block>
+  <block id="5f0ca33f2460ea62edbb1294005773d1" category="list-text">反勒索軟體預設 Volume 狀態</block>
+  <block id="62c6cfa01ccd1bfca1270515cd16a869" category="list-text">空間強制執行設定</block>
+  <block id="eb198e55a3d53e9dca85f82d111972e9" category="list-text">對等關係（應用程式、狀態、遠端叢集/儲存設備虛擬機器）</block>
+  <block id="f1da4c6433fc3861698be29872fd7d1a" category="section-title">Aggregate / 儲存設備層級</block>
+  <block id="56328e52f2e54baa263645aa9f76cc0c" category="list-text">Aggregate 名稱、UUID、狀態、RAID 狀態</block>
+  <block id="8055d1fb6870df68fe1be39145ac69da" category="list-text">區塊儲存設備：磁碟數量、RAID 大小、可用/已使用/總空間、實體已使用</block>
+  <block id="045a10b05cce4afa5e1adf1007d02a41" category="list-text">已使用的雲端儲存設備</block>
+  <block id="e1de2fb6b2c9245402f7263ba00d22d8" category="list-text">效率：比率、邏輯已用、節省</block>
+  <block id="eb6b7b49f18f5b7eca041d28cd9aa51e" category="list-text">加密、鏡射、SnapLock 設定</block>
+  <block id="6f2bb990139987fa3665ffdbf081d6d8" category="list-text">效能計量（IOPS、延遲、處理量）</block>
+  <block id="0339a3d0fdbbb769900e76ef052bffe7" category="section-title">利用率計量（EDA）</block>
+  <block id="7c490ce488555626d759bd2477ecd7ad" category="list-text">資料擷取頻率：容量/處理量每 12 小時擷取一次；延遲每 20 分鐘擷取一次</block>
+  <block id="37dbd9e2f4c76770166547c2d0451e50" category="list-text">粒度：每個時間範圍內標準化至約 60 個資料點</block>
+  <block id="2019e2fb7eaa57e3c022917375ae173a" category="inline-link-macro">計量與遙測參考</block>
+  <block id="70a916723f9c52c40a4740994890e164" category="list-text">保留和儲存設備詳情：<block ref="ddf7221e3cfbcc0c7ac73522f7cb671b" category="inline-link-macro-rx"></block></block>
+  <block id="c54269ebc65c2b19febd69831886f43a" category="summary">NetApp Workload Factory 對靜態資料進行加密，並明確定義了 Workload Factory 和 AWS 服務之間的金鑰管理職責。</block>
+  <block id="bcfa10afbafff77f6e6fd4466a057841" category="doc">NetApp Workload Factory 的加密與金鑰管理</block>
+  <block id="65938dc0df1eff41650b9f2127f29d3b" category="paragraph">NetApp Workload Factory 使用靜態加密，並在 Workload Factory 和 AWS 服務之間明確定義了金鑰管理職責。對於 Amazon FSx for NetApp ONTAP 檔案系統，您可以選擇自己的 AWS KMS 金鑰，也可以使用 AWS 代管的預設金鑰，而 FSx for ONTAP 會使用該金鑰執行加密作業。Workload Factory 也使用信封加密來保護儲存的 ONTAP 認證資料。</block>
+  <block id="e9ef59cb448443e3512d0da7dd380612" category="section-title">FSx 的 KMS 靜態加密範圍</block>
+  <block id="8bef3df53575f350c722ab06f22cedcb" category="paragraph">透過 Workload Factory 建立 FSx for ONTAP 檔案系統時，您可以選擇指定自己的 AWS KMS 金鑰用於靜態資料加密。如果您未指定金鑰，Workload Factory 將使用 AWS 代管的預設 FSx 金鑰。</block>
+  <block id="8b4493c97fa430a4bffa8d2eef4efcd0" category="list-text">加密的內容</block>
+  <block id="95e01d29e76ba8caee4bd15e6adcaba9" category="list-text">所有儲存在支援 FSx for ONTAP 檔案系統的底層 EBS 磁碟區上的資料（AWS FSx 靜態加密）。</block>
+  <block id="46ae93d3722e7816b6f8be2a6131b2a8" category="list-text">金鑰所有權</block>
+  <block id="0fd9c0715a3b9a29f2171bbeba39ae05" category="list-text">KMS 金鑰位於您的 AWS 帳戶中。</block>
+  <block id="9caf46c2ea953918f6c9b35db2a47bab" category="list-text">選擇和使用金鑰所需的權限</block>
+  <block id="8c48b6377072760489c2d3c9d617fee6" category="list-text">Workload Factory 需要：</block>
+  <block id="dfb668701678da9712efc2b20ffc334b" category="list-text"><block ref="07b068a2b55029d6b44b340463f0d1d8" prefix="" category="inline-code"></block></block>
+  <block id="f95d023a6ce4fdaea7a8c22d2df978b9" category="list-text"><block ref="f135b7d7ed012bd98709eefe7430e01d" prefix="" category="inline-code"></block></block>
+  <block id="70143e00bdd092c316a27d6dc5f9ccd9" category="list-text"><block ref="276e466538acff21910df6227231c79f" prefix="" category="inline-code"></block></block>
+  <block id="74053520cf190d0ed965409693e42819" category="list-text"><block ref="341d6f040d34917cbc708be689644fc5" prefix="" category="inline-code"></block>（允許 FSx for ONTAP 服務使用該金鑰）</block>
+  <block id="c4b4bb1d43e9827e1f7cad72dfbd8d38" category="list-text">金鑰存取模式</block>
+  <block id="079e89f8ec40ed581f9520a4f43de3fa" category="list-text">Workload Factory 從不直接使用您的 KMS 金鑰加密或解密資料。它會在檔案系統建立期間將金鑰 ID 傳遞給 Amazon FSx for NetApp ONTAP API；Amazon FSx for NetApp ONTAP 會執行加密作業。</block>
+  <block id="93924bfac25af082b28708ea0a6f7760" category="section-title">認證資料保護（服務端信封加密）</block>
+  <block id="a7609b1301c0a2661267db22dc1eb700" category="paragraph">當您透過 Workload Factory 儲存 ONTAP 認證資料（管理員密碼）時，它會在持久化之前使用信封加密來保護它們。</block>
+  <block id="0b29276e0e738649a2ec6cfa7a4f5782" category="list-text">加密方法</block>
+  <block id="5e21f2d02ccce77da19c03411ff50abb" category="list-text">使用唯一的資料加密金鑰（DEK）對每個認證資料記錄進行 AES-256-CBC 加密。</block>
+  <block id="b1c7eb06dec3b830a544a652954f1d18" category="list-text">信封加密流程</block>
+  <block id="be5c9895b00667f49f4b23311912051a" category="list-text">每個認證資料都會產生一個唯一的 256 位元 DEK。</block>
+  <block id="73d2c701e05ff92f130b1b92f73202a7" category="list-text">DEK 對認證資料（密碼）進行加密。</block>
+  <block id="3268712d478768270e87fa178eef0eb2" category="list-text">DEK 本身使用根目錄金鑰進行加密，並與加密認證資料一起儲存。</block>
+  <block id="96c40dbc419699af3deb2a8b85407458" category="list-text">明文 DEK 永遠不會儲存。</block>
+  <block id="411f9a778fff923b200136272bccc4a2" category="list-text">加密內容</block>
+  <block id="f6e11010bd34657eb7b96fb4372c6026" category="list-text">每個資料金鑰都透過加密方式與其特定的認證資料記錄綁定，防止金鑰在不同記錄之間重複使用。</block>
+  <block id="ad1ad5d884d1d19b770599ea50e37b7b" category="list-text">替代方案：AWS Secrets Manager</block>
+  <block id="e3df5e7a9db964244e3fdcd2792898a1" category="list-text">您無需將加密密碼儲存在服務中，而是可以將 ONTAP 認證資料儲存在您自己帳戶的 AWS Secrets Manager 中。Workload Factory 從不檢視或儲存密碼；它會將 Secrets Manager ARN 傳遞給 Lambda 連結，該連結會在執行階段於您的 VPC 內擷取密碼。</block>
+  <block id="87b7d0cb9c26c755da6e31735102208f" category="admonition">GovCloud 帳戶需要 AWS Secrets Manager。</block>
+  <block id="429dd710c4499635ea141d2a6618ad53" category="summary">NetApp 以多種方式為 Workload Factory 及其雲端服務提供支援。全天候 24 小時提供豐富的免費自助支援選項，例如知識庫（KB）文章和社群論壇。您的支援註冊包含透過線上工單提供的遠端技術支援。</block>
+  <block id="3e47dd6c1c31a28a814c68e2545e736c" category="doc">取得適用於 NetApp Workload Factory 的 FSx for ONTAP 協助</block>
+  <block id="3c6efe0ce159fb5b8ee4882bcf3ad973" category="paragraph">NetApp 為 Workload Factory 及其雲端服務提供多種支援方式。提供 24x7 全天候的豐富免費自助支援選項，例如知識庫（KB）文章和社群論壇。您的支援註冊包含透過網路開立工單的遠端技術支援。</block>
+  <block id="6a7b2c9c4cec65ad972b108fa0a1192b" category="section-title">取得 FSx for ONTAP 的支援</block>
+  <block id="4435b263dd1a35bcd8dfda050db92b3b" category="paragraph">如需與 FSx for ONTAP、其基礎架構或使用該服務的任何解決方案相關的技術支援，請參閱該產品的 Workload Factory 文件中的「取得協助」。</block>
+  <block id="18cf072964a583150dd247485ba75b92" category="inline-link-macro">Amazon FSx for ONTAP</block>
+  <block id="359d8b16e442ffaa72e03c95fcd60448" category="paragraph"><block ref="359d8b16e442ffaa72e03c95fcd60448" category="inline-link-macro-rx"></block></block>
+  <block id="35f9849ffdd809bda11d0fc56e1e3583" category="paragraph">若要獲得針對 Workload Factory 及其儲存設備解決方案與服務的技術支援，請使用下列說明的支援選項。</block>
+  <block id="edd15fbeb7b2dffa163336ecd4f3e80c" category="section-title">使用自助選項</block>
+  <block id="5e4b821a1a82558dead1ef6961e90666" category="paragraph">這些選項全天候 24 小時、每週 7 天免費提供：</block>
+  <block id="5b6cf869265c13af8566f192b4ab3d2a" category="list-text">文件</block>
+  <block id="d935525f4850c4638cbf48ae53fb4686" category="paragraph">您目前正在查看的 Workload Factory 文件。</block>
+  <block id="19111351b69b6b15668130b38b7f6038" category="inline-link">知識庫</block>
+  <block id="436f63b446dba5a418c698d49bd39718" category="list-text"><block ref="436f63b446dba5a418c698d49bd39718" category="inline-link-rx"></block></block>
+  <block id="ba6274b9c9d1f81bb3a648fa289986b8" category="paragraph">搜尋 Workload Factory 知識庫，尋找有助於解決問題的文章。</block>
+  <block id="14526abd8bda5af347775025cd5342cf" category="inline-link">社群</block>
+  <block id="410fdb9caa9c64da2ff3f88f4836960d" category="list-text"><block ref="410fdb9caa9c64da2ff3f88f4836960d" category="inline-link-rx"></block></block>
+  <block id="7faef90df03399696ba9d4815b37171a" category="paragraph">加入 Workload Factory 社群，即可關注後續的討論或建立新的討論。</block>
+  <block id="d88bacf2a9fdcbbc844edcba97c34e30" category="section-title">建立 NetApp 支援案例</block>
+  <block id="82812db645b6ff5e9c2a24ddfb66c8d6" category="paragraph">除了上述自助支援選項外，您可以在啟動支援後與 NetApp 支援專家合作解決任何問題。</block>
+  <block id="8fece025a1a8fef7018449bf104a2527" category="paragraph-title">開始之前</block>
+  <block id="e2a733504c4088b809813bbb35a3ddfd" category="inline-link-macro">了解如何註冊以獲得支援</block>
+  <block id="a12ea39ddf1c98adfd7f751299705efa" category="paragraph">若要使用 *建立案例* 功能，您必須先註冊支援。將您的 NetApp 支援網站認證資料與您的 Workload Factory 登入資訊建立關聯。<block ref="d9fea24984986beabae03291c4b721de" category="inline-link-macro-rx"></block>。</block>
+  <block id="356c88ac4b0ec3f7689cc91f54701fef" category="list-text">在 Workload Factory 主控台的右上角，選取 *說明 &gt; 支援*。</block>
+  <block id="6e74b203173a9994c366c7e7a3cf4748" category="paragraph">選擇此選項會在新的瀏覽器索引標籤中開啟 NetApp Console，並載入支援儀表板。</block>
+  <block id="08d96fdd1a845d80db99e6e1dffb8bc7" category="list-text">在「資源」頁面上，選擇「技術支援」下的可用選項之一：</block>
+  <block id="6a1b74969231967ed071d465206b15c7" category="list-text">如果您想透過電話與我們聯繫，請選擇「致電」。您將被引導至 netapp.com 上的頁面，該頁面列出您可以撥打的電話號碼。</block>
+  <block id="d65a2a6fc9caad1867728d4382eeb989" category="list-text">選擇「建立案例」以向 NetApp 支援專家開啟工單：</block>
+  <block id="d7d0da18fbb8f8f85c1364883fbdf4c7" category="list-text">*服務*：選擇 *Workload Factory*。</block>
+  <block id="e6f29fb3c7636dc0040600dd0e84bb79" category="list-text">*案例優先順序*：選擇案例的優先順序，可以是低、中、高或關鍵。</block>
+  <block id="835eb4008e97c2a7f69bbb2725285e34" category="paragraph">若要深入瞭解這些優先順序的詳細資訊，請將滑鼠懸停在欄位名稱旁邊的資訊圖示上。</block>
+  <block id="0f7d9319c95a8be1492e74601c4b3259" category="list-text">*問題執行摘要*：請詳細描述您的問題，包括任何適用的錯誤訊息或您執行的疑難排解步驟。</block>
+  <block id="002c6f26fb01affb37b8cf3cef7a1fb0" category="list-text">*其他電子郵件地址*：如果您想讓其他人知悉此問題，請輸入其他電子郵件地址。</block>
+  <block id="c7f5c1a75acc58c6f004efc0ce1eba09" category="list-text">*附件（選購）*：一次最多可上傳五個附件。</block>
+  <block id="bfa80e7aaad6da353b431bff3a0e12d6" category="paragraph">每個檔案的大小限制為 25 MB。支援的檔案副檔名有：txt、log、pdf、jpg/jpeg、rtf、doc/docx、xls/xlsx 和 csv。</block>
+  <block id="baaf0e61add7d12cf8d12e023d5aef18" category="inline-image-macro">這是「建立案例」表單的快照，您可以透過該表單向 NetApp 支援部門建立案例。</block>
+  <block id="b0c6c3ee60a29925d3f09cd609b79483" category="paragraph"><block ref="b0c6c3ee60a29925d3f09cd609b79483" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="bd965e38a0c9cf27aa1bde099308e23f" category="paragraph-title">完成後</block>
+  <block id="18f487556417bb6d9721a7005ae097c9" category="paragraph">螢幕上會彈出一個窗口，顯示您的支援案例編號。NetApp 支援專員將審查您的案例，並儘快與您聯繫。</block>
+  <block id="0ff9b4b8684b9e03c9c1e1320935eae3" category="paragraph">若要查看您的支援案例歷史記錄，您可以選擇 *Settings &gt; Timeline*，然後尋找名為「create support case」的行動。最右側的按鈕可讓您展開該行動以查看詳細資訊。</block>
+  <block id="5c56753585e89a84941bb3a78bc681af" category="paragraph">建立案例時，您可能會遇到以下錯誤訊息：</block>
+  <block id="a30f69ab0ec85d427a3e8835713525bd" category="paragraph">「您無權針對所選服務建立案例。」</block>
+  <block id="3f13dd54818447375c92bf35e0a35f00" category="paragraph">此錯誤可能表示 NSS 帳戶及其關聯的註冊公司，與 NetApp Console 帳戶序號（例如960xxxx）或系統序號的註冊公司不同。您可以透過下列其中一種方式尋求協助：</block>
+  <block id="e01df0b4dfd95eba2c59333419e4fac6" category="list-text">使用產品內聊天功能</block>
+  <block id="d41d8cd98f00b204e9800998ecf8427e" category="inline-link"></block>
+  <block id="639be990cfca56ab4b63685d8bacd437" category="list-text">提交非技術性案例，請至<block ref="2298f47e4dad19a3156da7ce6116d9b1" category="inline-link-rx"></block></block>
+  <block id="898e35e1a4bf4b025c3edec879439b08" category="section-title">管理您的支援案例（預覽版）</block>
+  <block id="289d2ab2d9b0e116790d035921c12b56" category="paragraph">您可以直接從 NetApp Console 檢視和管理作用中和已解決的支援案例。您可以管理與您的 NSS 帳戶和公司關聯的案例。</block>
+  <block id="394ef093ad3259b9ff0fe7406f015b83" category="paragraph">案例管理目前以預覽版形式提供。我們計劃在後續版本中完善此體驗並新增增強功能。請透過產品內聊天功能向我們傳送回饋。</block>
+  <block id="cf3a2d2c139bf5c9cc87fe714bfff3b1" category="paragraph">請注意下列事項：</block>
+  <block id="5e4e7672ec2ba2b8a763da7f6714e212" category="list-text">頁面頂端的案例管理儀表板提供兩種檢視：</block>
+  <block id="01c3ffea552d74a5ae390b10e71a1f26" category="list-text">左側檢視顯示您提供的使用者 NSS 帳戶在過去 3 個月內開啟的案例總數。</block>
+  <block id="e3b6c09a5686233f72ce1ea60a1eb088" category="list-text">右側檢視顯示過去 3 個月內，根據您的使用者 NSS 帳戶，您公司層級開立的案件總數。</block>
+  <block id="b19b168cc8a2b8c984465e140256b3a2" category="paragraph">表格中的結果反映了與您選擇的檢視相關的案例。</block>
+  <block id="56dcadeee6b0e5c47a52673f9b5a0bb3" category="list-text">您可以新增或移除感興趣的欄，也可以篩選諸如「優先順序」和「狀態」等欄的內容。其他欄位僅提供排序功能。</block>
+  <block id="6f936762e1223311f031685422fcd3a4" category="paragraph">請查看以下步驟以了解更多詳情。</block>
+  <block id="b14929795a61440e9b4ec9f8a4885ae3" category="list-text">在每個案件層級，我們提供更新案件備註或結案尚未處於「已結案」或「待結案」狀態的案件的功能。</block>
+  <block id="f9a63cd3a07378e169c58addd5fdce8d" category="paragraph">選擇此選項會在新的瀏覽器標籤頁中開啟 NetApp Console 並載入支援儀表板。</block>
+  <block id="785b440c0be1d853c5e2f4fb1f1ee2ab" category="list-text">選擇 *個案管理*，如果系統提示，請將您的 NSS 帳戶新增至 NetApp Console。</block>
+  <block id="c80d8addb8aa8e8872bbc44894b077f3" category="paragraph">*案例管理*頁面顯示與您的 NetApp Console 使用者帳戶相關聯之 NSS 帳戶相關的開啟案例。這與顯示在 *NSS 管理*頁面頂端的 NSS 帳戶相同。</block>
+  <block id="2ae5ae78bdb2d222f15fd8e89248709c" category="list-text">您可以選擇修改表格中顯示的資訊：</block>
+  <block id="1d39d3ab518e1e3f16cbafb2a56e1fd9" category="list-text">在「組織案例」下，選擇「檢視」以檢視與貴公司相關的所有案例。</block>
+  <block id="059e856250b59be3069246887b74a23c" category="list-text">您可以選擇確切的日期範圍或選擇不同的時間範圍來修改日期範圍。</block>
+  <block id="dfb3764bce2548df4e06357403f9c7d0" category="inline-image-macro">案例管理頁面表格上方的選項快照，可讓您選擇確切的日期範圍或過去 7 天、30 天或 3 個月。</block>
+  <block id="4f7062c5c309a833cf46e4a1a5a5d366" category="paragraph"><block ref="4f7062c5c309a833cf46e4a1a5a5d366" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="a1bb576be9e5a356290f231efb51b3f5" category="list-text">篩選各列的內容。</block>
+  <block id="3753f10a59e21f58b30e3e67d416453e" category="inline-image-macro">狀態列中的篩選選項快照，可讓您篩選出符合特定狀態（例如「作用中」或「已關閉」）的案例。</block>
+  <block id="8f624dee500d9670a27c4404084a7a62" category="paragraph"><block ref="8f624dee500d9670a27c4404084a7a62" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="1c6ea5ef583389e18e7d7bda70beaa71" category="inline-image-macro">表格中出現的加號圖示</block>
+  <block id="002f1c0a8cf4a68b888010ddef3a7f7e" category="list-text">選取 <block ref="e55ec8dc42ae68d9326c51261c8a5f4f" category="inline-image-macro-rx" type="image"></block>，然後選擇要顯示的欄，即可變更表格中顯示的欄。</block>
+  <block id="370b44009f1b82d0b6b178bb80cc62fa" category="inline-image-macro">一張快照，顯示您可以在表格中顯示的欄位。</block>
+  <block id="72c5c65442a2c44e7f2546b8b4c957df" category="paragraph"><block ref="72c5c65442a2c44e7f2546b8b4c957df" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="ad0ae9ea1f2e8d973a9a0f6bb169f494" category="inline-image-macro">表格最後一列出現的一個有三個點的圖示</block>
+  <block id="000a1376035909240f559b8ab724030c" category="list-text">透過選取 <block ref="54181d1b918b28e5f92545f8b3b4a30c" category="inline-image-macro-rx" type="image"></block> 並選取其中一個可用選項來管理現有案例：</block>
+  <block id="6d9dd74e7709ef802d299966f7898f6b" category="list-text">*檢視案例*：檢視特定案例的完整詳細資訊。</block>
+  <block id="8e6b52a532a4fbbfc98dca3ebfa5f1e6" category="list-text">*更新案例記錄*：提供有關您問題的更多詳細資料，或選擇 *Upload files* 以附加最多五個檔案。</block>
+  <block id="bb6d5d351525342dd6b3cf4d15b6f298" category="list-text">*結案*：提供有關您結案原因的詳細資訊，然後選擇 *結案*。</block>
+  <block id="e93217b2f709a398ce3c0fb753beb05f" category="inline-image-macro">顯示選擇表格最後一欄選單後可執行動作的快照。</block>
+  <block id="6f7cf78e14aa346236a87d9541221fb2" category="paragraph"><block ref="6f7cf78e14aa346236a87d9541221fb2" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="697e181c992fd61808824540e4ba16b1" category="summary">NetApp Workload Factory 使用 Lambda 連結權限邊界來定義 Lambda 執行和 Workload Factory 呼叫所需的 IAM 存取。這些權限是選用的，但對於 ONTAP 原生操作是必需的。</block>
+  <block id="d7bd95cad1bccdf0a47d579915962720" category="doc">適用於 NetApp Workload Factory 的 Lambda 連結 IAM 權限</block>
+  <block id="e385699fc5ad8aa115f586c834926c7c" category="paragraph">NetApp Workload Factory 使用 Lambda 連結權限邊界來定義 Lambda 執行和 Workload Factory 呼叫所需的 IAM 存取。這些權限是選用的，但對於 ONTAP 原生作業是必要的。設定 Secrets Manager 支援後，連結會在執行階段直接從您的 AWS Secrets Manager 取得 ONTAP 認證資料，且密碼僅在您的 VPC 內傳輸，從 Secrets Manager 到 Lambda 函數，然後再到 ONTAP 終端節點。</block>
+  <block id="e60c3ad2237426a9a97cf78a300c633a" category="inline-link-macro">Lambda 連結埠和呼叫</block>
+  <block id="92666e891219e3c221ef1434cff49a5a" category="paragraph">有關請求路徑和連接埠要求，請參閱<block ref="4905cc0a517d5199ddb6cc56382a6425" category="inline-link-macro-rx"></block>。</block>
+  <block id="89db385dcbe0d3f84cbdac70bb629a4d" category="section-title">Lambda 執行角色權限</block>
+  <block id="0e061feab12b96b1f41b8e33f0ebb755" category="paragraph">在 VPC 中部署連結時，Lambda 執行角色需要以下權限：</block>
+  <block id="a73bd31daeac3758b853e534cdaec351" category="cell">ec2:CreateNetworkInterface / ec2:DescribeNetworkInterfaces / ec2:DeleteNetworkInterface</block>
+  <block id="81c68c56799d505af7ff645ef9829343" category="cell">標準 VPC 連接的 Lambda 連網</block>
+  <block id="47d688b55b5fe1639642e2aa370ee33a" category="cell">ec2:AssignPrivateIpAddresses / ec2:UnassignPrivateIpAddresses</block>
+  <block id="582a43783ed1a1e612d23922574c33e3" category="cell">VPC ENI IP 管理</block>
+  <block id="70757a66616a159402fa2c4296de9ba2" category="cell">secretsmanager:GetSecretValue （作用域為 FSxSecret*）</block>
+  <block id="8c6c8254d894dff4693d61d4bf167c02" category="cell">擷取 ONTAP 認證資料（僅在啟用 Secrets Manager 時）</block>
+  <block id="1d9db47508aec775b1c693ec88284093" category="cell">CloudWatch 日誌（代管原則）</block>
+  <block id="55382d277a15cb21d700cb916cd0786e" category="cell">Lambda 執行記錄</block>
+  <block id="69cfa22208c5bf2ae087266f95cf8d97" category="section-title">Workload Factory 呼叫權限</block>
+  <block id="12814af220e91227acced340b9d16dfe" category="paragraph">Lambda 連結資源型原則授予 Workload Factory 服務主體以下權限：</block>
+  <block id="f83f9c33f721f289d66ffd89e3a3ce41" category="cell">lambda:InvokeFunction</block>
+  <block id="b28d80d2fdce1674201439c2ef6df65c" category="cell">執行 Lambda</block>
+  <block id="a7acbafbf920c0858cb3e7590ec34b89" category="cell">lambda:GetFunction</block>
+  <block id="ce589933fd4aa8f6fa7351378266b837" category="cell">健全狀況與狀態檢查</block>
+  <block id="5562fdbc0e3f883ad84293bab475fd9d" category="cell">lambda:UpdateFunctionCode</block>
+  <block id="2dd0e6fe52e02f98dc7a05590262e2d7" category="cell">版本升級（映像更新）</block>
+  <block id="ab228d160c41218837aa1b55d7b8a4c2" category="cell">lambda:GetFunctionConfiguration</block>
+  <block id="7c71015fa1289d15ecc26f45f5a5efea" category="cell">設定驗證</block>
+  <block id="96e4535ace7673910470c23b446fbc82" category="summary">NetApp Workload Factory 使用 Lambda 連結生命週期控制來管理部署、健全狀況監控和受控映像更新，同時最大限度地減少運作風險。</block>
+  <block id="a82455589531ab39ea4c163ed199e1e6" category="doc">NetApp Workload Factory 的 Lambda 連結生命週期</block>
+  <block id="d7282ac4e1b6f5b65adc8025ebc47561" category="paragraph">NetApp Workload Factory 使用 Lambda 連結生命週期控制來管理部署、健全狀況監控和受控映像更新，將維運風險降至最低。您可以使用<block ref="5562fdbc0e3f883ad84293bab475fd9d" prefix=" " category="inline-code"></block>權限來更新 Lambda 連結 Container 映像，以部署改進或安全性修補程式，而無需重新部署 Amazon CloudFormation 堆疊。生命週期控制也定義如何監控連結健全狀況，以及在不再需要時如何移除 Lambda 連結及其關聯資源。</block>
+  <block id="c8e7046fae47843f831a71b2ea66ce55" category="section-title">生命週期控制點</block>
+  <block id="e925025cd72aca13d64b1b37193c0d54" category="list-text">部署：透過 Amazon CloudFormation 或 Terraform 堆疊部署自動化</block>
+  <block id="9e09c5606fa64d3b00d85d3c466fd124" category="list-text">監控：健全狀況檢查偵測連線問題；故障計數器追蹤可靠性</block>
+  <block id="c88026bfec86ea9e1a3a73abbdfd37df" category="list-text">移除：刪除 CloudFormation 堆疊會從您的 AWS 帳戶移除 Lambda 及相關資源</block>
+  <block id="d00f5c0a222775783b54514a9bccba4b" category="summary">NetApp Workload Factory 使用 _連結_（部署在您 VPC 中的 AWS Lambda 函數），在 Amazon FSx for NetApp ONTAP API 未公開這些操作時，將 ONTAP 原生操作保留在您的 AWS 帳戶邊界內。</block>
+  <block id="53b9d52063ce0377dabc49cee1823179" category="doc">了解 NetApp Workload Factory 的 Lambda 連結</block>
+  <block id="7ba904fc9a72f24504e2f60dcbf6862a" category="paragraph">NetApp Workload Factory 使用 _link_（部署在您 VPC 中的 AWS Lambda 函數），在 Amazon FSx for NetApp ONTAP API 未公開這些操作時，將 ONTAP 原生操作保留在您的 AWS 帳戶邊界內。該連結在您的子網路和安全性群組中執行，因此執行元件會保留在您的 AWS 環境中。Workload Factory 僅針對需要直接 ONTAP 存取而非可用 AWS 服務 API 的操作呼叫該連結。它會將連結的架構與 NetApp Console 代理程式的安全性和操作設定檔進行比較。</block>
+  <block id="8ee4203494265e57fedea182d2084538" category="section-title">連結安全性架構</block>
+  <block id="5ad96879a11f37652715b1674a7d6115" category="paragraph">Workload Factory 連結在 Workload Factory 帳戶和一個或多個 FSx for ONTAP 檔案系統之間建立信任關係和間接連線。</block>
+  <block id="0cf381e7d4d203cdd3d115a96e4d926f" category="paragraph">下表提供 Lambda 連結安全性架構的總覽。使用此資訊來了解 Lambda 函數如何在您的 AWS 帳戶中部署和執行，包括其連網組態、執行環境和操作限制。</block>
+  <block id="5ad234cb2cde4266195252a23ca7d84e" category="cell">屬性</block>
+  <block id="a254c25adc7d10d7e9c4889484f875a5" category="cell">詳細資料</block>
+  <block id="a623a8d0366bf079411aa30be45b2d10" category="cell">運算</block>
+  <block id="09a292e9b7243301a5cef0878206f4df" category="cell">AWS Lambda（Container 映像）</block>
+  <block id="88cd0b47d78df68ae0cb9100c508304f" category="cell">Node.js 22</block>
+  <block id="ea355214fd4bc7c57f471bd92918879b" category="cell">部署</block>
+  <block id="d5763ac72a602e8578b2ce867d40a3b4" category="cell">您 AWS 帳戶中的 CloudFormation 堆疊</block>
+  <block id="20f98dfb9c02ecf109311df066e79285" category="cell">VPC 放置</block>
+  <block id="bba35eb233cac3c041d349cac1de85ea" category="cell">您的子網路，您的安全性群組</block>
+  <block id="c85a251cc457840f1e032f1b733e9398" category="cell">逾時</block>
+  <block id="d32c26e7d7b694081fb636cf6f618604" category="cell">每次調用 10 秒</block>
+  <block id="da495869897c5c6c4ad8b3348989762f" category="cell">呼叫</block>
+  <block id="6ae6b49651fea979667b175bd9f5a1e5" category="cell">同步（RequestResponse）</block>
+  <block id="519044510c97365906cb7e8370ee07db" category="cell">套件類型</block>
+  <block id="d36f94c36a75d8621a4f3e82567486f7" category="cell">Container 映像（取自 NetApp ECR）</block>
+  <block id="13311c4c4676678a83c3ec8435c4106c" category="paragraph">下圖顯示 Lambda 連結的安全性架構。</block>
+  <block id="fc646b825472a1035524e6ed5912ce54" category="inline-image-macro">圖示 Lambda 連結的安全性架構。</block>
+  <block id="a0b0c411755d02f1cb565d75d6427415" category="paragraph"><block ref="a0b0c411755d02f1cb565d75d6427415" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="85987282a3ba67324ab8024c85774fcc" category="section-title">Lambda 連結與 NetApp Console 代理程式</block>
+  <block id="c632567aa7911a12b8f27597086f4bb8" category="paragraph">Lambda 連結和 NetApp Console 代理程式用途不同，安全性和操作影響也不同。</block>
+  <block id="9e0e31246b7b078403969b265870b3f4" category="cell">維度</block>
+  <block id="ace4d7951f4a45454f8a2812055823ae" category="cell">連結（基於 Lambda）</block>
+  <block id="a57767794f409526a42adaf3ebca317f" category="cell">NetApp Console 代理程式（基於虛擬機器/Pods）</block>
+  <block id="ee78f38cb6fe8737ddc921f7392c6dfb" category="cell">執行階段模型</block>
+  <block id="bf547b91f8cf98eaca408e159a6edcdf" category="cell">無伺服器（AWS Lambda），客戶部署</block>
+  <block id="2d55d8e900a09dbdccdd5b375e629f77" category="cell">客戶部署的虛擬機器/Container；執行 NetApp 控制台服務 pod</block>
+  <block id="ae5d763e83682ac38d9c832814c4209c" category="cell">主要範圍</block>
+  <block id="18e41f5530da436347c85d2557f6b686" category="cell">控制平面 ONTAP REST 操作（僅當 AWS API 不支援此操作時）</block>
+  <block id="6392d1593b85e745b028dede0be1766c" category="cell">編排以及對資料服務的支援</block>
+  <block id="8288da93dae1352a8b3b464e7acfa657" category="cell">資料服務支援</block>
+  <block id="09acc2ba4ee586428918f6e651200fa7" category="cell">不代管資料服務</block>
+  <block id="166f369bc2f2c4fa92738261b6b7327e" category="cell">可作為資料服務主機（執行 NetApp 主控台服務 Pod）</block>
+  <block id="19cce72d454e39a6a01b982e7ca532a4" category="cell">營運例行成本</block>
+  <block id="9d4dc0c22bb4af6f0735c1f543943a4f" category="cell">沒有全年無休的 VM</block>
+  <block id="b4b866f2197b1b8ecfec9e0aab1956fe" category="cell">虛擬機器生命週期管理與升級</block>
+  <block id="6bd69dd600d3d81973b0e85194a8b885" category="paragraph">如需完整的跨系統連線圖，請參閱<block ref="99ebaf77705a119234345f8cf9fb6a9f" category="inline-link-macro-rx"></block>。</block>
+  <block id="493b97a0d712b7d22cf393781012a19e" category="summary">NetApp Workload Factory 使用 Lambda 連結請求和連接埠邊界來定義所需的傳出連線和 IAM 授權呼叫。</block>
+  <block id="b30add353b22a335c3f371d270f4cb99" category="doc">NetApp Workload Factory 的 Lambda 連結埠和呼叫</block>
+  <block id="1cb033e8531c74d9f51b0e598895bcfb" category="paragraph">NetApp Workload Factory 使用 Lambda 連結請求和連接埠邊界來定義所需的傳出連線和 IAM 授權呼叫。此連結支援對 ONTAP 管理端點的 HTTPS 請求、用於診斷的唯讀 SSH 命令，以及健全狀況檢查。所有連線均從您的 VPC 內的連結傳出，因此不需要傳入連線或暴露的端點。Workload Factory 透過基於 IAM 的授權，經由 AWS Lambda API 呼叫該連結。</block>
+  <block id="dfba8729ba29a6e9c012ec644ce8386f" category="section-title">請求類型</block>
+  <block id="752321f15c48165a422a855891d59fd6" category="list-text">HTTPS（ONTAP REST API）：將 HTTPS 呼叫代理至 ONTAP 管理端點（連接埠 443），以進行 Volume、儲存設備 VM 和叢集操作。</block>
+  <block id="2c1b8da88c71a63f8b5e51f6a5b4cd83" category="list-text">SSH（ONTAP CLI）：在連接埠 22 上執行唯讀 ONTAP CLI 命令，以取得診斷和效能資料。</block>
+  <block id="55a2f148e495fc5dd3cd954db0b7aec0" category="list-text">健全狀況檢查：傳回狀態和支援的功能。</block>
+  <block id="ab8b1dee0dd0fb72726215e26369a8fb" category="section-title">傳出網路邊界</block>
+  <block id="12007e1d59f4d09c87dbe2c438256244" category="cell">目的地</block>
+  <block id="83de60f888490a415c4d8d02f474db89" category="cell">ONTAP 管理 IP（在您的 VPC 內）</block>
+  <block id="ebdbd0470c7f62f146b8021298cf232e" category="cell">REST API 操作</block>
+  <block id="0225f3308d4fb0f77604d8bcbc595a60" category="cell">SSH CLI 命令</block>
+  <block id="3ec9b95a8ae6f93416cf8442ca7b8e78" category="cell">AWS Secrets Manager 端點（選用）</block>
+  <block id="77fd0eb52b46132b1ca2e9361bf201fd" category="cell">使用 Secrets Manager 時擷取憑證</block>
+  <block id="ff9a446db49d05d3288e9ae78409ea9e" category="paragraph">不需要傳入連線。該連結不會暴露任何端點。Workload Factory 使用 AWS<block ref="f83f9c33f721f289d66ffd89e3a3ce41" prefix=" " category="inline-code"></block> API 呼叫它。</block>
+  <block id="35828f2c8ceb4d6b1b2377e9e607f787" category="section-title">Workload Factory 呼叫 Lambda 連結</block>
+  <block id="e6fdf13fa3a083a3dcca5804e3456ee4" category="paragraph">Workload Factory 透過 AWS Lambda API <block ref="f83f9c33f721f289d66ffd89e3a3ce41" prefix="(" category="inline-code"></block>）呼叫 Lambda 連結，使用基於 IAM 的授權。</block>
+  <block id="6036362dda5acd1953a060524ae12572" category="paragraph">呼叫有效負載包含：</block>
+  <block id="f3f9e7871d96ecc034ebf2fd28c9d635" category="list-text">目標 ONTAP 管理端點（IP/主機名稱）</block>
+  <block id="467dae23a3f3873d2b296c4e2e38806d" category="list-text">要執行的操作（REST API 路徑或 SSH 命令）</block>
+  <block id="ec2a0e07ecdd554ba708009669766abf" category="list-text">驗證資訊（即時憑證或 Secrets Manager ARN 引用）</block>
+  <block id="98c778fa3870c62687cfe943190eb372" category="paragraph">如需完整的跨系統連線圖，請參閱 <block ref="71ee473288a155db0dbd0d5fefa71686" category="inline-link-macro-rx"></block>。</block>
+  <block id="2ed10307ffa46f8b98db6d272dfe2c9e" category="summary">NetApp Workload Factory 非常重視資訊安全性和資料保護實務，重點關注資料處理實務和存取要求，並提供最小權限組態和潛力加固方面的指導。</block>
+  <block id="959c03dd443d17c86595f3f842446ea3" category="doc">了解 NetApp Workload Factory 的資訊安全性</block>
+  <block id="8b5365df20590671b13578db1d53ae69" category="paragraph">資訊安全性是 NetApp Workload Factory 設計和營運的核心組成部分。資訊安全、雲端平台和儲存設備團隊可以利用這些詳細資訊來評估和就職 Workload Factory，以支援企業安全性需求。</block>
+  <block id="607efb75bc505340a11d534848e6d1bb" category="section-title">什麼是 Workload Factory</block>
+  <block id="b653a7dba78ef8c5f7055df1ec5d23c6" category="paragraph">Workload Factory 是一個 SaaS 生命週期管理平台，旨在協助您使用 Amazon FSx for NetApp ONTAP 最佳化和管理工作負載（例如儲存設備、VMware 遷移、EDA 專案和資料庫環境）。您的工作負載在 AWS 中運作。</block>
+  <block id="f140fdc3cbfb1da5ce43e6a966fdb9b3" category="paragraph">Workload Factory 使用 AWS API 來執行所有可透過 AWS 原生提供的 FSx for ONTAP 操作，並使用 ONTAP REST API 來執行平台支援但無法透過 AWS API 原生提供的 Workload Factory 操作。</block>
+  <block id="85e6a28e481055462ce32046d42b2d6a" category="section-title">本指南中所使用的核心安全性原則</block>
+  <block id="7310289d42f662613510d4520b3fe67c" category="list-text">保密性</block>
+  <block id="59e9d5fa5514bd2b1b57a906c30407cb" category="list-text">透過身分控制、最小權限原則、加密和網路邊界來保護資料免受未經授權的存取。</block>
+  <block id="f3f97de67c80480904f958df15b8a57b" category="list-text">完整性</block>
+  <block id="0359faac8eb3504444e5b9e3c3cd01df" category="list-text">使用權限範圍、變更控制和可稽核性來保護系統和組態免受未經授權或意外變更的影響。</block>
+  <block id="faeaec9eda6bc4c8cb6e1a9156a858be" category="list-text">可用性</block>
+  <block id="e567c0b31ac468a35fe8341be486e9dc" category="list-text">透過具有恢復能力的 AWS 設計和運作監控，確保授權使用者可以存取服務和工作負載。</block>
+  <block id="84cea73d4fd562da22e7352b79d6a3ca" category="section-title">本指南涵蓋的資訊類型</block>
+  <block id="68ab0752c1d1f9cfe9d659753bdc75a8" category="paragraph">以下各節提供資訊，協助您評估與就職 Workload Factory，以支援企業安全性要求。</block>
+  <block id="2dee056d046172623e9ab8b91b844e56" category="list-text">安全性模型和職責</block>
+  <block id="3abf13be969acfc79b6f19a4dde3e95f" category="inline-link-macro">安全性模型概覽</block>
+  <block id="41425a8ad228f11b22cffb2ce0c34aa1" category="list-text"><block ref="41425a8ad228f11b22cffb2ce0c34aa1" category="inline-link-macro-rx"></block></block>
+  <block id="d99a0c202a15cbf339a9c8c2dd928b82" category="inline-link-macro">共同責任邊界</block>
+  <block id="497411aac0bea806358427417c5ac5d3" category="list-text"><block ref="497411aac0bea806358427417c5ac5d3" category="inline-link-macro-rx"></block></block>
+  <block id="3b6365bca88cc4bb07408c9232669b84" category="list-text">架構與連線</block>
+  <block id="bb578015250f94dc0a40050a24c9d9e8" category="inline-link-macro">連結性和信任路徑</block>
+  <block id="c94ed78a28f43392eacfbba5c435f3b8" category="list-text"><block ref="c94ed78a28f43392eacfbba5c435f3b8" category="inline-link-macro-rx"></block></block>
+  <block id="bcf548884551acff793fc591608fcb34" category="list-text">身分、憑證和最小權限</block>
+  <block id="ed91153c791299d1316432fb714612c6" category="inline-link-macro">AWS 帳戶整合</block>
+  <block id="544c0a2fe3c2bc365eecd765b0966b10" category="list-text"><block ref="544c0a2fe3c2bc365eecd765b0966b10" category="inline-link-macro-rx"></block></block>
+  <block id="9123b393544ff2d9596c3b63e3dfc3cf" category="list-text">資料治理、隱私和生命週期</block>
+  <block id="746adf4e84a84901fcd35c09789c4fee" category="inline-link-macro">資料處理和駐留</block>
+  <block id="87d744a5d3717ebb550c2a48cde70712" category="list-text"><block ref="87d744a5d3717ebb550c2a48cde70712" category="inline-link-macro-rx"></block></block>
+  <block id="d84d2e30de7be656d2f8a84533dd20cb" category="inline-link-macro">帳戶刪除清單</block>
+  <block id="37bcf849d6ce7af2d14487dad347ceaa" category="list-text"><block ref="37bcf849d6ce7af2d14487dad347ceaa" category="inline-link-macro-rx"></block></block>
+  <block id="965a0caf28156aac11b6460fc52f2051" category="list-text">可觀測性和監控</block>
+  <block id="9264d875fb527a2da8d21099786d2a40" category="inline-link-macro">指標和遙測</block>
+  <block id="f1c26453771b58a51cf87671418e6073" category="list-text"><block ref="f1c26453771b58a51cf87671418e6073" category="inline-link-macro-rx"></block></block>
+  <block id="5fb9365b28a4db680676958fe415569e" category="list-text">AI 控制和 VPC 元件</block>
+  <block id="ba932869980ec8545d6a2a91661fc92f" category="inline-link-macro">AI 控制總覽</block>
+  <block id="ef28dc8b3051281f6fa5f3c395639a47" category="list-text"><block ref="ef28dc8b3051281f6fa5f3c395639a47" category="inline-link-macro-rx"></block></block>
+  <block id="b3fb3b97b3903142bb5c18330787728d" category="section-title">快速入門</block>
+  <block id="91812ebb5627b3db7da12d8be134dc28" category="list-text">從_檢視、規劃和分析_（唯讀）權限開始，並僅在需要時擴充。</block>
+  <block id="74d5e70bd364a973507961e7180b8346" category="list-text">使用 AWS CloudTrail 驗證<block ref="60cfe31830d467874bb430da1683504e" prefix=" " category="inline-code"></block>整合角色的活動。</block>
+  <block id="029bf93187092518fcd5b40e80f49deb" category="list-text">事先決定您是否需要部署 Lambda 連結或 NetApp Console 代理程式的 ONTAP 原生作業。</block>
+  <block id="a3383ae136d2372758456979b0295bfd" category="list-text">事先決定是否允許生成式 AI，以及駐留限制是否需要單一區域推論設定檔。</block>
+  <block id="d9186b0a27b5b835f06c5d6408286a7e" category="doc">NetApp Workload Factory 的最小權限層級</block>
+  <block id="418dcbb4a08e8e2a0893a95da942d404" category="paragraph">您可以隨時限制 Workload Factory IAM 權限，以遵守最小權限要求，例如限制對特定資源（ARN）的存取，並套用 IAM 條件，例如標籤和 CIDR 範圍。</block>
+  <block id="128e58d321ee4bf170ce36048d908b7c" category="section-title">分層權限模型</block>
+  <block id="4961e62d68458489040ae8240e432a7d" category="paragraph">Workload Factory 採用分層權限模型，遵循最小權限原則。新增 AWS 憑證時，您可以選擇要啟用的功能層級。您可以從唯讀探索開始，並根據需要擴充。</block>
+  <block id="aaf9f546928ec8a4a338ccfe2e273d3b" category="paragraph">Workload Factory 透過您 AWS 帳戶中的 IAM 角色授予所有權限，該角色是透過 STS 使用外部 ID 來擔任。</block>
+  <block id="e7c899658fa24ca7a745599cff1cdf35" category="paragraph">Workload Factory 透過即時工作階段原則進一步限定每次 API 呼叫的範圍。</block>
+  <block id="b5c4fb47ac0ad39176efd041f61c16b7" category="paragraph">在 Workload Factory 主控台中，AI 聊天功能 _Ask Me_ 可協助您安全地完善權限，它會建議限制選項並產生要在 AWS 中套用的更新原則。</block>
+  <block id="039727239d5248f9f141984a526c5307" category="section-title">授予權限</block>
+  <block id="d407b51f274f45e6167ca6dda253ee88" category="paragraph">將 AWS 憑證新增至 Workload Factory 時，您可以選擇要啟用的權限分層。您可以隨時啟用或停用分層。</block>
+  <block id="564cd84499debe05935b48419f625f70" category="paragraph">分層是累積的：啟用較高分層會自動啟用所有較低分層。</block>
+  <block id="3e265b668fb365db436e23411e27697d" category="list-text">外部 ID（混淆代理保護）</block>
+  <block id="3789708ccf6965626efa02ee0161ac95" category="list-text">按作業工作階段原則（每次請求最小權限）</block>
+  <block id="03e2dfde5e609debd4317a64f2d0b675" category="list-text">基於標籤的條件（安全性群組修改僅限於 Workload Factory 建立的資源）</block>
+  <block id="1e97ac5aa3063a45835812927ca40b89" category="list-text">秘密 ARN 範圍（Secrets Manager 存取受限於<block ref="4e7ac6946d9d0866cca5f3153dff7741" prefix=" " category="inline-code"></block>）</block>
+  <block id="07a9c1d549f04dc7d5c58345e3ecf5e7" category="list-text">執行階段權限驗證（回報缺少的行動/資源以進行針對性修復）</block>
+  <block id="2107b42c0c5102465121e5ec8705ca05" category="section-title">權限文件</block>
+  <block id="9d8756af99e6ba953331af86b86fe733" category="inline-link-macro">權限參考</block>
+  <block id="12643469f0fbd2d5aad92bc54b51e92a" category="paragraph">Workload Factory 權限的主要參考資料是 Workload Factory 設定和管理文件中的 <block ref="86d546199bf7e7e189a44cce3e98b32d" category="inline-link-macro-rx"></block>。您可以在此參考資料中找到有關從儲存設備 IAM 原則中移除權限之影響的資訊。</block>
+  <block id="3a84cef0233ac32a841f51da8d052f65" category="doc">NetApp Workload Factory 的法律聲明</block>
+  <block id="e9c44bbfd795a5d63d74c6a77afee70d" category="paragraph">法律聲明提供版權聲明、商標、專利等資訊的存取權限。</block>
+  <block id="6016a2b341113bf496b719905398ecd2" category="section-title">版權</block>
+  <block id="52009bb7ee17227f566cd26a02caee56" category="inline-link-macro"><block ref="52009bb7ee17227f566cd26a02caee56" category="inline-link-rx"></block></block>
+  <block id="a1a9afcf552a769c282769271829889a" category="paragraph"><block ref="a1a9afcf552a769c282769271829889a" category="inline-link-macro-rx"></block></block>
+  <block id="126a02652da6de02962cf1b654fd6376" category="section-title">商標</block>
+  <block id="c4ce4761e466527d26b3e3d5ed1006fd" category="paragraph">NETAPP、NETAPP 標誌以及 NetApp 商標頁面上所列的標記均為 NetApp, Inc. 的商標。其他公司和產品名稱可能是其各自所有者的商標。</block>
+  <block id="f99aa604031e5049799e73b5c3748a98" category="inline-link-macro"><block ref="f99aa604031e5049799e73b5c3748a98" category="inline-link-rx"></block></block>
+  <block id="5d545fe5152641e2ebe654e336e520e5" category="paragraph"><block ref="5d545fe5152641e2ebe654e336e520e5" category="inline-link-macro-rx"></block></block>
+  <block id="be89498d2f8a22ce47c02ba9795fe2af" category="section-title">專利</block>
+  <block id="d0b19d36be2c5f16e9aef46c8a452d3d" category="paragraph">目前 NetApp 擁有的專利清單可在以下網址找到：</block>
+  <block id="88e5eabd3917048b6927c42496b98f86" category="inline-link-macro"><block ref="88e5eabd3917048b6927c42496b98f86" category="inline-link-rx"></block></block>
+  <block id="dd38f906b37d412de7d1c1dcf4cbf31c" category="paragraph"><block ref="dd38f906b37d412de7d1c1dcf4cbf31c" category="inline-link-macro-rx"></block></block>
+  <block id="56c34c6410dd45c5cec44149ad0ce037" category="section-title">隱私權政策</block>
+  <block id="8acb58cbd50ef1b468a020ee0bd351d3" category="inline-link-macro"><block ref="8acb58cbd50ef1b468a020ee0bd351d3" category="inline-link-rx"></block></block>
+  <block id="2352c4e1f4d0024ade0869e00e6243f4" category="paragraph"><block ref="2352c4e1f4d0024ade0869e00e6243f4" category="inline-link-macro-rx"></block></block>
+  <block id="c0227cef6f07a8cd2ac72f2945b031aa" category="section-title">開放原始碼</block>
+  <block id="9b73989307c1975dfa4d5e1581e4afe8" category="paragraph">通知文件提供有關 NetApp 軟體中使用的第三方版權和授權的資訊。</block>
+  <block id="aeb31c9f8c311597856b129ab948b4e6" category="inline-link">NetApp Workload Factory</block>
+  <block id="55f7843f27571db97da76bdf68a76d22" category="paragraph"><block ref="55f7843f27571db97da76bdf68a76d22" category="inline-link-rx"></block></block>
+  <block id="bef7b0fa7c024988f7d2096895036f9c" category="summary">NetApp Workload Factory 在 AWS CloudWatch 中收集並儲存 Volume 層級與檔案系統層級的計量，為您提供儲存效能與容量的營運可見度。</block>
+  <block id="29cea2413c94021e75af1ee68a6f97a5" category="doc">NetApp Workload Factory 的計量與遙測</block>
+  <block id="adecdc66805ff3238d868ca03ce1035d" category="paragraph">NetApp Workload Factory 會在 AWS CloudWatch 中收集並儲存 Volume 級和檔案系統級計量，讓您對儲存效能和容量具有營運可見度。計算出的計量（例如處理量）是從這些收集的值衍生而來。了解計量定義、收集頻率、重新整理行為和保留詳細資訊。</block>
+  <block id="12ba142cac3f1268846bfc963157b693" category="section-title">包含的計量</block>
+  <block id="657d0ae7a064a2dcd5876dd086faa484" category="paragraph">NetApp Workload Factory 針對操作日誌和事件使用這些計量：</block>
+  <block id="cf45807585a5cdf01d2aad6464ef4932" category="list-text">Volume 層級 CloudWatch 計量（每個 Volume 收集）</block>
+  <block id="8eaeba0c41b848a7cfeaa2f99d8aded0" category="list-text">檔案系統層級 CloudWatch 計量（按檔案系統收集）</block>
+  <block id="08be5e1d2d18d626d0538b272de428cd" category="list-text">計算計量</block>
+  <block id="16249599c9eec41b26af44db7608ce44" category="list-text">收集排程與保留</block>
+  <block id="c9c9ba8b1b44541f777d24879581c5f6" category="section-title">關於營運計量</block>
+  <block id="564bd3de956132ab7f95848cd9d60765" category="paragraph">計算計量使用以下公式：</block>
+  <block id="6b334ed56aa6956d1f6166cc2a22d7b1" category="list-text">處理量（位元組/秒）=（NetworkSentBytes + NetworkReceivedBytes）/ 週期</block>
+  <block id="e9e18d4473e8824f470fd65cfc0c6ea9" category="paragraph">重新整理行為：</block>
+  <block id="88882da096561488634253388865fcf4" category="list-text">Volume 和叢集計量每 12 小時重新整理一次。</block>
+  <block id="beb56aafb5106e10df138c9b071edd6d" category="list-text">延遲計量每 20 分鐘重新整理一次。</block>
+  <block id="f0929c02b196f8ddb0d85f51aef32183" category="list-text">DynamoDB 項目會在 14 天後自動過期。</block>
+  <block id="aa0a0b41fc28da2f334d59bb1528c61b" category="section-title">關於遙測資料收集</block>
+  <block id="751f7be5e9cbb8dcaffa809b00fa079d" category="list-text">OpenTelemetry 追蹤透過 OTLP HTTP 匯出至 SigNoz（內部可觀測性）</block>
+  <block id="81267c0215fbbf018b49b785c2363784" category="list-text">AI 使用情況計量（權杖計數、模型成本）儲存在 AWS Timestream 中</block>
+  <block id="c811e1f9e16809265e73d21d2a227407" category="list-text">NetApp Console 稽核記錄（行動名稱、狀態、請求/回應中繼資料、時間戳記）</block>
+  <block id="216ab40cda5c7c00ff42a4efb1827d89" category="cell">指標</block>
+  <block id="e47968d23161243dce030a9386a4395e" category="cell">AWS CloudWatch 名稱</block>
+  <block id="19c562a36aeb455d09534f93b4f5236f" category="cell">單元</block>
+  <block id="85c3e14744d86f2b3848b8685d9c5366" category="cell">它測量的內容</block>
+  <block id="b3e9c4cd60af78168e1dfa0923b34db0" category="cell">Volume 儲存容量</block>
+  <block id="617329fecd67c24176298b54c11ecfdb" category="cell">StorageCapacity</block>
+  <block id="600e754f49b68aa0fc90a9cd64eb7051" category="cell">位元組</block>
+  <block id="47e1fef9c9daf3c2b0b394d6b0d18f76" category="cell">總配置容量</block>
+  <block id="8a83a3693fbeea338030954271df0e2c" category="cell">已使用的儲存設備</block>
+  <block id="42fd0e3f836a3283fbc8dd726b9d73a3" category="cell">StorageUsed</block>
+  <block id="889dd3578bc34ba61fa08921f98f7a7a" category="cell">實際儲存的資料</block>
+  <block id="079fcb9b0c6420ac7c85720f05daac87" category="cell">資料讀取位元組</block>
+  <block id="c1929329db66f1a5b4fc210febc71478" category="cell">DataReadBytes</block>
+  <block id="8d6a77ffbbf7b13e07ced2b4c6cada11" category="cell">讀取處理量</block>
+  <block id="1c52cb04d74c214e9474cac77b886d73" category="cell">資料寫入位元組</block>
+  <block id="9ad91595784880e9bbb04cb7ea86bb22" category="cell">DataWriteBytes</block>
+  <block id="f065806b8d90a21785624f56bbbfd705" category="cell">寫入處理量</block>
+  <block id="a1d3ac22ef5e8be0595fec09e30f5eaa" category="cell">資料讀取作業</block>
+  <block id="73d8588689ba9870753a58faecf3aea2" category="cell">DataReadOperations</block>
+  <block id="e93f994f01c537c4e2f7d8528c3eb5e9" category="cell">計數</block>
+  <block id="86cfa2758dc24270f86861fe92aedae4" category="cell">讀取 IOPS</block>
+  <block id="2273b78e812bbe4786cda2d0faf19cde" category="cell">資料寫入作業</block>
+  <block id="af36d93274827f4506acc55ed20c9986" category="cell">DataWriteOperations</block>
+  <block id="06dfefa7d295854682c6a6f2f613ca2d" category="cell">寫入 IOPS</block>
+  <block id="bcb598846f52a45771f7b5eb195ffa58" category="cell">元資料操作</block>
+  <block id="8c7f1db9c62b703ae627f33c159f5c05" category="cell">MetadataOperations</block>
+  <block id="082cd5c6b8b5bd183c696fc7d544f484" category="cell">中繼資料 IOPS</block>
+  <block id="8b8176b45990b4e06ee1ba1f3c92ac69" category="cell">資料讀取作業時間</block>
+  <block id="37620dd581af8acb80c316585703082c" category="cell">DataReadOperationTime</block>
+  <block id="8f19a8c7566af54ea8981029730e5465" category="cell">秒</block>
+  <block id="cf9afbba5dc3d6546bf5f110bb1a8486" category="cell">讀取延遲</block>
+  <block id="48cbd816dc52596050619b3ea734c823" category="cell">資料寫入作業時間</block>
+  <block id="39f67ae3609ea4652e64513b0ae65fcc" category="cell">DataWriteOperationTime</block>
+  <block id="d80906a49158ecc08546e169f755d9b9" category="cell">寫入延遲</block>
+  <block id="aa13456f424a30d485c661f4cdfa11a1" category="cell">中繼資料作業時間</block>
+  <block id="0b178902b4a0aa1eeb6744f705ffe646" category="cell">MetadataOperationTime</block>
+  <block id="89798dbdddac0f98ae0daf12503549fc" category="cell">中繼資料延遲</block>
+  <block id="caa419c06e9141baccd8c1f93fed02b4" category="section-title">檔案系統層級 CloudWatch 計量</block>
+  <block id="dbcdce0df591a5821f381209133390e5" category="cell">SSD 儲存容量</block>
+  <block id="c512c8d5e285af060d6c6f3342ea26de" category="cell">總 SSD 分層容量</block>
+  <block id="c68360be8eb15a3ec154ccc15ae1c4bf" category="cell">已使用的 SSD 儲存設備</block>
+  <block id="d8bdaefa24e5e14ffb6e9b6961c5ba0f" category="cell">StorageUsed（SSD 分層）</block>
+  <block id="6eb0c0806206b6acfea795aea6552e8b" category="cell">SSD 分層消耗</block>
+  <block id="581a574b3423127dcbc3236e842f4079" category="cell">已使用的容量資源池</block>
+  <block id="2c6ed60f2e0e461bee42c6d9fda5905e" category="cell">StorageUsed（容量資源池）</block>
+  <block id="24fc63a7b05ce258f8b14f349db8614e" category="cell">容量資源池消耗</block>
+  <block id="fb8326e1edbd06b1bf6ea0332e089055" category="cell">CPU 使用率</block>
+  <block id="e4fa0b47fa54fc7226baea824078cb88" category="cell">CPU 使用率</block>
+  <block id="adaaee4b22041c27198d410c68d952c9" category="cell">百分比</block>
+  <block id="a986262ce735a85529f01195a5e1e464" category="cell">檔案伺服器 CPU</block>
+  <block id="d2d9bfb471eaafa9f0774d54e40ddbda" category="cell">SSD 容量使用率</block>
+  <block id="097b3ab7d0b839a2c5b5e0aa20a14d1c" category="cell">StorageCapacityUtilization</block>
+  <block id="a7295fc258014e8410ac4ada9d5e982e" category="cell">SSD 分層使用率</block>
+  <block id="d5c077f0799922ec9890f2a994494fd9" category="cell">網路處理量使用率</block>
+  <block id="921fe88b5ba4f43fc968cf150e7327ea" category="cell">NetworkThroughputUtilization</block>
+  <block id="898589ce64c4408fc545fb8d15a49354" category="cell">網路使用率百分比</block>
+  <block id="0a4131f42a7884c79713c88154df8d52" category="cell">磁碟 IOPS 使用率</block>
+  <block id="baabb7e8b61ce3cfc7ba2a815fc1375d" category="cell">DiskIopsUtilization</block>
+  <block id="05702ae69456f77fc232c2c430b3f788" category="cell">磁碟 IOPS 使用率百分比</block>
+  <block id="3805ffea182af8f8e649ef5a3ddde3d0" category="cell">磁碟處理量使用率</block>
+  <block id="25396189e67c08d31e63d89d891d7c71" category="cell">FileServerDiskThroughputUtilization</block>
+  <block id="e37e59fd6f3a27d2486438212dd873b3" category="cell">磁碟處理量已使用百分比</block>
+  <block id="c2e070e92f055f6e49098abc39bdc053" category="cell">磁碟 IOPS 使用率（伺服器）</block>
+  <block id="64749188ec7697746671319c9db23092" category="cell">FileServerDiskIopsUtilization</block>
+  <block id="a10cc478b3b5d7cd5a329caabbe43bb9" category="cell">伺服器磁碟 IOPS 利用率</block>
+  <block id="0e63e1a4096a86da3bdbb23c4222aef2" category="cell">儲存設備效率節省</block>
+  <block id="3b1271b3e1e7dc5bb635f7f209e9c6ca" category="cell">StorageEfficiencySavings</block>
+  <block id="b392c56b53dacfe3d5d5f328a3ba358f" category="cell">效率節省的空間</block>
+  <block id="4f31691a2aad91ed29ea2b96dfa40cfd" category="cell">網路接收</block>
+  <block id="896a7a5aa761f110126e8a9c027a4004" category="cell">NetworkReceivedBytes</block>
+  <block id="56b0f815de4b0f68772c9a48670a6ac5" category="cell">傳入網路</block>
+  <block id="847b9e0887e0aaccb8e7e94f8911b49c" category="cell">網路傳送</block>
+  <block id="8046ba9ef5ea28f217759f37c4328603" category="cell">NetworkSentBytes</block>
+  <block id="c94e839e793a9bf1fae316f8f4bc3021" category="cell">傳出網路</block>
+  <block id="8ae4a627e28635267b1fc532c618e41b" category="cell">時間範圍</block>
+  <block id="ef3d144d18d141f6a4e73a06e4a348d3" category="cell">收集期間</block>
+  <block id="90fd43f146814c9c0cb1e9040b914fa0" category="cell">資料點</block>
+  <block id="8c4aa541ee911e8d80451ef8cc304806" category="cell">儲存</block>
+  <block id="7f6d38d7d0f6e5ede0664468079dfb06" category="cell">保留</block>
+  <block id="e3b481d5297f475abc283227bedbd9b9" category="cell">1 天</block>
+  <block id="00970c9ca37aa88dc959bcc3250bc82c" category="cell">24 分鐘</block>
+  <block id="4e8328e60b25d82b27fe129ca0750612" category="cell">約 60</block>
+  <block id="6ebb7423072c5943f52c11274fd71b0b" category="cell">DynamoDB</block>
+  <block id="b5df581dd21ad389ad77d892c0b23399" category="cell">14 天（TTL）</block>
+  <block id="705fbbd6e1667845569c00fd7523d343" category="cell">1 週</block>
+  <block id="917baadb82ae77abe24e40eb396b1d3f" category="cell">約 2.8 小時</block>
+  <block id="1634e66b522edaa910370cc5581a47f1" category="cell">1 個月</block>
+  <block id="a32d6f77b4cd387776263c94eaaa52ff" category="cell">12 小時</block>
+  <block id="de0353cab16c9faa68162dffe7b3ec08" category="cell">3 個月</block>
+  <block id="a7343b00ee0b3860d95aa33bbfa82b0e" category="cell">約 1.5 天</block>
+  <block id="ca4c73c1f333c437a47c58afd0623530" category="cell">1 年</block>
+  <block id="e9f096c83d6235d983b901df04ed36ee" category="cell">約 6 天</block>
+  <block id="96d510e07d4793fecba562c7a0e6fb4d" category="summary">可觀測性訊號有助於支援運行監控、疑難排解和調查。在 NetApp Workload Factory 中，可觀測性包括計量、遙測資料和運行記錄，這些指標和記錄能夠提供對服務行為、AI 使用情況以及透過 Workload Factory 執行的操作的可見度。</block>
+  <block id="50ed157fb664d3ee633efe845f6d74b7" category="doc">了解 NetApp Workload Factory 中的可觀測性</block>
+  <block id="0f287a5706ad9eabca9b2428379aa356" category="paragraph">可觀測性訊號有助於支援運行監控、疑難排解和調查。在 NetApp Workload Factory 中，可觀測性包括計量、遙測資料和運行記錄，這些指標和記錄能夠提供對服務行為、AI 使用情況以及透過 Workload Factory 執行的操作的可見度。遙測資料和運行記錄支援內部監控和客戶導向的稽核可見度，而 Tracker 則可協助您審查支援操作的進度、狀態和詳細資訊。</block>
+  <block id="afbfe64bedf0aa1b3200acd9514d0dba" category="section-title">遙測與運作記錄</block>
+  <block id="30f69f916007cd6aaa34e3fa4bd342ca" category="paragraph">Workload Factory 使用下列遙測和作業記錄類型：</block>
+  <block id="bc53eda97bfbe9e09e30ce14aee5be6c" category="section-title">Workload Factory 中的稽核記錄</block>
+  <block id="145813b0d1b5bcb1ddec60c42ffa4f74" category="paragraph">Workload Factory 提供 Tracker 監控功能，方便您監控正在執行的作業及其執行時間。透過 Tracker，您可以追蹤 FSx for ONTAP、認證資料和連結作業的進度和狀態，審查作業任務和子任務的詳細資料，並診斷任何問題或故障。</block>
+  <block id="d73fd05e9c4331e9d1af30ae3dcfd75c" category="paragraph">Tracker 提供多種操作。您可以按時間範圍（過去 24 小時、7 天、14 天或 30 天）、工作負載、狀態和使用者篩選工作；使用搜尋功能尋找工作；並將工作表下載為 CSV 檔案。</block>
+  <block id="bbcc3d77b8d7921725fb0f747cf0c4bb" category="inline-link-macro">使用 Workload Factory 中的 Tracker 監控作業</block>
+  <block id="a41bdbf9803f4f390fc59e16b259386a" category="list-text"><block ref="a41bdbf9803f4f390fc59e16b259386a" category="inline-link-macro-rx"></block></block>
+  <block id="108fb3bdf8bc31cb0de9178a07dea83e" category="list-text"><block ref="108fb3bdf8bc31cb0de9178a07dea83e" category="inline-link-macro-rx"></block></block>
+  <block id="44f3f76df08f2953ae314abe0f58ae9c" category="summary">上線至 NetApp Workload Factory 可在您開始使用產品之前，建立對您 AWS 環境的安全的存取。</block>
+  <block id="61366223199ce2252f0d9930298c6569" category="doc">NetApp Workload Factory 上線安全性工作流程</block>
+  <block id="25ecb47a1602dea549b92558fd02ef27" category="paragraph">上線至 NetApp Workload Factory 可在您開始使用產品之前，建立對您 AWS 環境的安全的存取。此流程結合了 AWS 信任組態、權限界定、連線設定、可觀測性驗證，以及選用的 AI 診斷能力開發。</block>
+  <block id="893f7a5e42f0cc2b555d99ea7379e0cc" category="section-title">步驟 1：決定您的上線方式</block>
+  <block id="2a834ac0df3a003c929e66b9bdd28e70" category="list-text">確定 AWS 帳戶和環境邊界（例如，生產環境與非生產環境的分隔）。</block>
+  <block id="9e6e0866445ae2c61fdc62d622510627" category="list-text">識別所需的工作流程（唯讀探索、資源配置與 ONTAP 原生作業）。</block>
+  <block id="5dcb5dba894df689d7ded57f982063d8" category="list-text">根據工作流程需求決定是否部署 VPC 執行元件（例如 Lambda 連結）。</block>
+  <block id="9a11f5d322377bc8fd3d66a7d8cc5707" category="list-text">決定是否啟用 AI 診斷（預設啟用）。</block>
+  <block id="2ef07eb8787a63f2c077f581db7de377" category="list-text"><block ref="2ef07eb8787a63f2c077f581db7de377" category="inline-link-macro-rx"></block></block>
+  <block id="2eee1235aaa9e2c78fd8464b8e498c45" category="section-title">步驟 2：建立 AWS 信任與存取</block>
+  <block id="24b26f2b0e8fb62879f557b01457ba1d" category="list-text">在您的 AWS 帳戶中部署 IAM 角色。</block>
+  <block id="b71e572a5c261a2134bd499eec03c6fa" category="list-text">使用信任原則中的外部 ID 來控管角色代入。</block>
+  <block id="5ab4146446ff5f4b56c1aa1f5549d0ba" category="section-title">步驟 3：套用最小權限</block>
+  <block id="3a992e9144af06303108319ec4598b1d" category="list-text">選擇支援您預期工作流程的最低權限分層。</block>
+  <block id="5457fc6ef4d8745ace850f6c441c737c" category="list-text">驗證每個請求的工作階段原則是否將動作限制為正在執行的作業。</block>
+  <block id="f163abb067723f28487ac052cffe5a71" category="paragraph"><block ref="470abcaa1ec503caa1f909e24384f857" category="inline-link-macro-rx"></block>。</block>
+  <block id="904950ddef61a0d894e263aac77703d8" category="section-title">步驟 4：設定連線與 VPC 邊界（視需要）</block>
+  <block id="58dc51ba9809050d0cf33762f086c9dc" category="list-text">驗證到 AWS 端點的必要網路路徑。</block>
+  <block id="b7160c09f6a36371d8dc3bb720f03dda" category="list-text">如果您需要 ONTAP 原生操作，請在您的 VPC 中部署並驗證適當的執行選項。</block>
+  <block id="99ebaf77705a119234345f8cf9fb6a9f" category="list-text"><block ref="99ebaf77705a119234345f8cf9fb6a9f" category="inline-link-macro-rx"></block></block>
+  <block id="cd999cf62ea454164f7660db743ae1bf" category="inline-link-macro">NetApp Workload Factory 的 ONTAP 執行選項</block>
+  <block id="e95eda9cdd8ebf53d68bb2eada60ece7" category="list-text"><block ref="e95eda9cdd8ebf53d68bb2eada60ece7" category="inline-link-macro-rx"></block></block>
+  <block id="dcc2be1fa0f998cc0b9beb1f8cb6f0e7" category="section-title">步驟 5：驗證可觀測性</block>
+  <block id="c64a054dcc88b668d6edef7c11d61348" category="list-text">確認計量和遙測資料已如預期收集和保留。</block>
+  <block id="02a3fbe3b0d7680706f04ebe921805cb" category="list-text">請確認您可以存取所需的運作記錄，以便進行疑難排解和調查。</block>
+  <block id="ec538b8a8f5dd3e890f200a773eb294c" category="inline-link-macro">NetApp Workload Factory 的可觀測性總覽</block>
+  <block id="c7c9bb42da91c4746c89fd9ac151df8b" category="list-text"><block ref="c7c9bb42da91c4746c89fd9ac151df8b" category="inline-link-macro-rx"></block></block>
+  <block id="97c44537a2c9b087fcb1b49064f63850" category="section-title">步驟 6：啟用 AI 診斷（選用）</block>
+  <block id="52c22999823078fa4f6f870e5f13b021" category="paragraph">AI 診斷預設為啟用。若啟用，請確認您符合所有先決條件，並將權限範圍限定在最低要求。</block>
+  <block id="36c4b396e59e85a57ce13345a9405aff" category="summary">某些 NetApp Workload Factory 工作流程需要使用 ONTAP 原生操作，這些操作並未透過 AWS API 公開。Workload Factory 提供兩種執行選項，可確保這些操作在您的 AWS 帳戶邊界內完成。</block>
+  <block id="104051cf68d5e97556c69412c71b3e2f" category="paragraph">某些 NetApp Workload Factory 工作流程需要執行 ONTAP 原生操作，而這些操作並未透過 AWS API 公開。Workload Factory 提供兩種執行選項，可將這些操作保留在您的 AWS 帳戶邊界內：一種是從您的 VPC 內執行 ONTAP 操作的 Lambda 連結，另一種是使用來自 EC2 執行個體僅傳出連線的 NetApp Console 代理程式。這兩種選項都允許您執行所需的 ONTAP 操作，同時將網路、認證資料和生命週期決策保留在您的安全性模型內。</block>
+  <block id="880ee77775ef24f61df7473e24da8839" category="section-title">執行選項</block>
+  <block id="9d18c0c7be709a00164ff346d9df8d35" category="list-text">Lambda 連結（您 VPC 中的 AWS Lambda）</block>
+  <block id="7ddfb9d89de561a389cd89e1b037a475" category="list-text">從您的 VPC 內部執行 ONTAP REST 和唯讀 ONTAP CLI 診斷，而無需公開 ONTAP。</block>
+  <block id="f5f9a6629d7072a5fd34544f00868506" category="list-text">NetApp Console 代理程式（您 VPC 中的 EC2，僅限傳出）</block>
+  <block id="54168f04c2cb5307e0d68a4fc80ed444" category="list-text">執行代理 ONTAP 操作，其中代理程式發起傳出連線，而 Workload Factory 從不發起與代理程式的傳入連線。</block>
+  <block id="e267da5d3ce594aee233daa50baa6853" category="section-title">安全性考量</block>
+  <block id="a2f8cf22d3ad7b97e6c8a0638ceb5bb6" category="list-text">網路邊界：確認所需的傳出連接埠（443/22）和目的地。</block>
+  <block id="7756ab3ce9a23d5de3fc3931d3cd1a7e" category="list-text">認證資料邊界：決定 ONTAP 認證資料是儲存在 Workload Factory（信封加密）中，還是從 AWS Secrets Manager 中引用。</block>
+  <block id="5465ef86b9d7ca1b717ce0d45a9ca3c8" category="list-text">可稽核性：確認元件活動和故障的運作記錄。</block>
+  <block id="e0daadd716788856f3d83cbb78c9f7ce" category="list-text">生命週期管理：確認更新和移除如何發生。</block>
+  <block id="39f4e7991235e69a06c9960efb9fe3d6" category="inline-link-macro">NetApp Workload Factory 的 Lambda 連結總覽</block>
+  <block id="0c4438fd627125c0191e7276e3fc7b90" category="list-text"><block ref="0c4438fd627125c0191e7276e3fc7b90" category="inline-link-macro-rx"></block></block>
+  <block id="3416e67013b2e232d7725e559917ea8f" category="list-text"><block ref="3416e67013b2e232d7725e559917ea8f" category="inline-link-macro-rx"></block></block>
+  <block id="b334128403ed60ff931947907046e1f0" category="summary">在向 NetApp 技術支援開啟支援案例之前，您需要將 NetApp 支援網站帳戶新增至 Workload Factory，然後註冊以獲得支援。</block>
+  <block id="a974c4cc3e5ab4ff9e0eff9af208bde1" category="doc">向 NetApp 支援註冊</block>
+  <block id="3d9b602ae77ac6a4951ca31b05b6b54f" category="paragraph">必須註冊支援才能獲得專屬於 NetApp Workload Factory 及其儲存設備解決方案和服務的技術支援。您必須從 NetApp Console 註冊支援，這是一個與 Workload Factory 分隔的網路型主控台。</block>
+  <block id="c552970fd4dc8118ba1806da596acad9" category="paragraph">註冊支援並不會啟用雲端供應商檔案服務的 NetApp 支援。如需與雲端供應商檔案服務、其基礎架構或任何使用該服務的解決方案相關的技術支援，請參閱該產品 Workload Factory 文件中的「取得協助」。</block>
+  <block id="0b0e252af8897fbe981ec6682d2aa33b" category="section-title">支援註冊總覽</block>
+  <block id="eb803e55617f13b716b5e56642cce2b0" category="paragraph">註冊您的帳戶 ID 支援訂閱（您的 20 位數 960xxxxxxxxx 序號位於 NetApp Console 的「支援資源」頁面）即為您的單一支援訂閱 ID。每個 NetApp 帳戶層級的支援訂閱都必須註冊。</block>
+  <block id="4cffd3c1dbf2f1038c01d18e7a860305" category="paragraph">註冊後即可使用諸如開啟支援工單和自動產生案例等功能。註冊是透過將 NetApp 支援網站（NSS）帳戶新增至 NetApp Console 來完成，如下所述。</block>
+  <block id="856edc4caec68fece6859c4be9360f3c" category="section-title">註冊您的帳戶以取得 NetApp 支援</block>
+  <block id="f6c4a3ae75d6616126e6da8310ae7384" category="paragraph">若要註冊支援並啟動支援權限，您帳戶中的一位使用者必須將 NetApp 支援網站帳戶與其 NetApp Console 登入關聯。註冊 NetApp 支援的方式取決於您是否已擁有 NetApp 支援網站（NSS）帳戶。</block>
+  <block id="bf4c731c0ee7f60c8018ad8f96828dda" category="section-title">已擁有 NSS 帳戶的現有客戶</block>
+  <block id="f732375b4bc27328f202e3b10a957017" category="paragraph">如果您是擁有 NSS 帳戶的 NetApp 客戶，您只需透過 NetApp Console 註冊以獲得支援。</block>
+  <block id="f65aaf10469eac2932fc53c6a37afb71" category="list-text">從 NetApp Console 選單中，選取 *管理*，然後選取 *認證資料*。</block>
+  <block id="f19ab635e6d5f884a22ee4ce067fdbfd" category="list-text">選擇 *User Credentials*。</block>
+  <block id="0c788a722f31f8f0cf36539ee04615cf" category="list-text">選擇 *新增 NSS 認證資料*，然後按照 NetApp 支援網站（NSS）驗證提示進行操作。</block>
+  <block id="cfc5506589d5a4d055e721267d5f0732" category="list-text">若要確認註冊程序是否成功，請選擇「說明」圖示，然後選擇 *支援*。</block>
+  <block id="8add4eb0d3f6ce61d374f3df3ee4eadf" category="paragraph">「資源」頁面應顯示您的帳戶已註冊支援。</block>
+  <block id="10c56875db7a47f791d653e5d5bff0e9" category="inline-image-macro">顯示帳戶序號、綠色核取方塊和「已註冊支援」文字的快照。</block>
+  <block id="fa7897454f637026faa3e00ccbfec239" category="paragraph"><block ref="fa7897454f637026faa3e00ccbfec239" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="9094354ffd09e4644caa0010edc66d24" category="paragraph">請注意，如果其他 NetApp Console 使用者尚未將 NetApp 支援網站帳戶與其 NetApp Console 登入建立關聯，他們將不會看到相同的支援註冊狀態。然而，這並不代表您的 NetApp 帳戶未註冊支援。只要帳戶中有一位使用者已依照這些步驟操作，您的帳戶即已註冊。</block>
+  <block id="1ff5aefce774ec72a211f2b3bb10b950" category="section-title">現有客戶但沒有 NSS 帳戶</block>
+  <block id="a8f62b208e5177a219f0b0d4ce88e0a9" category="paragraph">如果您是現有 NetApp 客戶，擁有現有授權和序號，但沒有 NSS 帳戶，則需要建立 NSS 帳戶並將其與您的 NetApp Console 登入關聯。</block>
+  <block id="5b2b7f628f804bcb786a097c7e45aa41" category="inline-link">NetApp 支援網站使用者註冊表</block>
+  <block id="0c4a8b62da9473fbd5401273c4f85ee0" category="list-text">完成以下步驟即可建立 NetApp 支援網站帳戶<block ref="041bcb6d9bdf91f7d6ac92ae3a196e12" category="inline-link-rx"></block></block>
+  <block id="d61c9f72493817776f392db42ac446a2" category="list-text">請務必選擇適當的使用者層級，通常為 *NetApp 客戶/終端使用者*。</block>
+  <block id="fb9b6bbcab5fb396a13f67594a0ba1ee" category="list-text">請務必複製上方使用的 NetApp 帳戶序號（960xxxx）至序號欄位。這將加快帳戶處理速度。</block>
+  <block id="40eff8559acd41057187b6cb11fa1919" category="list-text">請完成 <block ref="2f3aba04ec49ee5f0573a6c80a1b9df2" category="inline-xref-macro-rx"></block> 下的步驟，將您的新 NSS 帳戶與您的 NetApp Console 登入關聯。</block>
+  <block id="e9b1f53d6cabb3394833a4e102eb6a69" category="section-title">全新接觸 NetApp</block>
+  <block id="c20c107d0d4eef6351660f3590324232" category="paragraph">如果您是 NetApp 的全新使用者且還沒有 NSS 帳戶，請依照下列步驟操作。</block>
+  <block id="f5d7029ed18f998c0a9d780b2554e538" category="list-text">請在支援資源頁面找到您的帳戶 ID 序號。</block>
+  <block id="b50f0a46135bcb7083b1f2f82032fc26" category="inline-image-macro">說明選單的快照，其中「支援」是列出的第一個選項。</block>
+  <block id="55adf589d087b17fca134b34f65498ed" category="paragraph"><block ref="55adf589d087b17fca134b34f65498ed" category="inline-image-macro-rx" type="image"></block></block>
+  <block id="dd50e314c18933734174c1156dd9237f" category="inline-link">NetApp 的支援註冊網站</block>
+  <block id="78f94e749b89d69dcbf3baff21ccb958" category="list-text">導航至 <block ref="e1c4be66250fd76d5c52bfe2cb7daee2" category="inline-link-rx"></block> 並選取 *我不是已註冊的 NetApp 客戶*。</block>
+  <block id="d4f633ef130727b2776fa7f45024ca7d" category="list-text">請填寫必填項目（標有紅色星號的欄位）。</block>
+  <block id="1128fc8d5ec64880f4d49337ed798d31" category="list-text">在「產品線」欄位中，選擇「Cloud Manager」，然後選擇您適用的計費供應商。</block>
+  <block id="50a1dc01b7312307c34a888071586955" category="list-text">從上面的步驟 2 複製您的帳戶序號，完成安全性檢查，然後確認您已讀取 NetApp 的全球資料隱私政策。</block>
+  <block id="3a24c87c9971d2011b4df223718f84b4" category="paragraph">系統會立即傳送電子郵件至您提供的信箱，以完成此安全的交易。如果幾分鐘後您仍未收到驗證郵件，請務必檢查您的垃圾郵件資料夾。</block>
+  <block id="03413baeca1ff7222737d8ce299bd4e8" category="list-text">請在郵件中確認此行動。</block>
+  <block id="201080500e946070a2e4873042507c77" category="paragraph">確認後，您的請求將提交至 NetApp，並建議您建立 NetApp 支援網站帳戶。</block>
+  <block id="cc8b0535948da368f832027c19b7f853" category="list-text">請務必將上方使用的帳戶序號（960xxxx）複製到序號欄位。這將加快帳戶處理速度。</block>
+  <block id="684375e279a289295b72a006d93e2c4c" category="paragraph">NetApp 將在此過程中與您聯繫。這是針對新使用者的一次性引導程序。</block>
+  <block id="f335678326583cea28377216c5515221" category="paragraph">擁有 NetApp 支援網站帳戶後，請完成 <block ref="2f3aba04ec49ee5f0573a6c80a1b9df2" category="inline-xref-macro-rx"></block> 下的步驟，將該帳戶與您的 NetApp Console 登入建立關聯。</block>
+  <block id="5ee0ffcbc0868f2752b4e1ef23b4ddcc" category="summary">NetApp Workload Factory 是一個 SaaS 控制平面，可協助您管理與最佳化在 AWS 環境中 Amazon FSx for NetApp ONTAP 上執行的工作負載。</block>
+  <block id="235ee935fcf1f80bd8010a48d153f4d6" category="doc">了解 NetApp Workload Factory 的安全性模型</block>
+  <block id="df6c39931b4ff1a4a4f813f53516e211" category="paragraph">NetApp Workload Factory 是一個 SaaS 控制平面，可協助您管理和最佳化在 AWS 環境中執行於 Amazon FSx for NetApp ONTAP 上的工作負載。安全性結果取決於 NetApp 、 AWS 和您的組織之間的共享的責任。</block>
+  <block id="8355753a2ee58f10ef2f9c5626ab3eb3" category="section-title">高階安全性模型</block>
+  <block id="8f952e7edd6ea5a754e9ee4d27245197" category="list-text">Workload Factory 使用 IAM 角色承擔模型來取得臨時 AWS STS 認證資料，以便在您的帳戶中呼叫 AWS API。</block>
+  <block id="9c423a0cb16ec9658cd69d3b3a1d31e0" category="list-text">有些工作流程需要 ONTAP 原生操作，這些操作沒有透過 AWS API 公開；您可以使用客戶部署的執行元件（例如 Lambda 連結）在 VPC 內執行這些操作。</block>
+  <block id="a4bb11c5ebb27f3a58ba74af8dcc4567" category="list-text">可觀測性訊號（計量、遙測資料和運行記錄）支援運行監控和調查。</block>
+  <block id="efa1784e2378c40d6784e3d01d326a58" category="section-title">關鍵審查問題</block>
+  <block id="bdaab2cf472610a3c2d8fededdd0fcc7" category="list-text">Workload Factory 需要對您的 AWS 帳戶擁有哪些存取（角色信任 + 權限）？</block>
+  <block id="80681d2fca175dfb71dee20c6ba79c9d" category="list-text">哪些執行路徑適用於您預期的工作流程（僅限 AWS API 或透過 VPC 元件執行 ONTAP 原生操作）？</block>
+  <block id="db811043ee5b5c50b7bb9ff502bae56d" category="list-text">處理哪些資料類別（組態/中繼資料、操作日誌/事件、遙測資料）？它們存放在哪裡？</block>
+  <block id="40528fae98d54d885ea8c3dd73a9b488" category="list-text">存在哪些監控訊號？它們的保留特性是什麼？</block>
+  <block id="01e12de62fa77fda2815719aed8ff892" category="section-title">接下來</block>
+  <block id="51d0640cffcf3166d189ae3659eeee68" category="inline-link-macro">NetApp Workload Factory 的共享的責任邊界</block>
+  <block id="2e2ee63a379e039c60a59db259e790fa" category="list-text"><block ref="2e2ee63a379e039c60a59db259e790fa" category="inline-link-macro-rx"></block></block>
+  <block id="470abcaa1ec503caa1f909e24384f857" category="list-text"><block ref="470abcaa1ec503caa1f909e24384f857" category="inline-link-macro-rx"></block></block>
+  <block id="65625937c73079b6ea7c1d74edb5c3f5" category="summary">NetApp Workload Factory 的安全性責任由 NetApp（SaaS 營運）、AWS（雲端基礎架構和代管服務）以及您（客戶組態）共享的。</block>
+  <block id="178c4c9ffd88ef065b79dc99c8ca3944" category="paragraph">NetApp Workload Factory 安全性責任是由 NetApp（SaaS 營運）、AWS（雲端基礎架構與代管服務）以及您（客戶組態）共享的。了解各方責任的起訖範圍，有助於您正確設定 AWS 環境並避免安全性漏洞。這些界限釐清了 NetApp 營運的內容、AWS 保護的內容，以及您必須自行設定與維護的內容。</block>
+  <block id="9614419eb90f312b043ee2a4a41cf80c" category="section-title">NetApp 職責（服務方）</block>
+  <block id="cf958bef3be5b00887ef83f6f7b45ed4" category="paragraph">NetApp 負責營運和保障 Workload Factory SaaS 平台的安全。這包括對儲存的組態參考和營運資料的服務端處理。</block>
+  <block id="c620d0c6085e93f8726d026181b76ac7" category="section-title">AWS 職責（雲端平台）</block>
+  <block id="bc78c1452201742cf659194bba712434" category="paragraph">AWS 負責您的部署和工作流程使用的雲端基礎架構和代管服務的安全性（例如 IAM/STS、FSx for ONTAP、CloudWatch、KMS、Secrets Manager、CloudFormation、Lambda 和連網原語）。</block>
+  <block id="e527a27f52031f654d3cee98706703df" category="section-title">客戶責任（您的組態）</block>
+  <block id="0ac6d7e58bdcdd03588430c747957bae" category="paragraph">您負責：</block>
+  <block id="70bf9232820645b7c2e8862503895786" category="list-text">AWS IAM 角色、信任原則和最小權限</block>
+  <block id="706b148aeb1628621b171ba2e335f9eb" category="list-text">VPC 控制（子網路、安全性群組、路由、端點和出口）</block>
+  <block id="6025aadaac9f7a87e58ea1e556bdde0e" category="list-text">認證資料治理（包括工作流程所需的 ONTAP 認證資料）</block>
+  <block id="a9386acc40271e497bf629c5bdeda579" category="list-text">加密和金鑰管理決策（例如，FSx for ONTAP 的選用客戶代管 KMS 金鑰）</block>
+  <block id="837126a6769bc80c3b4d129b371e01f3" category="list-text">監控、警報、保留原則和事件回應流程</block>
+  <block id="1d943c32a5927ce2487452931f22630b" category="section-title">要收集的證據</block>
+  <block id="aad0ef0f727d9e9fdb610998af6116c3" category="list-text">IAM 角色信任關係（包括外部 ID 條件）</block>
+  <block id="1f9862df8c89368ce8823cb23999af87" category="list-text">IAM 權限分層選擇與原則工件</block>
+  <block id="77e7a3ae451f8d35a1a0d8654510f17c" category="list-text">網路邊界決策（僅限 AWS API 與 VPC 執行元件，例如 Lambda 連結）</block>
+  <block id="c8a090dc466363f34a7db985a1a4e836" category="list-text">可觀測性決策與保留預期</block>
+  <block id="e46e86c0bcf88e8a51a31a4cdc8df66f" category="list-text">AI 能力開發決策（除非明確停用，否則 AI 診斷預設為啟用）</block>
+  <block id="46c1dcc77329c2ea9396c86aff6719c7" category="sidebar">Workload Factory 包含安全性和資料保護指南，涵蓋資料的收集、儲存、保留和存取方式。使用此參考資料可以了解架構、權限和法規遵循狀況，並支援更快、一致的安全性審查和就職程序。</block>
+  <block id="ca3d222c28addc7f03269d358f6a99a5" category="sidebar">NetApp Workload Factory 的資訊安全性</block>
+  <block id="be11c74c1dd7f307bb80183a90dc2067" category="sidebar">開始使用</block>
+  <block id="512a1656fff6876a42e3177a70af0af8" category="sidebar">就職安全性工作流程</block>
+  <block id="45d25c062bc3ec8b4bf9436c8e58c147" category="sidebar">安全性和連線能力</block>
+  <block id="8670548aa113cffb6c6bf814dd4c87f1" category="sidebar">法規遵循和安全性態勢</block>
+  <block id="9c43e5e6d49a3a598c99296cb4a2c640" category="sidebar">AWS 認證資料流程</block>
+  <block id="0ed02153c798ff59aa26fdba20dd07d3" category="sidebar">認證資料儲存設備選項</block>
+  <block id="42ef5ce9159b94351827912365f28929" category="sidebar">最小權限要求</block>
+  <block id="cdf8b1112911b37c25e8e30cfab17573" category="sidebar">加密和金鑰管理</block>
+  <block id="0104b1c48fe8dbacf595b673f8209e12" category="sidebar">可觀測性（日誌、計量、遙測）</block>
+  <block id="ce7de0d2d3268b87e04a63020adf4e63" category="sidebar">可觀測性總覽</block>
+  <block id="bcd7555baa738ea17cc3b07fd015b887" category="sidebar">生成式 AI 安全性控制</block>
+  <block id="b50d2c6c1773236fe470d0d2f580eb97" category="sidebar">Bedrock 選擇加入 AI 診斷</block>
+  <block id="af91107c4278124f30a1414ffa67d4a9" category="sidebar">AI 工具邊界</block>
+  <block id="685328e02aa5a2f42c3a732be7be9070" category="sidebar">AI 模型參數和計費</block>
+  <block id="99766a99f9128229766ce2a730f02f14" category="sidebar">ONTAP 操作和 Lambda 連結</block>
+  <block id="1418f29d53b916b6897c5fa0f67ce486" category="sidebar">Lambda 連結 IAM 權限</block>
+  <block id="0adc03eac86772ad2c75c8f140be417e" category="sidebar">知識與支援</block>
+  <block id="42748df9eaa0be17ddc5cc1593cf57ab" category="sidebar">註冊以取得支援</block>
+  <block id="fabfc25ef8996fd90836e58a4c0b26b6" category="sidebar">取得協助</block>
+  <block id="813011e2103649bb71f124adedcc10ea" category="sidebar">部落格與社群</block>
+  <block id="3c031b939f6ec312ee601d021e7a6644" category="sidebar">NetApp Console</block>
+  <block id="cc58d3a9b2264c4fd8cb1d3f61b90bdc" category="sidebar">NetApp Data Services</block>
+  <block id="dd490b81914dd945601e442a41cb4222" category="sidebar">NetApp 社群</block>
+  <block id="01891381b46127715f1ff77c772edaf8" category="sidebar">了解 Workload Factory 的資訊安全性</block>
+  <block id="718a296036b3734fb967232381cf3df5" category="sidebar">認證資料保留</block>
+  <block id="7545768961310611a3f58a52ccdc09c9" category="sidebar">CloudWatch 監控權限</block>
+  <block id="dee12d83249dd7abd9012ae73fc3b012" category="sidebar">帳戶刪除</block>
+  <block id="0a48f49460f6f689a9da82a9cf2b4219" category="sidebar">Amazon Bedrock 選擇加入 AI 診斷</block>
+  <block id="e89477f461ecef2d895595553cc0cfbf" category="sidebar">Ask Me AI 助理</block>
+  <block id="0adf29a021a9a48af6279e10449f2bbf" category="sidebar">Ask Me 安全性架構</block>
+  <block id="e80c2f90cfc11a974dd003be6c0cb360" category="sidebar">Ask Me 存取控制</block>
+  <block id="f13f00b0f38cb5d39ae46a660f3730e2" category="sidebar">Ask Me 執行模式</block>
+  <block id="082650d690280d5ac61dd2bb38899196" category="sidebar">Ask Me 隱私與可用度</block>
+  <block id="4d9cde297d1c003eba9c5b3021d6839e" category="sidebar">ONTAP 操作和 Lambda 連結（客戶 VPC 元件）</block>
+  <block id="a3a6979c264d714e00c70c8cf88cc14b" category="sidebar">Lambda 連結生命週期</block>
+  <block id="30d965eef5ba25c6b9998ae38270b43e" category="sidebar">法律聲明</block>
+</blocks>

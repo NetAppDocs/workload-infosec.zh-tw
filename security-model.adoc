@@ -1,0 +1,48 @@
+---
+sidebar: sidebar 
+permalink: security-model.html 
+keywords: security model, shared responsibility, IAM assume-role, STS credentials, ONTAP-native operations, VPC execution components, observability, data handling 
+summary: NetApp Workload Factory 是一個 SaaS 控制平面，可協助您管理與最佳化在 AWS 環境中 Amazon FSx for NetApp ONTAP 上執行的工作負載。 
+---
+= 了解 NetApp Workload Factory 的安全性模型
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+NetApp Workload Factory 是一個 SaaS 控制平面，可協助您管理和最佳化在 AWS 環境中執行於 Amazon FSx for NetApp ONTAP 上的工作負載。安全性結果取決於 NetApp 、 AWS 和您的組織之間的共享的責任。
+
+
+
+[[high-level-security-model]]
+== 高階安全性模型
+
+* Workload Factory 使用 IAM 角色承擔模型來取得臨時 AWS STS 認證資料，以便在您的帳戶中呼叫 AWS API。
+* 有些工作流程需要 ONTAP 原生操作，這些操作沒有透過 AWS API 公開；您可以使用客戶部署的執行元件（例如 Lambda 連結）在 VPC 內執行這些操作。
+* 可觀測性訊號（計量、遙測資料和運行記錄）支援運行監控和調查。
+
+
+
+
+[[key-review-questions]]
+== 關鍵審查問題
+
+* Workload Factory 需要對您的 AWS 帳戶擁有哪些存取（角色信任 + 權限）？
+* 哪些執行路徑適用於您預期的工作流程（僅限 AWS API 或透過 VPC 元件執行 ONTAP 原生操作）？
+* 處理哪些資料類別（組態/中繼資料、操作日誌/事件、遙測資料）？它們存放在哪裡？
+* 存在哪些監控訊號？它們的保留特性是什麼？
+
+
+
+
+[[whats-next]]
+== 接下來
+
+* link:shared-responsibility-boundaries.html["NetApp Workload Factory 的共享的責任邊界"]
+* link:connectivity-trust-paths.html["NetApp Workload Factory 的連線能力與信任路徑"]
+* link:least-privilege-permissions.html["NetApp Workload Factory 的最小權限層級"]
+

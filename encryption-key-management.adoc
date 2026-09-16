@@ -1,0 +1,63 @@
+---
+sidebar: sidebar 
+permalink: encryption-key-management.html 
+keywords: encryption, key management, AWS KMS, encryption at rest, envelope encryption, FSx for ONTAP, credential protection, kms CreateGrant 
+summary: NetApp Workload Factory 對靜態資料進行加密，並明確定義了 Workload Factory 和 AWS 服務之間的金鑰管理職責。 
+---
+= NetApp Workload Factory 的加密與金鑰管理
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+NetApp Workload Factory 使用靜態加密，並在 Workload Factory 和 AWS 服務之間明確定義了金鑰管理職責。對於 Amazon FSx for NetApp ONTAP 檔案系統，您可以選擇自己的 AWS KMS 金鑰，也可以使用 AWS 代管的預設金鑰，而 FSx for ONTAP 會使用該金鑰執行加密作業。Workload Factory 也使用信封加密來保護儲存的 ONTAP 認證資料。
+
+
+
+[[kms-encryption-at-rest-scope-for-fsx]]
+== FSx 的 KMS 靜態加密範圍
+
+透過 Workload Factory 建立 FSx for ONTAP 檔案系統時，您可以選擇指定自己的 AWS KMS 金鑰用於靜態資料加密。如果您未指定金鑰，Workload Factory 將使用 AWS 代管的預設 FSx 金鑰。
+
+加密的內容:: 所有儲存在支援 FSx for ONTAP 檔案系統的底層 EBS 磁碟區上的資料（AWS FSx 靜態加密）。
+金鑰所有權:: KMS 金鑰位於您的 AWS 帳戶中。
+選擇和使用金鑰所需的權限:: Workload Factory 需要：
++
+--
+* `kms:DescribeKey`
+* `kms:ListKeys`
+* `kms:ListAliases`
+* `kms:CreateGrant`（允許 FSx for ONTAP 服務使用該金鑰）
+
+
+--
+金鑰存取模式:: Workload Factory 從不直接使用您的 KMS 金鑰加密或解密資料。它會在檔案系統建立期間將金鑰 ID 傳遞給 Amazon FSx for NetApp ONTAP API；Amazon FSx for NetApp ONTAP 會執行加密作業。
+
+
+
+
+[[credential-protection-service-side-envelope-encryption]]
+== 認證資料保護（服務端信封加密）
+
+當您透過 Workload Factory 儲存 ONTAP 認證資料（管理員密碼）時，它會在持久化之前使用信封加密來保護它們。
+
+加密方法:: 使用唯一的資料加密金鑰（DEK）對每個認證資料記錄進行 AES-256-CBC 加密。
+信封加密流程::
++
+--
+. 每個認證資料都會產生一個唯一的 256 位元 DEK。
+. DEK 對認證資料（密碼）進行加密。
+. DEK 本身使用根目錄金鑰進行加密，並與加密認證資料一起儲存。
+. 明文 DEK 永遠不會儲存。
+
+
+--
+加密內容:: 每個資料金鑰都透過加密方式與其特定的認證資料記錄綁定，防止金鑰在不同記錄之間重複使用。
+替代方案：AWS Secrets Manager:: 您無需將加密密碼儲存在服務中，而是可以將 ONTAP 認證資料儲存在您自己帳戶的 AWS Secrets Manager 中。Workload Factory 從不檢視或儲存密碼；它會將 Secrets Manager ARN 傳遞給 Lambda 連結，該連結會在執行階段於您的 VPC 內擷取密碼。
+
+
+
+NOTE: GovCloud 帳戶需要 AWS Secrets Manager。

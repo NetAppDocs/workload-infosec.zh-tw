@@ -1,0 +1,49 @@
+---
+sidebar: sidebar 
+permalink: observability-overview.html 
+keywords: observability, telemetry, Tracker, audit logging, OpenTelemetry, AI usage metering, AWS Timestream, operational records, monitoring 
+summary: 可觀測性訊號有助於支援運行監控、疑難排解和調查。在 NetApp Workload Factory 中，可觀測性包括計量、遙測資料和運行記錄，這些指標和記錄能夠提供對服務行為、AI 使用情況以及透過 Workload Factory 執行的操作的可見度。 
+---
+= 了解 NetApp Workload Factory 中的可觀測性
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+可觀測性訊號有助於支援運行監控、疑難排解和調查。在 NetApp Workload Factory 中，可觀測性包括計量、遙測資料和運行記錄，這些指標和記錄能夠提供對服務行為、AI 使用情況以及透過 Workload Factory 執行的操作的可見度。遙測資料和運行記錄支援內部監控和客戶導向的稽核可見度，而 Tracker 則可協助您審查支援操作的進度、狀態和詳細資訊。
+
+
+
+[[telemetry-and-operational-records]]
+== 遙測與運作記錄
+
+Workload Factory 使用下列遙測和作業記錄類型：
+
+* OpenTelemetry 追蹤透過 OTLP HTTP 匯出至 SigNoz（內部可觀測性）
+* AI 使用情況計量（權杖計數、模型成本）儲存在 AWS Timestream 中
+* NetApp Console 稽核記錄（行動名稱、狀態、請求/回應中繼資料、時間戳記）
+
+
+
+
+[[audit-logging-in-workload-factory]]
+== Workload Factory 中的稽核記錄
+
+Workload Factory 提供 Tracker 監控功能，方便您監控正在執行的作業及其執行時間。透過 Tracker，您可以追蹤 FSx for ONTAP、認證資料和連結作業的進度和狀態，審查作業任務和子任務的詳細資料，並診斷任何問題或故障。
+
+Tracker 提供多種操作。您可以按時間範圍（過去 24 小時、7 天、14 天或 30 天）、工作負載、狀態和使用者篩選工作；使用搜尋功能尋找工作；並將工作表下載為 CSV 檔案。
+
+* link:https://docs.netapp.com/us-en/workload-fsx-ontap/monitor-operations.html["使用 Workload Factory 中的 Tracker 監控作業"^]
+
+
+
+
+[[related-information]]
+== 相關資訊
+
+* link:metrics-telemetry.html["NetApp Workload Factory 的計量與遙測"]
+

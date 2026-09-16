@@ -1,0 +1,84 @@
+---
+sidebar: sidebar 
+permalink: lambda-link-overview.html 
+keywords: Lambda link overview, ONTAP-native operations, VPC deployment, security architecture, NetApp Console agent, CloudFormation, container image 
+summary: NetApp Workload Factory 使用 _連結_（部署在您 VPC 中的 AWS Lambda 函數），在 Amazon FSx for NetApp ONTAP API 未公開這些操作時，將 ONTAP 原生操作保留在您的 AWS 帳戶邊界內。 
+---
+= 了解 NetApp Workload Factory 的 Lambda 連結
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+NetApp Workload Factory 使用 _link_（部署在您 VPC 中的 AWS Lambda 函數），在 Amazon FSx for NetApp ONTAP API 未公開這些操作時，將 ONTAP 原生操作保留在您的 AWS 帳戶邊界內。該連結在您的子網路和安全性群組中執行，因此執行元件會保留在您的 AWS 環境中。Workload Factory 僅針對需要直接 ONTAP 存取而非可用 AWS 服務 API 的操作呼叫該連結。它會將連結的架構與 NetApp Console 代理程式的安全性和操作設定檔進行比較。
+
+
+
+[[link-security-architecture]]
+== 連結安全性架構
+
+Workload Factory 連結在 Workload Factory 帳戶和一個或多個 FSx for ONTAP 檔案系統之間建立信任關係和間接連線。
+
+下表提供 Lambda 連結安全性架構的總覽。使用此資訊來了解 Lambda 函數如何在您的 AWS 帳戶中部署和執行，包括其連網組態、執行環境和操作限制。
+
+[cols="2,3"]
+|===
+| 屬性 | 詳細資料 
+
+
+| 運算 | AWS Lambda（Container 映像） 
+
+
+| 執行階段 | Node.js 22 
+
+
+| 部署 | 您 AWS 帳戶中的 CloudFormation 堆疊 
+
+
+| VPC 放置 | 您的子網路，您的安全性群組 
+
+
+| 逾時 | 每次調用 10 秒 
+
+
+| 呼叫 | 同步（RequestResponse） 
+
+
+| 套件類型 | Container 映像（取自 NetApp ECR） 
+|===
+下圖顯示 Lambda 連結的安全性架構。
+
+image:infosec-link-diagram.png["圖示 Lambda 連結的安全性架構。"]
+
+
+
+[[lambda-link-versus-netapp-console-agent]]
+== Lambda 連結與 NetApp Console 代理程式
+
+Lambda 連結和 NetApp Console 代理程式用途不同，安全性和操作影響也不同。
+
+[cols="1,2,2"]
+|===
+| 維度 | 連結（基於 Lambda） | NetApp Console 代理程式（基於虛擬機器/Pods） 
+
+
+| 執行階段模型 | 無伺服器（AWS Lambda），客戶部署 | 客戶部署的虛擬機器/Container；執行 NetApp 控制台服務 pod 
+
+
+| 主要範圍 | 控制平面 ONTAP REST 操作（僅當 AWS API 不支援此操作時） | 編排以及對資料服務的支援 
+
+
+| 資料服務支援 | 不代管資料服務 | 可作為資料服務主機（執行 NetApp 主控台服務 Pod） 
+
+
+| 營運例行成本 | 沒有全年無休的 VM | 虛擬機器生命週期管理與升級 
+|===
+
+
+[[related-information]]
+== 相關資訊
+
+如需完整的跨系統連線圖，請參閱link:connectivity-trust-paths.html["NetApp Workload Factory 的連線能力與信任路徑"]。

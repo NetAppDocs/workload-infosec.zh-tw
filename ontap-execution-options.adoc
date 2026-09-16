@@ -1,0 +1,47 @@
+---
+sidebar: sidebar 
+permalink: ontap-execution-options.html 
+keywords: ONTAP execution options, Lambda link, NetApp Console Agent, VPC, outbound-only connectivity, network boundaries, credential boundaries, auditability, lifecycle management 
+summary: 某些 NetApp Workload Factory 工作流程需要使用 ONTAP 原生操作，這些操作並未透過 AWS API 公開。Workload Factory 提供兩種執行選項，可確保這些操作在您的 AWS 帳戶邊界內完成。 
+---
+= NetApp Workload Factory 的 ONTAP 執行選項
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+某些 NetApp Workload Factory 工作流程需要執行 ONTAP 原生操作，而這些操作並未透過 AWS API 公開。Workload Factory 提供兩種執行選項，可將這些操作保留在您的 AWS 帳戶邊界內：一種是從您的 VPC 內執行 ONTAP 操作的 Lambda 連結，另一種是使用來自 EC2 執行個體僅傳出連線的 NetApp Console 代理程式。這兩種選項都允許您執行所需的 ONTAP 操作，同時將網路、認證資料和生命週期決策保留在您的安全性模型內。
+
+
+
+[[execution-options]]
+== 執行選項
+
+Lambda 連結（您 VPC 中的 AWS Lambda）:: 從您的 VPC 內部執行 ONTAP REST 和唯讀 ONTAP CLI 診斷，而無需公開 ONTAP。
+NetApp Console 代理程式（您 VPC 中的 EC2，僅限傳出）:: 執行代理 ONTAP 操作，其中代理程式發起傳出連線，而 Workload Factory 從不發起與代理程式的傳入連線。
+
+
+
+
+[[security-considerations]]
+== 安全性考量
+
+* 網路邊界：確認所需的傳出連接埠（443/22）和目的地。
+* 認證資料邊界：決定 ONTAP 認證資料是儲存在 Workload Factory（信封加密）中，還是從 AWS Secrets Manager 中引用。
+* 可稽核性：確認元件活動和故障的運作記錄。
+* 生命週期管理：確認更新和移除如何發生。
+
+
+
+
+[[related-information]]
+== 相關資訊
+
+* link:lambda-link-overview.html["NetApp Workload Factory 的 Lambda 連結總覽"]
+* link:connectivity-trust-paths.html["NetApp Workload Factory 的連線能力與信任路徑"]
+* link:encryption-key-management.html["NetApp Workload Factory 的加密與金鑰管理"]
+

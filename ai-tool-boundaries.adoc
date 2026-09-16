@@ -1,0 +1,40 @@
+---
+sidebar: sidebar 
+permalink: ai-tool-boundaries.html 
+keywords: AI tool boundaries, read-only diagnostics, AWS CLI, ONTAP CLI, Amazon Bedrock, data retention, model training boundaries, mutating commands, tool safety controls 
+summary: NetApp Workload Factory 對其 AI 功能如何與您的 AWS 和 ONTAP 環境互動施加了嚴格的限制，因此您可以信任 AI 輔助診斷，而無需擔心發生意外變更。 
+---
+= NetApp Workload Factory 的人工智慧工具邊界
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+NetApp Workload Factory 對其 AI 功能與您的 AWS 和 ONTAP 環境互動的方式實施嚴格的界線，因此您可以信賴 AI 輔助診斷，而不會有意外變更的風險。Amazon Bedrock 使用唯讀的 AWS CLI 和 ONTAP CLI 診斷工具，這些工具會區塊修改命令並依大小和執行限制輸出，且所使用的任何資料僅為暫時性，不會由 NetApp Workload Factory 或 AWS 保留。
+
+
+
+[[tool-safety-controls]]
+== 工具安全控制
+
+[cols="2,3,4"]
+|===
+| 工具 | 功能 | 安全控制 
+
+
+| AWS CLI（唯讀） | 執行唯讀的 AWS CLI 指令（describe、list、get） | 阻止所有修改動詞（建立、刪除、修改、更新、放置、移除）。每步最多 10 個命令。輸出大小截斷至 20 KB。 
+
+
+| ONTAP CLI（唯讀） | 使用 SSH 執行唯讀 ONTAP CLI 指令 | 封鎖所有變動動詞（刪除、毀損、建立、修改、移動）。輸出已截斷。 
+|===
+代理程式無法修改、建立或刪除資源。它只能觀察和診斷。
+
+
+
+[[data-retention-and-model-training-boundaries]]
+== 資料保留和模型訓練邊界
+
+根據 AWS 原則，Amazon Bedrock 不會儲存或使用您的輸入和輸出來訓練或改進基礎模型。對於隨需推論（由 Workload Factory 使用），AWS 會暫時處理您的資料，並在回傳回應後不予保留。

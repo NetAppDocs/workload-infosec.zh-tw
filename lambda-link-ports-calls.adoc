@@ -1,0 +1,67 @@
+---
+sidebar: sidebar 
+permalink: lambda-link-ports-calls.html 
+keywords: Lambda link ports, outbound connectivity, HTTPS, SSH, ONTAP REST API, port 443, port 22, lambda InvokeFunction, health check 
+summary: NetApp Workload Factory 使用 Lambda 連結請求和連接埠邊界來定義所需的傳出連線和 IAM 授權呼叫。 
+---
+= NetApp Workload Factory 的 Lambda 連結埠和呼叫
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+NetApp Workload Factory 使用 Lambda 連結請求和連接埠邊界來定義所需的傳出連線和 IAM 授權呼叫。此連結支援對 ONTAP 管理端點的 HTTPS 請求、用於診斷的唯讀 SSH 命令，以及健全狀況檢查。所有連線均從您的 VPC 內的連結傳出，因此不需要傳入連線或暴露的端點。Workload Factory 透過基於 IAM 的授權，經由 AWS Lambda API 呼叫該連結。
+
+
+
+[[request-types]]
+== 請求類型
+
+* HTTPS（ONTAP REST API）：將 HTTPS 呼叫代理至 ONTAP 管理端點（連接埠 443），以進行 Volume、儲存設備 VM 和叢集操作。
+* SSH（ONTAP CLI）：在連接埠 22 上執行唯讀 ONTAP CLI 命令，以取得診斷和效能資料。
+* 健全狀況檢查：傳回狀態和支援的功能。
+
+
+
+
+[[outbound-network-boundaries]]
+== 傳出網路邊界
+
+[cols="1,1,3,3"]
+|===
+| 方向 | 連接埠 | 目的地 | 目的 
+
+
+| 傳出 | 443 | ONTAP 管理 IP（在您的 VPC 內） | REST API 操作 
+
+
+| 傳出 | 22 | ONTAP 管理 IP（在您的 VPC 內） | SSH CLI 命令 
+
+
+| 傳出 | 443 | AWS Secrets Manager 端點（選用） | 使用 Secrets Manager 時擷取憑證 
+|===
+不需要傳入連線。該連結不會暴露任何端點。Workload Factory 使用 AWS `lambda:InvokeFunction` API 呼叫它。
+
+
+
+[[workload-factory-calls-lambda-link]]
+== Workload Factory 呼叫 Lambda 連結
+
+Workload Factory 透過 AWS Lambda API (`lambda:InvokeFunction`）呼叫 Lambda 連結，使用基於 IAM 的授權。
+
+呼叫有效負載包含：
+
+* 目標 ONTAP 管理端點（IP/主機名稱）
+* 要執行的操作（REST API 路徑或 SSH 命令）
+* 驗證資訊（即時憑證或 Secrets Manager ARN 引用）
+
+
+
+
+[[related-information]]
+== 相關資訊
+
+如需完整的跨系統連線圖，請參閱 link:connectivity-trust-paths.html["NetApp Workload Factory 的連結性和信任路徑"]。

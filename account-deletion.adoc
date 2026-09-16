@@ -1,0 +1,19 @@
+---
+sidebar: sidebar 
+permalink: account-deletion.html 
+keywords: account deletion, data removal, offboarding, file system deletion, credential deletion, link deletion, notification channel deletion, IAM role deletion, Lambda link deletion, CloudWatch monitoring stack deletion 
+summary: 帳戶刪除並非自助服務操作。這是一個涉及 Workload Factory 服務和您 AWS 帳戶中資源的退出工作流程。 
+---
+= NetApp Workload Factory 帳戶刪除
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+帳戶刪除並非自助服務操作；這是一個退出工作流程，涉及 Workload Factory 服務和您 AWS 帳戶中的資源。清理過程包括安全地移除與 Workload Factory 帳戶、FSx for ONTAP 檔案系統、憑證、連結、通知通道，以及相關的 IAM、AWS Lambda 和 Amazon CloudWatch 資源相關聯的任何資料。此操作不可逆。
+
+當您需要移除 Workload Factory 帳戶時，您必須link:get-help.adoc["聯絡 NetApp 支援。"]

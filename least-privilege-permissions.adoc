@@ -1,0 +1,58 @@
+---
+sidebar: sidebar 
+permalink: least-privilege-permissions.html 
+keywords: infosec, security, data handling, data retention, data collection, permissions, credentials, iam, assume role, least privilege, compliance, soc 2, govcloud, amazon bedrock, lambda, link, fsx for ontap, logging, audit, access control, onboarding, hardening 
+summary: NetApp Workload Factory 非常重視資訊安全性和資料保護實務，重點關注資料處理實務和存取要求，並提供最小權限組態和潛力加固方面的指導。 
+---
+= NetApp Workload Factory 的最小權限層級
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+您可以隨時限制 Workload Factory IAM 權限，以遵守最小權限要求，例如限制對特定資源（ARN）的存取，並套用 IAM 條件，例如標籤和 CIDR 範圍。
+
+
+
+[[tiered-permission-model]]
+== 分層權限模型
+
+Workload Factory 採用分層權限模型，遵循最小權限原則。新增 AWS 憑證時，您可以選擇要啟用的功能層級。您可以從唯讀探索開始，並根據需要擴充。
+
+Workload Factory 透過您 AWS 帳戶中的 IAM 角色授予所有權限，該角色是透過 STS 使用外部 ID 來擔任。
+
+Workload Factory 透過即時工作階段原則進一步限定每次 API 呼叫的範圍。
+
+在 Workload Factory 主控台中，AI 聊天功能 _Ask Me_ 可協助您安全地完善權限，它會建議限制選項並產生要在 AWS 中套用的更新原則。
+
+
+
+[[granting-permissions]]
+== 授予權限
+
+將 AWS 憑證新增至 Workload Factory 時，您可以選擇要啟用的權限分層。您可以隨時啟用或停用分層。
+
+分層是累積的：啟用較高分層會自動啟用所有較低分層。
+
+
+
+[[security-controls]]
+== 安全性控制
+
+* 外部 ID（混淆代理保護）
+* 按作業工作階段原則（每次請求最小權限）
+* 基於標籤的條件（安全性群組修改僅限於 Workload Factory 建立的資源）
+* 秘密 ARN 範圍（Secrets Manager 存取受限於 `FSxSecret*`）
+* 執行階段權限驗證（回報缺少的行動/資源以進行針對性修復）
+
+
+
+
+[[permissions-documentation]]
+== 權限文件
+
+Workload Factory 權限的主要參考資料是 Workload Factory 設定和管理文件中的 link:https://docs.netapp.com/us-en/workload-setup-admin/permissions-reference.html["權限參考"^]。您可以在此參考資料中找到有關從儲存設備 IAM 原則中移除權限之影響的資訊。

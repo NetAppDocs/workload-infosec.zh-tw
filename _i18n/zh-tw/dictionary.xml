@@ -500,7 +500,6 @@
   <block id="ac252743de820aac9183d9f76d4bed67" category="section-title">NetApp 帳戶</block>
   <block id="fa6063b1c2f2305250c0e4398ff9f643" category="list-text">FSx 組態、平衡計畫、ARP 組態和 AI 使用限制</block>
   <block id="bf287b813cd334fda1fc42e415bf3dc7" category="list-text">臨時 AWS STS 認證資料（快取在 Redis 中）、回應快取、鎖定和部署狀態</block>
-  <block id="f61c0a27e4ead4113f37e307fceeac09" category="list-text">CloudFormation/Terraform 範本、WAD 組態描述元和壓縮報告</block>
   <block id="9f80825b2d67b8ccab25b67e670760f5" category="list-text">AI 使用計量和收集器效能計量</block>
   <block id="919e790bde6c7da375d06d2d8a044fef" category="list-text">EDA 彙總計量</block>
   <block id="92d894d5716ae374c87da601cbacccdb" category="list-text">操作稽核追蹤</block>
@@ -1215,4 +1214,5 @@
   <block id="4d9cde297d1c003eba9c5b3021d6839e" category="sidebar">ONTAP 操作和 Lambda 連結（客戶 VPC 元件）</block>
   <block id="a3a6979c264d714e00c70c8cf88cc14b" category="sidebar">Lambda 連結生命週期</block>
   <block id="30d965eef5ba25c6b9998ae38270b43e" category="sidebar">法律聲明</block>
+  <block id="e48f7b50b793847bd7a92cb2216e1751" category="list-text">CloudFormation/Terraform 範本、架構良好的組態描述符和壓縮報告</block>
 </blocks>
